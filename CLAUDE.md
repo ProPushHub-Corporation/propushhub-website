@@ -22,9 +22,15 @@ Run `npm run lint` and `npm run build` before committing code changes.
 - `src/data/projects.ts` — all project/case-study content and types; add new projects here
 - `public/projects/<slug>/*.svg` — project screenshots (placeholders; `replacementPathHint` in data says where real ones go)
 
+## SEO
+- Route metadata lives in `src/lib/seo.ts` (titles, descriptions, canonical, JSON-LD). `SITE_URL` there must be changed when a custom domain is connected.
+- `src/lib/useSeo.ts` updates the head on client-side navigation.
+- `npm run build` runs `scripts/prerender.ts`, which writes per-route static HTML (`dist/work/<slug>/index.html`), `sitemap.xml` and `robots.txt`. New projects in `src/data/projects.ts` are picked up automatically.
+- Use `Link` from `src/lib/router.tsx` (real `<a href>`) for internal navigation, not `onClick` buttons.
+- Design tokens (dark theme) are in `src/index.css`; use `bg-ink`, `text-fg`, `text-muted`, `border-line`, `glass`, `btn-primary`.
+
 ## Conventions
 - Match existing style: functional components, `React.FC`, Tailwind utility classes inline.
-- Palette: background `#F7F7F4`, text `#0F172A`.
 - Content changes go in `src/data/`, not hard-coded in components.
 - `vite.config.ts` HMR/watch settings are for AI Studio — do not modify.
 - Never commit `.env*` (only `.env.example`). No secrets in client code.
