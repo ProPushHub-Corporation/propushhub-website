@@ -93,6 +93,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             <img
               src={activeScreenshot.url}
               alt={`${project.displayTitle} — ${activeScreenshot.label}`}
+              loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
               onError={() => setImageError(true)}
               className="w-full h-full object-cover object-top transition-transform duration-200 group-hover:scale-[1.01]"

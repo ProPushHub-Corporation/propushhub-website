@@ -243,6 +243,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                 <img
                   src={activeShot.url}
                   alt={`${project.displayTitle} — ${activeShot.label}`}
+                  decoding="async"
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-top"
                 />
