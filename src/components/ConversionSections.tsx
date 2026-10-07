@@ -52,17 +52,17 @@ export const TrustExperienceSection: React.FC = () => {
   return (
     <section
       id="engineering-experience"
-      className="py-20 sm:py-24 border-t border-slate-200 bg-white"
+      className="py-20 sm:py-24 border-t border-line bg-surface"
     >
       <div className="max-w-[1240px] mx-auto px-6">
         <div className="max-w-3xl mb-14">
-          <p className="text-xs font-semibold text-[#1D4ED8] mb-2">
+          <p className="text-xs font-semibold text-accent mb-2">
             Engineering Proof · Verifiable Public Work
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mb-4">
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-fg tracking-tight mb-4">
             Built With Real-World Development Experience
           </h2>
-          <p className="text-slate-600 text-base leading-relaxed">
+          <p className="text-muted text-base leading-relaxed">
             Every capability offered by PropushHub is backed by inspectable source code, live
             deployments, and real full-stack, mobile, and enterprise software systems built by our
             development team.
@@ -73,21 +73,21 @@ export const TrustExperienceSection: React.FC = () => {
           {PROOF_AREAS.map((item) => (
             <div
               key={item.index}
-              className="p-6 rounded-2xl bg-[#F7F7F4] border border-slate-200/90 flex flex-col justify-between"
+              className="p-6 rounded-2xl bg-base border border-line flex flex-col justify-between"
             >
               <div>
-                <div className="text-xs font-mono text-[#1D4ED8] font-medium mb-3">
+                <div className="text-xs font-mono text-accent font-medium mb-3">
                   {item.index}. Capability Proof
                 </div>
-                <h3 className="font-display text-lg font-bold text-slate-900 mb-2.5">
+                <h3 className="font-display text-lg font-bold text-fg mb-2.5">
                   {item.title}
                 </h3>
-                <p className="text-sm text-slate-600 leading-relaxed mb-5">
+                <p className="text-sm text-muted leading-relaxed mb-5">
                   {item.detail}
                 </p>
               </div>
-              <div className="pt-3 border-t border-slate-200/80 text-xs font-mono text-slate-500">
-                Demonstrated in: <span className="text-slate-800">{item.evidenceProject}</span>
+              <div className="pt-3 border-t border-line text-xs font-mono text-dim">
+                Demonstrated in: <span className="text-fg-2">{item.evidenceProject}</span>
               </div>
             </div>
           ))}
@@ -99,17 +99,17 @@ export const TrustExperienceSection: React.FC = () => {
 
 export const GithubExploreSection: React.FC = () => {
   return (
-    <section className="py-16 border-t border-slate-200 bg-[#F7F7F4]">
+    <section className="py-16 border-t border-line bg-base">
       <div className="max-w-[1240px] mx-auto px-6">
-        <div className="p-8 sm:p-10 rounded-2xl bg-slate-900 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="p-8 sm:p-10 rounded-2xl bg-surface-2 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="max-w-2xl">
-            <p className="text-xs font-mono text-blue-400 mb-2">
+            <p className="text-xs font-mono text-accent mb-2">
               Open Source &amp; Public Repositories
             </p>
             <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight mb-2">
               Explore More Projects
             </h2>
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p className="text-muted text-sm sm:text-base leading-relaxed">
               Want to see more of our development work? Explore the public repositories and
               projects.
             </p>
@@ -119,7 +119,7 @@ export const GithubExploreSection: React.FC = () => {
               href={COMPANY_INFO.githubProfile}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-slate-900 bg-white rounded-lg hover:bg-slate-100 transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-fg bg-surface rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
             >
               <Github className="w-4 h-4" />
               <span>View GitHub</span>
@@ -138,17 +138,17 @@ export const FinalConversionSection: React.FC = () => {
   return (
     <section
       id="start-project"
-      className="py-20 sm:py-24 border-t border-slate-200 bg-white"
+      className="py-20 sm:py-24 border-t border-line bg-surface"
     >
       <div className="max-w-[1240px] mx-auto px-6">
         <div className="max-w-3xl">
-          <p className="text-xs font-semibold text-[#1D4ED8] mb-2">
+          <p className="text-xs font-semibold text-accent mb-2">
             Project Inquiry · Direct Engineering Consultation
           </p>
-          <h2 className="font-display text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight mb-5">
+          <h2 className="font-display text-3xl sm:text-5xl font-bold text-fg tracking-tight mb-5">
             Have a Project in Mind?
           </h2>
-          <p className="text-slate-600 text-base sm:text-lg leading-relaxed mb-8">
+          <p className="text-muted text-base sm:text-lg leading-relaxed mb-8">
             Whether you need a website, mobile app, ERP system, custom software, or help fixing an
             existing application, let's discuss what you want to build.
           </p>
@@ -157,7 +157,7 @@ export const FinalConversionSection: React.FC = () => {
             <button
               type="button"
               onClick={() => openProjectModal()}
-              className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-[#1D4ED8] rounded-lg hover:bg-blue-800 transition-colors whitespace-nowrap cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-white btn-primary rounded-full whitespace-nowrap cursor-pointer"
             >
               <span>Start Your Project</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -167,7 +167,7 @@ export const FinalConversionSection: React.FC = () => {
               href={COMPANY_INFO.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold text-slate-900 bg-[#F7F7F4] border border-slate-300 rounded-lg hover:bg-slate-100 transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold text-fg bg-base border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
             >
               <MessageSquare className="w-4 h-4 text-emerald-700" />
               <span>Talk on WhatsApp</span>
@@ -177,9 +177,9 @@ export const FinalConversionSection: React.FC = () => {
               href={`mailto:${COMPANY_INFO.email}?subject=${encodeURIComponent(
                 'Project Inquiry — PropushHub'
               )}`}
-              className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold text-slate-900 bg-[#F7F7F4] border border-slate-300 rounded-lg hover:bg-slate-100 transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold text-fg bg-base border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
             >
-              <Mail className="w-4 h-4 text-slate-700" />
+              <Mail className="w-4 h-4 text-fg-2" />
               <span>Email Us</span>
             </a>
           </div>
@@ -268,14 +268,14 @@ export const ProjectInquiryModal: React.FC<{
       role="dialog"
       aria-modal="true"
       aria-labelledby="project-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-base/60 backdrop-blur-xs"
     >
-      <div className="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-xl relative max-h-[90vh] overflow-y-auto">
+      <div className="bg-surface border border-line rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-xl relative max-h-[90vh] overflow-y-auto">
         <button
           type="button"
           onClick={resetAndClose}
           aria-label="Close modal"
-          className="absolute top-5 right-5 p-2 text-slate-500 hover:text-slate-900 rounded-lg cursor-pointer"
+          className="absolute top-5 right-5 p-2 text-dim hover:text-fg rounded-lg cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
@@ -283,12 +283,12 @@ export const ProjectInquiryModal: React.FC<{
         {submitted ? (
           <div className="py-6 text-center">
             <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
-            <h3 className="font-display text-2xl font-bold text-slate-900 mb-2">
+            <h3 className="font-display text-2xl font-bold text-fg mb-2">
               Project Brief Received
             </h3>
-            <p className="text-slate-600 text-sm leading-relaxed mb-6">
-              Thank you, <span className="font-semibold text-slate-900">{name}</span>. Your inquiry
-              regarding <span className="font-semibold text-slate-900">{projectType}</span> has
+            <p className="text-muted text-sm leading-relaxed mb-6">
+              Thank you, <span className="font-semibold text-fg">{name}</span>. Your inquiry
+              regarding <span className="font-semibold text-fg">{projectType}</span> has
               been prepared. You can also connect immediately on WhatsApp or via direct email below.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
@@ -306,7 +306,7 @@ export const ProjectInquiryModal: React.FC<{
               <button
                 type="button"
                 onClick={resetAndClose}
-                className="px-4 py-2.5 text-xs font-semibold text-slate-700 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors cursor-pointer"
+                className="px-4 py-2.5 text-xs font-semibold text-fg-2 bg-surface/5 rounded-lg hover:bg-surface/10 transition-colors cursor-pointer"
               >
                 Done
               </button>
@@ -314,16 +314,16 @@ export const ProjectInquiryModal: React.FC<{
           </div>
         ) : (
           <>
-            <p className="text-xs font-semibold text-[#1D4ED8] mb-1">
+            <p className="text-xs font-semibold text-accent mb-1">
               PropushHub · Start Your Project
             </p>
             <h3
               id="project-modal-title"
-              className="font-display text-2xl font-bold text-slate-900 mb-2"
+              className="font-display text-2xl font-bold text-fg mb-2"
             >
               Tell Us What You Want to Build
             </h3>
-            <p className="text-slate-600 text-sm mb-6">
+            <p className="text-muted text-sm mb-6">
               Share your project scope below, or connect directly via WhatsApp or email.
             </p>
 
@@ -331,7 +331,7 @@ export const ProjectInquiryModal: React.FC<{
               <div>
                 <label
                   htmlFor="inquiry-name"
-                  className="block text-xs font-semibold text-slate-700 mb-1.5"
+                  className="block text-xs font-semibold text-fg-2 mb-1.5"
                 >
                   Your Name
                 </label>
@@ -341,14 +341,14 @@ export const ProjectInquiryModal: React.FC<{
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Tariq Mahmood"
-                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-[#1D4ED8]"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-line-strong focus:outline-none focus:border-accent"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="inquiry-email"
-                  className="block text-xs font-semibold text-slate-700 mb-1.5"
+                  className="block text-xs font-semibold text-fg-2 mb-1.5"
                 >
                   Work or Personal Email
                 </label>
@@ -358,14 +358,14 @@ export const ProjectInquiryModal: React.FC<{
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@company.com"
-                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-[#1D4ED8]"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-line-strong focus:outline-none focus:border-accent"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor="inquiry-type"
-                  className="block text-xs font-semibold text-slate-700 mb-1.5"
+                  className="block text-xs font-semibold text-fg-2 mb-1.5"
                 >
                   What kind of software do you need?
                 </label>
@@ -373,7 +373,7 @@ export const ProjectInquiryModal: React.FC<{
                   id="inquiry-type"
                   value={projectType}
                   onChange={(e) => setProjectType(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-300 bg-white focus:outline-none focus:border-[#1D4ED8]"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-line-strong bg-surface focus:outline-none focus:border-accent"
                 >
                   <option value="Custom ERP / Business Software">
                     Custom ERP / Business Software
@@ -399,7 +399,7 @@ export const ProjectInquiryModal: React.FC<{
               <div>
                 <label
                   htmlFor="inquiry-details"
-                  className="block text-xs font-semibold text-slate-700 mb-1.5"
+                  className="block text-xs font-semibold text-fg-2 mb-1.5"
                 >
                   Project Overview &amp; Goals
                 </label>
@@ -409,7 +409,7 @@ export const ProjectInquiryModal: React.FC<{
                   value={details}
                   onChange={(e) => setDetails(e.target.value)}
                   placeholder="Describe the workflows, user roles, or platform you want to build..."
-                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-slate-300 focus:outline-none focus:border-[#1D4ED8]"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-line-strong focus:outline-none focus:border-accent"
                 />
               </div>
 
@@ -421,23 +421,23 @@ export const ProjectInquiryModal: React.FC<{
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="px-5 py-3 text-sm font-semibold text-white bg-[#1D4ED8] rounded-lg hover:bg-blue-800 transition-colors cursor-pointer disabled:opacity-60"
+                  className="px-5 py-3 text-sm font-semibold text-white btn-primary rounded-full cursor-pointer disabled:opacity-60"
                 >
                   {submitting ? 'Sending Brief...' : 'Submit Project Brief'}
                 </button>
 
-                <div className="flex items-center gap-4 text-xs font-semibold text-slate-600">
+                <div className="flex items-center gap-4 text-xs font-semibold text-muted">
                   <a
                     href={COMPANY_INFO.whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-[#1D4ED8] transition-colors"
+                    className="hover:text-accent transition-colors"
                   >
                     WhatsApp Us →
                   </a>
                   <a
                     href={`mailto:${COMPANY_INFO.email}`}
-                    className="hover:text-[#1D4ED8] transition-colors"
+                    className="hover:text-accent transition-colors"
                   >
                     Email Directly →
                   </a>

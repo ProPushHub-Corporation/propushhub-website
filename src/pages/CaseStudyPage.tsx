@@ -29,16 +29,16 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
   if (!project) {
     return (
       <main className="py-24 max-w-[1240px] mx-auto px-6 text-center">
-        <h1 className="font-display text-3xl font-bold text-slate-900 mb-3">
+        <h1 className="font-display text-3xl font-bold text-fg mb-3">
           Project Case Study Not Found
         </h1>
-        <p className="text-slate-600 mb-6">
+        <p className="text-muted mb-6">
           The requested project slug could not be located in our portfolio.
         </p>
         <button
           type="button"
           onClick={() => navigate('/work')}
-          className="px-5 py-2.5 text-sm font-semibold text-white bg-slate-900 rounded-lg hover:bg-[#1D4ED8] transition-colors cursor-pointer"
+          className="px-5 py-2.5 text-sm font-semibold text-white bg-surface-2 rounded-lg hover:bg-blue-500 transition-colors cursor-pointer"
         >
           Return to Selected Work
         </button>
@@ -55,21 +55,21 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
   return (
     <main>
       {/* 1. PROJECT HERO */}
-      <section className="pt-12 pb-16 border-b border-slate-200 bg-white">
+      <section className="pt-12 pb-16 border-b border-line bg-surface">
         <div className="max-w-[1240px] mx-auto px-6">
           <div className="flex flex-wrap items-center gap-3 mb-6">
             <button
               type="button"
               onClick={() => navigate('/work')}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted hover:text-fg transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>All Projects (/work)</span>
             </button>
-            <span className="text-slate-300" aria-hidden="true">
+            <span className="text-muted" aria-hidden="true">
               /
             </span>
-            <span className="text-xs font-mono text-slate-500">
+            <span className="text-xs font-mono text-dim">
               /work/{project.slug}
             </span>
           </div>
@@ -77,35 +77,35 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
           <div className="grid lg:grid-cols-12 gap-10 items-start">
             <div className="lg:col-span-8">
               {/* Unboxed Metadata Line */}
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold text-[#1D4ED8] mb-3">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold text-accent mb-3">
                 <span>
                   {project.ecosystemBadge
                     ? `${project.ecosystemBadge} — ${project.visualHierarchyLabel}`
                     : project.visualHierarchyLabel}
                 </span>
-                <span aria-hidden="true" className="text-slate-400">
+                <span aria-hidden="true" className="text-dim">
                   ·
                 </span>
-                <span className="text-slate-600 font-medium">{project.category}</span>
-                <span aria-hidden="true" className="text-slate-400">
+                <span className="text-muted font-medium">{project.category}</span>
+                <span aria-hidden="true" className="text-dim">
                   ·
                 </span>
-                <span className="text-slate-500 font-normal">
+                <span className="text-dim font-normal">
                   {project.caseStudy.attributionLabel}
                 </span>
               </div>
 
-              <h1 className="font-display text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight mb-5">
+              <h1 className="font-display text-3xl sm:text-5xl font-bold text-fg tracking-tight leading-tight mb-5">
                 {project.displayTitle}
               </h1>
 
-              <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-[68ch] mb-6">
+              <p className="text-muted text-base sm:text-lg leading-relaxed max-w-[68ch] mb-6">
                 {project.longDescription}
               </p>
 
               {/* Important Disclaimer if applicable (e.g. Clinic Software / AI QA Agent) */}
               {project.caseStudy.disclaimer && (
-                <div className="p-4 rounded-xl bg-[#F7F7F4] border border-slate-300 text-xs text-slate-700 leading-relaxed mb-6 max-w-[68ch]">
+                <div className="p-4 rounded-xl bg-base border border-line-strong text-xs text-fg-2 leading-relaxed mb-6 max-w-[68ch]">
                   {project.caseStudy.disclaimer}
                 </div>
               )}
@@ -117,7 +117,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-[#1D4ED8] rounded-lg hover:bg-blue-800 transition-colors whitespace-nowrap"
+                    className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white btn-primary rounded-full whitespace-nowrap"
                   >
                     <span>
                       {project.secondaryLiveUrl
@@ -133,7 +133,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                     href={project.secondaryLiveUrl.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-slate-900 rounded-lg hover:bg-slate-800 transition-colors whitespace-nowrap"
+                    className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-surface-2 rounded-lg hover:bg-surface-2 transition-colors whitespace-nowrap"
                   >
                     <span>{project.secondaryLiveUrl.label}</span>
                     <ExternalLink className="w-4 h-4" />
@@ -145,7 +145,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-slate-900 bg-[#F7F7F4] border border-slate-300 rounded-lg hover:bg-slate-100 transition-colors whitespace-nowrap"
+                    className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-fg bg-base border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
                   >
                     <Github className="w-4 h-4" />
                     <span>View Source on GitHub</span>
@@ -157,7 +157,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                     href={project.secondaryGithubUrl.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-3 text-xs font-semibold text-slate-700 bg-[#F7F7F4] border border-slate-300 rounded-lg hover:bg-slate-100 transition-colors whitespace-nowrap"
+                    className="inline-flex items-center gap-2 px-4 py-3 text-xs font-semibold text-fg-2 bg-base border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
                   >
                     <span>{project.secondaryGithubUrl.label}</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -167,26 +167,26 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
             </div>
 
             {/* Project Classification Metadata Panel */}
-            <div className="lg:col-span-4 bg-[#F7F7F4] border border-slate-200 rounded-2xl p-6 space-y-4">
+            <div className="lg:col-span-4 bg-base border border-line rounded-2xl p-6 space-y-4">
               <div>
-                <p className="text-xs font-mono text-slate-500 mb-1">Project Classification</p>
-                <p className="text-sm font-semibold text-slate-900">
+                <p className="text-xs font-mono text-dim mb-1">Project Classification</p>
+                <p className="text-sm font-semibold text-fg">
                   {project.caseStudy.projectNature}
                 </p>
               </div>
-              <div className="pt-3 border-t border-slate-200">
-                <p className="text-xs font-mono text-slate-500 mb-1">Attribution</p>
-                <p className="text-sm font-medium text-slate-800">
+              <div className="pt-3 border-t border-line">
+                <p className="text-xs font-mono text-dim mb-1">Attribution</p>
+                <p className="text-sm font-medium text-fg-2">
                   {project.caseStudy.attributionLabel}
                 </p>
               </div>
-              <div className="pt-3 border-t border-slate-200">
-                <p className="text-xs font-mono text-slate-500 mb-1">Deployment Status</p>
-                <p className="text-sm font-medium text-slate-800">{project.status}</p>
+              <div className="pt-3 border-t border-line">
+                <p className="text-xs font-mono text-dim mb-1">Deployment Status</p>
+                <p className="text-sm font-medium text-fg-2">{project.status}</p>
               </div>
-              <div className="pt-3 border-t border-slate-200">
-                <p className="text-xs font-mono text-slate-500 mb-1.5">Primary Stack</p>
-                <p className="text-xs font-mono text-slate-700 leading-relaxed">
+              <div className="pt-3 border-t border-line">
+                <p className="text-xs font-mono text-dim mb-1.5">Primary Stack</p>
+                <p className="text-xs font-mono text-fg-2 leading-relaxed">
                   {project.technologies.join(' · ')}
                 </p>
               </div>
@@ -196,14 +196,14 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
       </section>
 
       {/* 6. SCREENSHOTS & VISUAL SHOWCASE */}
-      <section className="py-16 border-b border-slate-200">
+      <section className="py-16 border-b border-line">
         <div className="max-w-[1240px] mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
             <div>
-              <p className="text-xs font-mono text-[#1D4ED8] mb-1">
+              <p className="text-xs font-mono text-accent mb-1">
                 Interface &amp; System Views
               </p>
-              <h2 className="font-display text-2xl font-bold text-slate-900">
+              <h2 className="font-display text-2xl font-bold text-fg">
                 Product Screenshots &amp; Module Views
               </h2>
             </div>
@@ -212,7 +212,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
               <div
                 role="tablist"
                 aria-label="Select product view"
-                className="flex flex-wrap items-center gap-1.5 p-1.5 bg-white border border-slate-200 rounded-xl"
+                className="flex flex-wrap items-center gap-1.5 p-1.5 bg-surface border border-line rounded-xl"
               >
                 {project.screenshots.map((shot, idx) => (
                   <button
@@ -223,8 +223,8 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                     onClick={() => setActiveShotIndex(idx)}
                     className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${
                       activeShotIndex === idx
-                        ? 'bg-slate-900 text-white'
-                        : 'text-slate-600 hover:text-slate-900'
+                        ? 'bg-surface-2 text-white'
+                        : 'text-muted hover:text-fg'
                     }`}
                   >
                     {shot.label}
@@ -235,10 +235,10 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
           </div>
 
           {activeShot && (
-            <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6">
+            <div className="bg-surface border border-line rounded-2xl p-4 sm:p-6">
               <div
                 onClick={() => setLightboxOpen(true)}
-                className="relative w-full aspect-16/10 bg-slate-900 rounded-xl overflow-hidden border border-slate-200 cursor-zoom-in group"
+                className="relative w-full aspect-16/10 bg-surface-2 rounded-xl overflow-hidden border border-line cursor-zoom-in group"
               >
                 <img
                   src={activeShot.url}
@@ -252,19 +252,19 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                     e.stopPropagation();
                     setLightboxOpen(true);
                   }}
-                  className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-slate-900/90 border border-slate-700 rounded-lg hover:bg-slate-900 transition-colors cursor-pointer"
+                  className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-surface/90 border border-line rounded-lg hover:bg-surface-2 transition-colors cursor-pointer"
                 >
                   <Maximize2 className="w-3.5 h-3.5" />
                   <span>Inspect Fullscreen</span>
                 </button>
               </div>
 
-              <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-600">
+              <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-muted">
                 <p>
-                  <span className="font-semibold text-slate-900">{activeShot.label}:</span>{' '}
+                  <span className="font-semibold text-fg">{activeShot.label}:</span>{' '}
                   {activeShot.caption}
                 </p>
-                <span className="font-mono text-[11px] text-slate-400 shrink-0">
+                <span className="font-mono text-[11px] text-dim shrink-0">
                   Asset path: {activeShot.replacementPathHint}
                 </span>
               </div>
@@ -274,41 +274,41 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
       </section>
 
       {/* 2, 3, 4. PROJECT OVERVIEW, PROBLEM & SOLUTION */}
-      <section className="py-16 sm:py-20 border-b border-slate-200 bg-white">
+      <section className="py-16 sm:py-20 border-b border-line bg-surface">
         <div className="max-w-[1240px] mx-auto px-6">
           <div className="grid lg:grid-cols-3 gap-10">
-            <div className="p-7 rounded-2xl bg-[#F7F7F4] border border-slate-200">
-              <p className="text-xs font-mono text-[#1D4ED8] font-semibold mb-2">
+            <div className="p-7 rounded-2xl bg-base border border-line">
+              <p className="text-xs font-mono text-accent font-semibold mb-2">
                 01. Project Overview
               </p>
-              <h2 className="font-display text-xl font-bold text-slate-900 mb-3">
+              <h2 className="font-display text-xl font-bold text-fg mb-3">
                 Context &amp; Scope
               </h2>
-              <p className="text-sm sm:text-[15px] text-slate-600 leading-relaxed">
+              <p className="text-sm sm:text-[15px] text-muted leading-relaxed">
                 {project.caseStudy.overview}
               </p>
             </div>
 
-            <div className="p-7 rounded-2xl bg-[#F7F7F4] border border-slate-200">
-              <p className="text-xs font-mono text-[#1D4ED8] font-semibold mb-2">
+            <div className="p-7 rounded-2xl bg-base border border-line">
+              <p className="text-xs font-mono text-accent font-semibold mb-2">
                 02. The Problem
               </p>
-              <h2 className="font-display text-xl font-bold text-slate-900 mb-3">
+              <h2 className="font-display text-xl font-bold text-fg mb-3">
                 Operational Challenge
               </h2>
-              <p className="text-sm sm:text-[15px] text-slate-600 leading-relaxed">
+              <p className="text-sm sm:text-[15px] text-muted leading-relaxed">
                 {project.caseStudy.problem}
               </p>
             </div>
 
-            <div className="p-7 rounded-2xl bg-[#F7F7F4] border border-slate-200">
-              <p className="text-xs font-mono text-[#1D4ED8] font-semibold mb-2">
+            <div className="p-7 rounded-2xl bg-base border border-line">
+              <p className="text-xs font-mono text-accent font-semibold mb-2">
                 03. The Solution
               </p>
-              <h2 className="font-display text-xl font-bold text-slate-900 mb-3">
+              <h2 className="font-display text-xl font-bold text-fg mb-3">
                 What We Engineered
               </h2>
-              <p className="text-sm sm:text-[15px] text-slate-600 leading-relaxed">
+              <p className="text-sm sm:text-[15px] text-muted leading-relaxed">
                 {project.caseStudy.solution}
               </p>
             </div>
@@ -317,16 +317,16 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
       </section>
 
       {/* 5. KEY FEATURES */}
-      <section className="py-16 sm:py-20 border-b border-slate-200">
+      <section className="py-16 sm:py-20 border-b border-line">
         <div className="max-w-[1240px] mx-auto px-6">
           <div className="max-w-3xl mb-12">
-            <p className="text-xs font-mono text-[#1D4ED8] font-semibold mb-2">
+            <p className="text-xs font-mono text-accent font-semibold mb-2">
               04. Functional Capabilities
             </p>
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-fg mb-3">
               Key Features &amp; Modules
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base">
+            <p className="text-muted text-sm sm:text-base">
               Implemented features verified directly against the {project.title} codebase and
               production deployment.
             </p>
@@ -336,15 +336,15 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
             {project.caseStudy.keyFeatures.map((feat, idx) => (
               <div
                 key={feat.title}
-                className="p-6 rounded-2xl bg-white border border-slate-200"
+                className="p-6 rounded-2xl bg-surface border border-line"
               >
-                <p className="text-xs font-mono text-[#1D4ED8] mb-2">
+                <p className="text-xs font-mono text-accent mb-2">
                   Feature 0{idx + 1}
                 </p>
-                <h3 className="font-display text-lg font-bold text-slate-900 mb-2">
+                <h3 className="font-display text-lg font-bold text-fg mb-2">
                   {feat.title}
                 </h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-muted leading-relaxed">
                   {feat.detail}
                 </p>
               </div>
@@ -354,18 +354,18 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
       </section>
 
       {/* 7 & 8. ARCHITECTURE / WORKFLOW & TECHNOLOGY STACK */}
-      <section className="py-16 sm:py-20 border-b border-slate-200 bg-white">
+      <section className="py-16 sm:py-20 border-b border-line bg-surface">
         <div className="max-w-[1240px] mx-auto px-6">
           <div className="grid lg:grid-cols-12 gap-12">
             {/* Architecture & Workflow */}
             <div className="lg:col-span-7">
-              <p className="text-xs font-mono text-[#1D4ED8] font-semibold mb-2">
+              <p className="text-xs font-mono text-accent font-semibold mb-2">
                 05. System Architecture &amp; Workflow
               </p>
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-fg mb-4">
                 How the Platform Operates
               </h2>
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-8">
+              <p className="text-muted text-sm sm:text-base leading-relaxed mb-8">
                 {project.caseStudy.architectureSummary}
               </p>
 
@@ -373,16 +373,16 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                 {project.caseStudy.workflowSteps.map((step) => (
                   <div
                     key={step.step}
-                    className="p-5 rounded-xl bg-[#F7F7F4] border border-slate-200 flex items-start gap-4"
+                    className="p-5 rounded-xl bg-base border border-line flex items-start gap-4"
                   >
-                    <span className="font-mono text-xs font-bold text-[#1D4ED8] pt-1 shrink-0">
+                    <span className="font-mono text-xs font-bold text-accent pt-1 shrink-0">
                       {step.step}.
                     </span>
                     <div>
-                      <h3 className="font-display text-base font-bold text-slate-900 mb-1">
+                      <h3 className="font-display text-base font-bold text-fg mb-1">
                         {step.title}
                       </h3>
-                      <p className="text-sm text-slate-600 leading-relaxed">
+                      <p className="text-sm text-muted leading-relaxed">
                         {step.description}
                       </p>
                     </div>
@@ -393,13 +393,13 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
 
             {/* Technology Stack By Layer */}
             <div className="lg:col-span-5">
-              <p className="text-xs font-mono text-[#1D4ED8] font-semibold mb-2">
+              <p className="text-xs font-mono text-accent font-semibold mb-2">
                 06. Technology Stack
               </p>
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 mb-4">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-fg mb-4">
                 Engineering Stack
               </h2>
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-8">
+              <p className="text-muted text-sm sm:text-base leading-relaxed mb-8">
                 Selected frameworks, state libraries, and infrastructure used in {project.title}.
               </p>
 
@@ -407,17 +407,17 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                 {project.caseStudy.techStackByLayer.map((layer) => (
                   <div
                     key={layer.layer}
-                    className="p-5 rounded-xl bg-[#F7F7F4] border border-slate-200"
+                    className="p-5 rounded-xl bg-base border border-line"
                   >
-                    <p className="text-xs font-mono text-slate-500 mb-2">
+                    <p className="text-xs font-mono text-dim mb-2">
                       {layer.layer}
                     </p>
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-mono font-medium text-slate-900">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-mono font-medium text-fg">
                       {layer.items.map((item, i) => (
                         <React.Fragment key={item}>
                           <span>{item}</span>
                           {i < layer.items.length - 1 && (
-                            <span aria-hidden="true" className="text-slate-400">
+                            <span aria-hidden="true" className="text-dim">
                               ·
                             </span>
                           )}
@@ -433,15 +433,15 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
       </section>
 
       {/* 9 & 10. CHALLENGES & DEVELOPMENT APPROACH */}
-      <section className="py-16 sm:py-20 border-b border-slate-200">
+      <section className="py-16 sm:py-20 border-b border-line">
         <div className="max-w-[1240px] mx-auto px-6">
           <div className="grid lg:grid-cols-12 gap-12">
             {/* Technical Challenges */}
             <div className="lg:col-span-7">
-              <p className="text-xs font-mono text-[#1D4ED8] font-semibold mb-2">
+              <p className="text-xs font-mono text-accent font-semibold mb-2">
                 07. Engineering Challenges
               </p>
-              <h2 className="font-display text-2xl font-bold text-slate-900 mb-6">
+              <h2 className="font-display text-2xl font-bold text-fg mb-6">
                 Challenges &amp; Technical Resolutions
               </h2>
 
@@ -449,16 +449,16 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                 {project.caseStudy.challenges.map((c, idx) => (
                   <div
                     key={idx}
-                    className="p-6 rounded-2xl bg-white border border-slate-200"
+                    className="p-6 rounded-2xl bg-surface border border-line"
                   >
-                    <p className="text-xs font-mono text-slate-500 mb-1">
+                    <p className="text-xs font-mono text-dim mb-1">
                       Challenge 0{idx + 1}
                     </p>
-                    <h3 className="font-display text-base font-bold text-slate-900 mb-2">
+                    <h3 className="font-display text-base font-bold text-fg mb-2">
                       {c.challenge}
                     </h3>
-                    <p className="text-sm text-slate-600 leading-relaxed">
-                      <span className="font-semibold text-slate-900">Resolution: </span>
+                    <p className="text-sm text-muted leading-relaxed">
+                      <span className="font-semibold text-fg">Resolution: </span>
                       {c.resolution}
                     </p>
                   </div>
@@ -468,17 +468,17 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
 
             {/* Development Approach & Live Links */}
             <div className="lg:col-span-5">
-              <p className="text-xs font-mono text-[#1D4ED8] font-semibold mb-2">
+              <p className="text-xs font-mono text-accent font-semibold mb-2">
                 08. Implementation Philosophy
               </p>
-              <h2 className="font-display text-2xl font-bold text-slate-900 mb-6">
+              <h2 className="font-display text-2xl font-bold text-fg mb-6">
                 Development Approach
               </h2>
 
-              <div className="p-6 rounded-2xl bg-white border border-slate-200 space-y-4 mb-6">
+              <div className="p-6 rounded-2xl bg-surface border border-line space-y-4 mb-6">
                 {project.caseStudy.developmentApproach.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-3 text-sm text-slate-600">
-                    <span className="font-mono text-xs font-bold text-[#1D4ED8] pt-0.5">
+                  <div key={idx} className="flex items-start gap-3 text-sm text-muted">
+                    <span className="font-mono text-xs font-bold text-accent pt-0.5">
                       0{idx + 1}
                     </span>
                     <p className="leading-relaxed">{item}</p>
@@ -487,14 +487,14 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
               </div>
 
               {/* 11. LIVE DEMO / GITHUB VERIFICATION BOX */}
-              <div className="p-6 rounded-2xl bg-slate-900 text-white">
-                <p className="text-xs font-mono text-blue-400 mb-1">
+              <div className="p-6 rounded-2xl bg-surface-2 text-white">
+                <p className="text-xs font-mono text-accent mb-1">
                   09. Direct Verification
                 </p>
                 <h3 className="font-display text-lg font-bold mb-2">
                   Inspect {project.title}
                 </h3>
-                <p className="text-xs text-slate-300 leading-relaxed mb-5">
+                <p className="text-xs text-muted leading-relaxed mb-5">
                   Explore the live deployed application or inspect the repository structure on
                   GitHub.
                 </p>
@@ -505,7 +505,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-slate-900 bg-white rounded-lg hover:bg-slate-100 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-fg bg-surface rounded-lg hover:bg-surface/10 transition-colors"
                     >
                       <span>{project.secondaryLiveUrl ? 'Live User App' : 'Live Demo'}</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -516,7 +516,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                       href={project.secondaryLiveUrl.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white bg-[#1D4ED8] rounded-lg hover:bg-blue-700 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white btn-primary rounded-full"
                     >
                       <span>{project.secondaryLiveUrl.label}</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -527,7 +527,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white border border-slate-700 rounded-lg hover:bg-slate-800 transition-colors"
+                      className="inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white border border-line rounded-lg hover:bg-surface-2 transition-colors"
                     >
                       <Github className="w-3.5 h-3.5" />
                       <span>GitHub Repository</span>
@@ -541,17 +541,17 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
       </section>
 
       {/* 12. BOTTOM CASE STUDY CTA: "Have a similar project in mind?" -> [Start Your Project] */}
-      <section className="py-20 bg-white border-b border-slate-200">
+      <section className="py-20 bg-surface border-b border-line">
         <div className="max-w-[1240px] mx-auto px-6">
-          <div className="p-8 sm:p-12 rounded-2xl bg-[#F7F7F4] border border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="p-8 sm:p-12 rounded-2xl bg-base border border-line flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold text-[#1D4ED8] mb-2">
+              <p className="text-xs font-semibold text-accent mb-2">
                 Build With PropushHub
               </p>
-              <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mb-3">
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-fg tracking-tight mb-3">
                 Have a similar project in mind?
               </h2>
-              <p className="text-slate-600 text-base leading-relaxed">
+              <p className="text-muted text-base leading-relaxed">
                 Whether you need a custom system like {project.title}, a full-stack web or mobile
                 application, or an enterprise operational dashboard, let’s discuss your
                 requirements.
@@ -562,7 +562,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
               <button
                 type="button"
                 onClick={() => openProjectModal(project.category)}
-                className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-[#1D4ED8] rounded-lg hover:bg-blue-800 transition-colors whitespace-nowrap cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-white btn-primary rounded-full whitespace-nowrap cursor-pointer"
               >
                 <span>Start Your Project</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -572,7 +572,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                 href={COMPANY_INFO.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold text-slate-900 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition-colors whitespace-nowrap"
+                className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold text-fg bg-surface border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
               >
                 <MessageSquare className="w-4 h-4 text-emerald-700" />
                 <span>Talk on WhatsApp</span>
@@ -585,7 +585,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                     setActiveShotIndex(0);
                     navigate(`/work/${nextProject.slug}`);
                   }}
-                  className="px-4 py-3.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors whitespace-nowrap cursor-pointer"
+                  className="px-4 py-3.5 text-xs font-semibold text-muted hover:text-fg transition-colors whitespace-nowrap cursor-pointer"
                 >
                   Next: {nextProject.title} →
                 </button>
@@ -601,18 +601,18 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
           role="dialog"
           aria-modal="true"
           onClick={() => setLightboxOpen(false)}
-          className="fixed inset-0 z-50 bg-slate-950/90 p-4 sm:p-8 flex flex-col items-center justify-center"
+          className="fixed inset-0 z-50 bg-base/90 p-4 sm:p-8 flex flex-col items-center justify-center"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="max-w-5xl w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl"
+            className="max-w-5xl w-full bg-surface-2 border border-line rounded-2xl overflow-hidden shadow-2xl"
           >
-            <div className="px-5 py-3.5 border-b border-slate-800 flex items-center justify-between text-white">
+            <div className="px-5 py-3.5 border-b border-line flex items-center justify-between text-white">
               <div>
                 <p className="font-display text-sm font-bold">
                   {project.displayTitle} — {activeShot.label}
                 </p>
-                <p className="text-xs text-slate-400 font-mono">
+                <p className="text-xs text-dim font-mono">
                   {activeShot.replacementPathHint}
                 </p>
               </div>
@@ -620,12 +620,12 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                 type="button"
                 onClick={() => setLightboxOpen(false)}
                 aria-label="Close fullscreen preview"
-                className="p-1.5 text-slate-400 hover:text-white rounded-lg cursor-pointer"
+                className="p-1.5 text-dim hover:text-white rounded-lg cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="p-4 bg-slate-950">
+            <div className="p-4 bg-base">
               <img
                 src={activeShot.url}
                 alt={activeShot.label}

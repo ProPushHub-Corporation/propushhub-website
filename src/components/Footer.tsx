@@ -6,9 +6,9 @@ export const Footer: React.FC = () => {
   const { navigate, openProjectModal } = useRouter();
 
   return (
-    <footer className="bg-[#0F172A] text-slate-300 border-t border-slate-800 py-16">
+    <footer className="bg-base text-muted border-t border-line py-16">
       <div className="max-w-[1240px] mx-auto px-6">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-line">
           {/* Column 1: Brand & Philosophy */}
           <div className="lg:col-span-1">
             <button
@@ -18,7 +18,7 @@ export const Footer: React.FC = () => {
             >
               PropushHub
             </button>
-            <p className="text-sm text-slate-400 leading-relaxed mb-5">
+            <p className="text-sm text-dim leading-relaxed mb-5">
               We don’t just build landing pages. We build complete digital products—custom ERP
               systems, warehouse platforms, web and mobile ecosystems, and AI-integrated business
               software.
@@ -26,7 +26,7 @@ export const Footer: React.FC = () => {
             <button
               type="button"
               onClick={() => openProjectModal()}
-              className="px-4 py-2 text-xs font-semibold text-white bg-[#1D4ED8] rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+              className="px-4 py-2 text-xs font-semibold text-white btn-primary rounded-full cursor-pointer"
             >
               Start Your Project
             </button>
@@ -37,7 +37,7 @@ export const Footer: React.FC = () => {
             <h3 className="font-display text-sm font-bold text-white mb-4">
               Selected Case Studies
             </h3>
-            <ul className="space-y-2.5 text-sm text-slate-400">
+            <ul className="space-y-2.5 text-sm text-dim">
               {PROJECTS.slice(0, 6).map((p) => (
                 <li key={p.id}>
                   <button
@@ -53,7 +53,7 @@ export const Footer: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => navigate('/work')}
-                  className="text-blue-400 hover:text-blue-300 font-medium transition-colors text-left cursor-pointer"
+                  className="text-accent hover:text-accent font-medium transition-colors text-left cursor-pointer"
                 >
                   View All 9 Projects →
                 </button>
@@ -66,7 +66,7 @@ export const Footer: React.FC = () => {
             <h3 className="font-display text-sm font-bold text-white mb-4">
               What We Build
             </h3>
-            <ul className="space-y-2.5 text-sm text-slate-400">
+            <ul className="space-y-2.5 text-sm text-dim">
               <li>ERP &amp; Business Software</li>
               <li>Inventory &amp; Warehouse Systems</li>
               <li>Web + Mobile App Ecosystems</li>
@@ -81,7 +81,7 @@ export const Footer: React.FC = () => {
             <h3 className="font-display text-sm font-bold text-white mb-4">
               Connect &amp; Verify
             </h3>
-            <ul className="space-y-2.5 text-sm text-slate-400">
+            <ul className="space-y-2.5 text-sm text-dim">
               <li>
                 <a
                   href={COMPANY_INFO.whatsappUrl}
@@ -124,7 +124,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-dim">
           <p>© {new Date().getFullYear()} PropushHub. Built with real-world engineering proof.</p>
           <p>
             All showcased projects represent real software systems built by the PropushHub
