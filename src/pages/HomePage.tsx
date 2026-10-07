@@ -5,7 +5,7 @@ import {
   getHomepageFeaturedProjects,
   PROJECTS,
 } from '../data/projects';
-import { useRouter } from '../lib/router';
+import { Link, useRouter } from '../lib/router';
 import { ProjectCard } from '../components/ProjectCard';
 import {
   FinalConversionSection,
@@ -165,9 +165,9 @@ export const HomePage: React.FC = () => {
 
                   <div className="space-y-1">
                     {featuredProjects.slice(0, 6).map((proj) => (
-                      <div
+                      <Link
                         key={proj.id}
-                        onClick={() => navigate(`/work/${proj.slug}`)}
+                        to={`/work/${proj.slug}`}
                         className="p-3 -mx-3 rounded-2xl flex items-center justify-between gap-4 group cursor-pointer hover:bg-white/5 transition-colors"
                       >
                         <div className="min-w-0">
@@ -182,7 +182,7 @@ export const HomePage: React.FC = () => {
                           </p>
                         </div>
                         <ArrowUpRight className="w-4 h-4 shrink-0 text-dim group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>

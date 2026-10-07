@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
-import { useRouter } from '../lib/router';
+import { Link, useRouter } from '../lib/router';
 
 const NAV_ITEMS: { label: string; path: string; scrollToId?: string }[] = [
   { label: 'Work', path: '/', scrollToId: 'selected-work' },
@@ -47,35 +47,37 @@ export const Navbar: React.FC = () => {
             : 'bg-white/[0.03] border-line'
         }`}
       >
-        <button
-          type="button"
-          onClick={() => handleNavClick('/')}
-          className="flex items-center gap-2.5 cursor-pointer"
-          aria-label="PropushHub home"
-        >
+        <Link to="/" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2.5" aria-label="PropushHub home">
           <span className="w-8 h-8 rounded-xl btn-primary grid place-items-center font-display font-bold text-sm">
             P
           </span>
           <span className="font-display text-lg font-bold tracking-tight text-fg whitespace-nowrap">
             PropushHub
           </span>
-        </button>
+        </Link>
 
         <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
-          {NAV_ITEMS.map((item) => (
-            <button
-              key={item.label}
-              type="button"
-              onClick={() => handleNavClick(item.path, item.scrollToId)}
-              className={`px-3.5 py-1.5 rounded-full transition-colors whitespace-nowrap cursor-pointer ${
-                isActive(item)
-                  ? 'text-fg bg-white/10'
-                  : 'text-muted hover:text-fg hover:bg-white/5'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const cls = `px-3.5 py-1.5 rounded-full transition-colors whitespace-nowrap cursor-pointer ${
+              isActive(item)
+                ? 'text-fg bg-white/10'
+                : 'text-muted hover:text-fg hover:bg-white/5'
+            }`;
+            return item.scrollToId ? (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => handleNavClick(item.path, item.scrollToId)}
+                className={cls}
+              >
+                {item.label}
+              </button>
+            ) : (
+              <Link key={item.label} to={item.path} className={cls}>
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2">

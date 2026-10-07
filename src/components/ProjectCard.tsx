@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowUpRight, ExternalLink, Github } from 'lucide-react';
 import { Project } from '../data/projects';
-import { useRouter } from '../lib/router';
+import { Link, useRouter } from '../lib/router';
 
 interface ProjectCardProps {
   project: Project;
@@ -42,12 +42,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         {/* Project Title */}
         <div className="flex items-start justify-between gap-4 mb-3">
           <h3
-            onClick={() => navigate(`/work/${project.slug}`)}
-            className={`font-display font-bold text-fg group-hover:text-accent transition-colors cursor-pointer ${
+            className={`font-display font-bold text-fg group-hover:text-accent transition-colors ${
               isProminent ? 'text-2xl sm:text-[28px] leading-tight' : 'text-xl leading-snug'
             }`}
           >
-            {project.displayTitle}
+            <Link to={`/work/${project.slug}`}>{project.displayTitle}</Link>
           </h3>
         </div>
 
@@ -144,14 +143,13 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
         {/* Action Row: View Case Study + Optional Live Demo & GitHub */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-          <button
-            type="button"
-            onClick={() => navigate(`/work/${project.slug}`)}
+          <Link
+            to={`/work/${project.slug}`}
             className="inline-flex items-center gap-1.5 px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-surface-2 rounded-lg hover:bg-blue-500 transition-colors whitespace-nowrap cursor-pointer"
           >
             <span>View Case Study</span>
             <ArrowUpRight className="w-4 h-4" />
-          </button>
+          </Link>
 
           <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-muted">
             {project.liveUrl && (

@@ -75,3 +75,26 @@ export const RouterProvider: React.FC<{
     </RouterContext.Provider>
   );
 };
+
+/** Crawlable internal link: real <a href> that navigates client-side. */
+export const Link: React.FC<
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & { to: string }
+> = ({ to, onClick, children, ...rest }) => {
+  const { navigate } = useRouter();
+  return (
+    <a
+      href={to}
+      {...rest}
+      onClick={(e) => {
+        onClick?.(e);
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+          return;
+        }
+        e.preventDefault();
+        navigate(to);
+      }}
+    >
+      {children}
+    </a>
+  );
+};

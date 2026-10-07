@@ -1,6 +1,6 @@
 import React from 'react';
 import { COMPANY_INFO, PROJECTS } from '../data/projects';
-import { useRouter } from '../lib/router';
+import { Link, useRouter } from '../lib/router';
 
 export const Footer: React.FC = () => {
   const { navigate, openProjectModal } = useRouter();
@@ -40,23 +40,21 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2.5 text-sm text-dim">
               {PROJECTS.slice(0, 6).map((p) => (
                 <li key={p.id}>
-                  <button
-                    type="button"
-                    onClick={() => navigate(`/work/${p.slug}`)}
+                  <Link
+                    to={`/work/${p.slug}`}
                     className="hover:text-white transition-colors text-left cursor-pointer"
                   >
                     {p.title}
-                  </button>
+                  </Link>
                 </li>
               ))}
               <li>
-                <button
-                  type="button"
-                  onClick={() => navigate('/work')}
+                <Link
+                  to={'/work'}
                   className="text-accent hover:text-accent font-medium transition-colors text-left cursor-pointer"
                 >
                   View All 9 Projects →
-                </button>
+                </Link>
               </li>
             </ul>
           </div>
