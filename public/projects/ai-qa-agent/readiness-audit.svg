@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" fill="none">
+  <rect width="1200" height="750" fill="#0F172A"/>
+  <rect x="24" y="24" width="1152" height="44" rx="8" fill="#1E293B"/>
+  <circle cx="48" cy="46" r="6" fill="#475569"/>
+  <circle cx="68" cy="46" r="6" fill="#475569"/>
+  <circle cx="88" cy="46" r="6" fill="#475569"/>
+  <rect x="120" y="34" width="480" height="24" rx="4" fill="#0F172A"/>
+  <text x="136" y="50" fill="#94A3B8" font-family="monospace" font-size="12">ai-qa-agent-web.vercel.app — Production Readiness &amp; QA</text>
+
+  <rect x="24" y="76" width="1152" height="650" rx="8" fill="#F8FAFC"/>
+  <rect x="24" y="76" width="230" height="650" fill="#0F172A"/>
+  <text x="48" y="118" fill="#FFFFFF" font-family="sans-serif" font-size="18" font-weight="700">AI QA Agent</text>
+  <text x="48" y="138" fill="#94A3B8" font-family="sans-serif" font-size="11">Automated QA &amp; Inspection</text>
+
+  <rect x="36" y="166" width="206" height="36" rx="6" fill="#1D4ED8"/>
+  <text x="54" y="189" fill="#FFFFFF" font-family="sans-serif" font-size="13" font-weight="600">Readiness Overview</text>
+  <text x="54" y="230" fill="#94A3B8" font-family="sans-serif" font-size="13">Local Agent CLI Pairing</text>
+  <text x="54" y="268" fill="#94A3B8" font-family="sans-serif" font-size="13">Command Policy Engine</text>
+  <text x="54" y="306" fill="#94A3B8" font-family="sans-serif" font-size="13">Playwright E2E &amp; Visual</text>
+  <text x="54" y="344" fill="#94A3B8" font-family="sans-serif" font-size="13">Security &amp; Secret Scan</text>
+  <text x="54" y="382" fill="#94A3B8" font-family="sans-serif" font-size="13">Report &amp; ZIP Export</text>
+
+  <text x="286" y="122" fill="#0F172A" font-family="sans-serif" font-size="22" font-weight="700">AI QA Agent — Evidence-Backed Software Inspection</text>
+  <text x="286" y="144" fill="#64748B" font-family="sans-serif" font-size="13">Connects repository, frontend URL, backend URL, and isolated Local Agent CLI for automated testing</text>
+
+  <rect x="286" y="174" width="420" height="240" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="312" y="210" fill="#0F172A" font-family="sans-serif" font-size="15" font-weight="700">Monorepo Inspection Engines</text>
+  <line x1="312" y1="226" x2="680" y2="226" stroke="#E2E8F0"/>
+  <text x="312" y="256" fill="#0F172A" font-family="monospace" font-size="12">• packages/qa-engine (Test runner)</text>
+  <text x="312" y="284" fill="#0F172A" font-family="monospace" font-size="12">• packages/browser-agent (Playwright + axe)</text>
+  <text x="312" y="312" fill="#0F172A" font-family="monospace" font-size="12">• packages/security-engine (XSS/CORS/Secrets)</text>
+  <text x="312" y="340" fill="#0F172A" font-family="monospace" font-size="12">• packages/api-tester (Endpoint probing)</text>
+  <text x="312" y="368" fill="#0F172A" font-family="monospace" font-size="12">• packages/code-analyzer (Circular deps)</text>
+
+  <rect x="724" y="174" width="420" height="240" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="750" y="210" fill="#0F172A" font-family="sans-serif" font-size="15" font-weight="700">Command Policy &amp; Patch Safety Gate</text>
+  <line x1="750" y1="226" x2="1118" y2="226" stroke="#E2E8F0"/>
+  <rect x="750" y="246" width="368" height="44" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="768" y="273" fill="#0F172A" font-family="monospace" font-size="12">Classification: SAFE / REVIEW / DANGEROUS</text>
+  <rect x="750" y="302" width="368" height="44" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="768" y="329" fill="#0F172A" font-family="monospace" font-size="12">Direct push to main/master: BLOCKED</text>
+  <text x="750" y="378" fill="#64748B" font-family="sans-serif" font-size="12">Requires human review before branch/PR creation</text>
+
+  <rect x="286" y="434" width="858" height="256" rx="8" fill="#0F172A"/>
+  <text x="314" y="472" fill="#FFFFFF" font-family="monospace" font-size="14" font-weight="700">$ npx @syedmuhammadali-dev/ai-qa-agent — Local Agent Execution</text>
+  <text x="314" y="508" fill="#94A3B8" font-family="monospace" font-size="12">[1/4] Running project test suite &amp; Playwright headless smoke checks...</text>
+  <text x="314" y="536" fill="#94A3B8" font-family="monospace" font-size="12">[2/4] Probing backend API routes &amp; checking CORS / secret exposure...</text>
+  <text x="314" y="564" fill="#94A3B8" font-family="monospace" font-size="12">[3/4] Computing weighted readiness breakdown from command-audit history...</text>
+  <text x="314" y="592" fill="#60A5FA" font-family="monospace" font-size="12">[4/4] Report ready for export: JSON · Markdown · HTML · SHA-256 Verified ZIP</text>
+</svg>

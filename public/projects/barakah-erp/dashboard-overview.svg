@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" fill="none">
+  <rect width="1200" height="750" fill="#0F172A"/>
+  <!-- Browser Bar -->
+  <rect x="24" y="24" width="1152" height="44" rx="8" fill="#1E293B"/>
+  <circle cx="48" cy="46" r="6" fill="#475569"/>
+  <circle cx="68" cy="46" r="6" fill="#475569"/>
+  <circle cx="88" cy="46" r="6" fill="#475569"/>
+  <rect x="120" y="34" width="420" height="24" rx="4" fill="#0F172A"/>
+  <text x="136" y="50" fill="#94A3B8" font-family="monospace" font-size="12">barakah-erp.vercel.app/dashboard</text>
+  <rect x="1020" y="34" width="136" height="24" rx="4" fill="#1D4ED8"/>
+  <text x="1042" y="50" fill="#FFFFFF" font-family="sans-serif" font-size="11" font-weight="600">EN / اردو (RTL)</text>
+
+  <!-- App Frame -->
+  <rect x="24" y="76" width="1152" height="650" rx="8" fill="#F8FAFC"/>
+  <!-- Sidebar -->
+  <rect x="24" y="76" width="230" height="650" fill="#0F172A"/>
+  <text x="48" y="118" fill="#FFFFFF" font-family="sans-serif" font-size="18" font-weight="700">Barakah ERP</text>
+  <text x="48" y="138" fill="#64748B" font-family="sans-serif" font-size="11">Enterprise Resource Planning</text>
+
+  <!-- Sidebar Nav Items (Real modules from repo) -->
+  <rect x="36" y="162" width="206" height="36" rx="6" fill="#1D4ED8"/>
+  <text x="56" y="185" fill="#FFFFFF" font-family="sans-serif" font-size="13" font-weight="600">Dashboard</text>
+  <text x="56" y="228" fill="#94A3B8" font-family="sans-serif" font-size="13">Inventory &amp; Bill OCR</text>
+  <text x="56" y="266" fill="#94A3B8" font-family="sans-serif" font-size="13">Sales &amp; PDF Invoices</text>
+  <text x="56" y="304" fill="#94A3B8" font-family="sans-serif" font-size="13">Mechanic Job Cards</text>
+  <text x="56" y="342" fill="#94A3B8" font-family="sans-serif" font-size="13">Purchase &amp; Supplier Bills</text>
+  <text x="56" y="380" fill="#94A3B8" font-family="sans-serif" font-size="13">Reports &amp; Ledger</text>
+  <text x="56" y="418" fill="#94A3B8" font-family="sans-serif" font-size="13">Salesmen &amp; Suppliers</text>
+  <text x="56" y="456" fill="#94A3B8" font-family="sans-serif" font-size="13">Zakat Calculator</text>
+  <text x="56" y="494" fill="#94A3B8" font-family="sans-serif" font-size="13">Data Viewer &amp; Notes</text>
+  <text x="56" y="680" fill="#64748B" font-family="sans-serif" font-size="12">Subscription &amp; Settings</text>
+
+  <!-- Main Workspace -->
+  <text x="286" y="122" fill="#0F172A" font-family="sans-serif" font-size="22" font-weight="700">Business Operations Overview</text>
+  <text x="286" y="144" fill="#64748B" font-family="sans-serif" font-size="13">Unified ERP workflow for inventory, multi-item sales, purchase bills, and financial reporting</text>
+
+  <!-- Module Cards -->
+  <rect x="286" y="168" width="205" height="110" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="306" y="196" fill="#64748B" font-family="sans-serif" font-size="12">Inventory Module</text>
+  <text x="306" y="226" fill="#0F172A" font-family="sans-serif" font-size="16" font-weight="700">Stock &amp; SKU Sync</text>
+  <text x="306" y="254" fill="#1D4ED8" font-family="monospace" font-size="11">Tesseract + PDF.js OCR</text>
+
+  <rect x="507" y="168" width="205" height="110" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="527" y="196" fill="#64748B" font-family="sans-serif" font-size="12">Sales Operations</text>
+  <text x="527" y="226" fill="#0F172A" font-family="sans-serif" font-size="16" font-weight="700">Multi-Item Billing</text>
+  <text x="527" y="254" fill="#0F172A" font-family="monospace" font-size="11">PDF Invoice Export</text>
+
+  <rect x="728" y="168" width="205" height="110" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="748" y="196" fill="#64748B" font-family="sans-serif" font-size="12">Purchases &amp; Suppliers</text>
+  <text x="748" y="226" fill="#0F172A" font-family="sans-serif" font-size="16" font-weight="700">Supplier Ledger</text>
+  <text x="748" y="254" fill="#0F172A" font-family="monospace" font-size="11">Automated Bill Entry</text>
+
+  <rect x="949" y="168" width="195" height="110" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="969" y="196" fill="#64748B" font-family="sans-serif" font-size="12">Access &amp; Tenant Guard</text>
+  <text x="969" y="226" fill="#0F172A" font-family="sans-serif" font-size="16" font-weight="700">Role Permissions</text>
+  <text x="969" y="254" fill="#15803D" font-family="monospace" font-size="11">Active Tenant State</text>
+
+  <!-- Central Workflow Panel -->
+  <rect x="286" y="300" width="560" height="396" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="310" y="336" fill="#0F172A" font-family="sans-serif" font-size="15" font-weight="700">Sales, Purchases &amp; Inventory Operations</text>
+  <line x1="310" y1="354" x2="822" y2="354" stroke="#E2E8F0"/>
+  <!-- Table Header -->
+  <text x="310" y="380" fill="#64748B" font-family="monospace" font-size="11">WORKFLOW MODULE</text>
+  <text x="520" y="380" fill="#64748B" font-family="monospace" font-size="11">CAPABILITY</text>
+  <text x="730" y="380" fill="#64748B" font-family="monospace" font-size="11">STATUS</text>
+  <!-- Rows -->
+  <rect x="310" y="396" width="512" height="44" rx="4" fill="#F8FAFC"/>
+  <text x="324" y="422" fill="#0F172A" font-family="sans-serif" font-size="13" font-weight="600">Inventory Management</text>
+  <text x="520" y="422" fill="#475569" font-family="sans-serif" font-size="12">Stock tracking &amp; bulk OCR import</text>
+  <text x="730" y="422" fill="#1D4ED8" font-family="monospace" font-size="11">ACTIVE</text>
+
+  <rect x="310" y="450" width="512" height="44" rx="4" fill="#FFFFFF"/>
+  <text x="324" y="476" fill="#0F172A" font-family="sans-serif" font-size="13" font-weight="600">Sales &amp; POS Billing</text>
+  <text x="520" y="476" fill="#475569" font-family="sans-serif" font-size="12">Multi-item cart &amp; PDF invoice</text>
+  <text x="730" y="476" fill="#1D4ED8" font-family="monospace" font-size="11">ACTIVE</text>
+
+  <rect x="310" y="504" width="512" height="44" rx="4" fill="#F8FAFC"/>
+  <text x="324" y="530" fill="#0F172A" font-family="sans-serif" font-size="13" font-weight="600">Mechanic Bills</text>
+  <text x="520" y="530" fill="#475569" font-family="sans-serif" font-size="12">Repair-shop job card workflows</text>
+  <text x="730" y="530" fill="#1D4ED8" font-family="monospace" font-size="11">ACTIVE</text>
+
+  <rect x="310" y="558" width="512" height="44" rx="4" fill="#FFFFFF"/>
+  <text x="324" y="584" fill="#0F172A" font-family="sans-serif" font-size="13" font-weight="600">Purchase &amp; Supplier Bills</text>
+  <text x="520" y="584" fill="#475569" font-family="sans-serif" font-size="12">Vendor procurement &amp; balances</text>
+  <text x="730" y="584" fill="#1D4ED8" font-family="monospace" font-size="11">ACTIVE</text>
+
+  <rect x="310" y="612" width="512" height="44" rx="4" fill="#F8FAFC"/>
+  <text x="324" y="638" fill="#0F172A" font-family="sans-serif" font-size="13" font-weight="600">Reports &amp; Zakat Module</text>
+  <text x="520" y="638" fill="#475569" font-family="sans-serif" font-size="12">Financial summaries &amp; valuation</text>
+  <text x="730" y="638" fill="#1D4ED8" font-family="monospace" font-size="11">ACTIVE</text>
+
+  <!-- Right Panel: Architecture & Bilingual Assistant -->
+  <rect x="866" y="300" width="278" height="396" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="890" y="336" fill="#0F172A" font-family="sans-serif" font-size="15" font-weight="700">ERP System Capabilities</text>
+  <line x1="890" y1="354" x2="1120" y2="354" stroke="#E2E8F0"/>
+  <rect x="890" y="374" width="230" height="82" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="906" y="398" fill="#0F172A" font-family="sans-serif" font-size="13" font-weight="600">Client-Side Bill OCR</text>
+  <text x="906" y="420" fill="#475569" font-family="sans-serif" font-size="11">Extracts invoice lines from PDFs</text>
+  <text x="906" y="438" fill="#475569" font-family="sans-serif" font-size="11">and images via Tesseract.js</text>
+
+  <rect x="890" y="472" width="230" height="82" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="906" y="496" fill="#0F172A" font-family="sans-serif" font-size="13" font-weight="600">Bilingual RTL / LTR Engine</text>
+  <text x="906" y="518" fill="#475569" font-family="sans-serif" font-size="11">Full English &amp; Urdu layout flip</text>
+  <text x="906" y="536" fill="#475569" font-family="sans-serif" font-size="11">for regional business teams</text>
+
+  <rect x="890" y="570" width="230" height="96" rx="6" fill="#EFF6FF" stroke="#BFDBFE"/>
+  <text x="906" y="596" fill="#1D4ED8" font-family="sans-serif" font-size="13" font-weight="600">Integrated ERP Search</text>
+  <text x="906" y="618" fill="#1E3A8A" font-family="sans-serif" font-size="11">Tool-calling assistant to navigate</text>
+  <text x="906" y="636" fill="#1E3A8A" font-family="sans-serif" font-size="11">modules and query tenant records</text>
+</svg>

@@ -1,0 +1,6 @@
+{
+  "name": "PropushHub — Custom Software, ERP, Web & Mobile Engineering",
+  "description": "PropushHub builds complete digital products — custom ERP systems, inventory platforms, web and mobile applications, AI-integrated workflows, and business software.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

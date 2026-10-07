@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" fill="none">
+  <rect width="1200" height="750" fill="#0F172A"/>
+  <rect x="24" y="24" width="1152" height="44" rx="8" fill="#1E293B"/>
+  <circle cx="48" cy="46" r="6" fill="#475569"/>
+  <circle cx="68" cy="46" r="6" fill="#475569"/>
+  <circle cx="88" cy="46" r="6" fill="#475569"/>
+  <rect x="120" y="34" width="460" height="24" rx="4" fill="#0F172A"/>
+  <text x="136" y="50" fill="#94A3B8" font-family="monospace" font-size="12">corestock-adminapp.vercel.app/admin</text>
+  <rect x="980" y="34" width="176" height="24" rx="4" fill="#0F172A" stroke="#3B82F6"/>
+  <text x="1006" y="50" fill="#60A5FA" font-family="monospace" font-size="11">ADMIN DASHBOARD</text>
+
+  <rect x="24" y="76" width="1152" height="650" rx="8" fill="#F8FAFC"/>
+  <rect x="24" y="76" width="230" height="650" fill="#0F172A"/>
+  <text x="48" y="118" fill="#FFFFFF" font-family="sans-serif" font-size="18" font-weight="700">CoreStock Admin</text>
+  <text x="48" y="138" fill="#94A3B8" font-family="sans-serif" font-size="11">Enterprise Control Panel</text>
+  <rect x="36" y="164" width="206" height="36" rx="6" fill="#1D4ED8"/>
+  <text x="54" y="187" fill="#FFFFFF" font-family="sans-serif" font-size="13" font-weight="600">Admin Overview</text>
+  <text x="54" y="230" fill="#94A3B8" font-family="sans-serif" font-size="13">Multi-Site Management</text>
+  <text x="54" y="268" fill="#94A3B8" font-family="sans-serif" font-size="13">Role &amp; Access Control</text>
+  <text x="54" y="306" fill="#94A3B8" font-family="sans-serif" font-size="13">Global Stock Audit</text>
+
+  <text x="286" y="122" fill="#0F172A" font-family="sans-serif" font-size="22" font-weight="700">CoreStock — Enterprise Admin Dashboard</text>
+  <text x="286" y="144" fill="#64748B" font-family="sans-serif" font-size="13">Centralized governance across warehouse sites, user role permissions, and inventory approvals</text>
+
+  <rect x="286" y="176" width="858" height="240" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="314" y="212" fill="#0F172A" font-family="sans-serif" font-size="16" font-weight="700">Role-Based Access Control (RBAC) &amp; Site Permissions</text>
+  <line x1="314" y1="230" x2="1116" y2="230" stroke="#E2E8F0"/>
+  <rect x="314" y="250" width="250" height="136" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="334" y="280" fill="#0F172A" font-family="sans-serif" font-size="14" font-weight="700">Administrator</text>
+  <text x="334" y="306" fill="#475569" font-family="sans-serif" font-size="12">• Global site provisioning</text>
+  <text x="334" y="328" fill="#475569" font-family="sans-serif" font-size="12">• User role assignment</text>
+  <text x="334" y="350" fill="#475569" font-family="sans-serif" font-size="12">• Cross-site reporting</text>
+
+  <rect x="588" y="250" width="250" height="136" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="608" y="280" fill="#0F172A" font-family="sans-serif" font-size="14" font-weight="700">Warehouse Manager</text>
+  <text x="608" y="306" fill="#475569" font-family="sans-serif" font-size="12">• Site stock approvals</text>
+  <text x="608" y="328" fill="#475569" font-family="sans-serif" font-size="12">• Transfer authorizations</text>
+  <text x="608" y="350" fill="#475569" font-family="sans-serif" font-size="12">• Threshold configuration</text>
+
+  <rect x="862" y="250" width="254" height="136" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="882" y="280" fill="#0F172A" font-family="sans-serif" font-size="14" font-weight="700">Site Operator</text>
+  <text x="882" y="306" fill="#475569" font-family="sans-serif" font-size="12">• Assigned site inventory</text>
+  <text x="882" y="328" fill="#475569" font-family="sans-serif" font-size="12">• Inbound/outbound logs</text>
+  <text x="882" y="350" fill="#475569" font-family="sans-serif" font-size="12">• Scoped dashboard access</text>
+
+  <rect x="286" y="436" width="858" height="256" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="314" y="472" fill="#0F172A" font-family="sans-serif" font-size="16" font-weight="700">Multi-Site Warehouse Directory</text>
+  <rect x="314" y="496" width="802" height="68" rx="6" fill="#F8FAFC"/>
+  <text x="334" y="526" fill="#0F172A" font-family="sans-serif" font-size="14" font-weight="600">Unified Admin + User Ecosystem</text>
+  <text x="334" y="548" fill="#64748B" font-family="sans-serif" font-size="12">Synchronizes administrative policies (corestock-adminapp) with warehouse operations (corestock-webapp)</text>
+</svg>

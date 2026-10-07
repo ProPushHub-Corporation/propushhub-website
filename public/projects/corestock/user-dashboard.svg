@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" fill="none">
+  <rect width="1200" height="750" fill="#0F172A"/>
+  <rect x="24" y="24" width="1152" height="44" rx="8" fill="#1E293B"/>
+  <circle cx="48" cy="46" r="6" fill="#475569"/>
+  <circle cx="68" cy="46" r="6" fill="#475569"/>
+  <circle cx="88" cy="46" r="6" fill="#475569"/>
+  <rect x="120" y="34" width="460" height="24" rx="4" fill="#0F172A"/>
+  <text x="136" y="50" fill="#94A3B8" font-family="monospace" font-size="12">corestock-webapp.vercel.app/dashboard</text>
+  <rect x="1000" y="34" width="156" height="24" rx="4" fill="#1E293B" stroke="#334155"/>
+  <text x="1022" y="50" fill="#E2E8F0" font-family="monospace" font-size="11">USER DASHBOARD</text>
+
+  <rect x="24" y="76" width="1152" height="650" rx="8" fill="#F8FAFC"/>
+  <rect x="24" y="76" width="220" height="650" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="48" y="118" fill="#0F172A" font-family="sans-serif" font-size="18" font-weight="700">CoreStock</text>
+  <text x="48" y="136" fill="#64748B" font-family="sans-serif" font-size="11">Warehouse &amp; Stock Platform</text>
+
+  <rect x="36" y="164" width="196" height="36" rx="6" fill="#0F172A"/>
+  <text x="54" y="187" fill="#FFFFFF" font-family="sans-serif" font-size="13" font-weight="600">User Dashboard</text>
+  <text x="54" y="230" fill="#475569" font-family="sans-serif" font-size="13">Site Inventory</text>
+  <text x="54" y="268" fill="#475569" font-family="sans-serif" font-size="13">Stock Movements</text>
+  <text x="54" y="306" fill="#475569" font-family="sans-serif" font-size="13">Requisitions</text>
+  <text x="54" y="344" fill="#475569" font-family="sans-serif" font-size="13">Site Reports</text>
+
+  <text x="276" y="122" fill="#0F172A" font-family="sans-serif" font-size="22" font-weight="700">CoreStock — User Dashboard</text>
+  <text x="276" y="144" fill="#64748B" font-family="sans-serif" font-size="13">Multi-site warehouse operations, assigned site stock levels, and daily receiving/dispatch workflow</text>
+
+  <rect x="276" y="172" width="275" height="116" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="298" y="202" fill="#64748B" font-family="sans-serif" font-size="12">Assigned Warehouse Site</text>
+  <text x="298" y="234" fill="#0F172A" font-family="sans-serif" font-size="18" font-weight="700">Central Distribution Hub</text>
+  <text x="298" y="262" fill="#1D4ED8" font-family="monospace" font-size="11">Multi-Site Sync Active</text>
+
+  <rect x="567" y="172" width="275" height="116" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="589" y="202" fill="#64748B" font-family="sans-serif" font-size="12">Stock Categories</text>
+  <text x="589" y="234" fill="#0F172A" font-family="sans-serif" font-size="18" font-weight="700">Active SKU Catalog</text>
+  <text x="589" y="262" fill="#475569" font-family="monospace" font-size="11">Real-time REST API feed</text>
+
+  <rect x="858" y="172" width="286" height="116" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="880" y="202" fill="#64748B" font-family="sans-serif" font-size="12">Role Permission Context</text>
+  <text x="880" y="234" fill="#0F172A" font-family="sans-serif" font-size="18" font-weight="700">Site Operator View</text>
+  <text x="880" y="262" fill="#15803D" font-family="monospace" font-size="11">Scoped Site Access</text>
+
+  <rect x="276" y="310" width="868" height="384" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="304" y="348" fill="#0F172A" font-family="sans-serif" font-size="16" font-weight="700">Recent Site Stock Activity &amp; Transfers</text>
+  <line x1="304" y1="368" x2="1116" y2="368" stroke="#E2E8F0"/>
+  <rect x="304" y="390" width="812" height="52" rx="6" fill="#F8FAFC"/>
+  <text x="324" y="421" fill="#0F172A" font-family="sans-serif" font-size="13" font-weight="600">Inbound Warehouse Receipt — Site A</text>
+  <text x="680" y="421" fill="#475569" font-family="monospace" font-size="12">Batch Verification</text>
+  <text x="980" y="421" fill="#1D4ED8" font-family="monospace" font-size="12">LOGGED</text>
+
+  <rect x="304" y="456" width="812" height="52" rx="6" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="324" y="487" fill="#0F172A" font-family="sans-serif" font-size="13" font-weight="600">Inter-Site Stock Transfer — Site A → Site B</text>
+  <text x="680" y="487" fill="#475569" font-family="monospace" font-size="12">Multi-Site Routing</text>
+  <text x="980" y="487" fill="#1D4ED8" font-family="monospace" font-size="12">IN TRANSIT</text>
+
+  <rect x="304" y="522" width="812" height="52" rx="6" fill="#F8FAFC"/>
+  <text x="324" y="553" fill="#0F172A" font-family="sans-serif" font-size="13" font-weight="600">Reorder Threshold Alert — Warehouse Zone 3</text>
+  <text x="680" y="553" fill="#475569" font-family="monospace" font-size="12">Stock Monitoring</text>
+  <text x="980" y="553" fill="#B45309" font-family="monospace" font-size="12">REVIEW</text>
+</svg>

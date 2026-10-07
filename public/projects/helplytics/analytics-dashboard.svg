@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" fill="none">
+  <rect width="1200" height="750" fill="#0F172A"/>
+  <rect x="24" y="24" width="1152" height="44" rx="8" fill="#1E293B"/>
+  <circle cx="48" cy="46" r="6" fill="#475569"/>
+  <circle cx="68" cy="46" r="6" fill="#475569"/>
+  <circle cx="88" cy="46" r="6" fill="#475569"/>
+  <rect x="120" y="34" width="460" height="24" rx="4" fill="#0F172A"/>
+  <text x="136" y="50" fill="#94A3B8" font-family="monospace" font-size="12">helplytics-frontend.vercel.app/dashboard</text>
+
+  <rect x="24" y="76" width="1152" height="650" rx="8" fill="#F8FAFC"/>
+  <rect x="24" y="76" width="220" height="650" fill="#0F172A"/>
+  <text x="48" y="118" fill="#FFFFFF" font-family="sans-serif" font-size="18" font-weight="700">Helplytics</text>
+  <text x="48" y="138" fill="#94A3B8" font-family="sans-serif" font-size="11">Helpdesk &amp; Analytics</text>
+
+  <rect x="36" y="166" width="196" height="36" rx="6" fill="#1D4ED8"/>
+  <text x="54" y="189" fill="#FFFFFF" font-family="sans-serif" font-size="13" font-weight="600">Dashboard</text>
+  <text x="54" y="230" fill="#94A3B8" font-family="sans-serif" font-size="13">AI Center (/ai-center)</text>
+  <text x="54" y="268" fill="#94A3B8" font-family="sans-serif" font-size="13">Helpdesk Requests</text>
+  <text x="54" y="306" fill="#94A3B8" font-family="sans-serif" font-size="13">Messages (/messages)</text>
+  <text x="54" y="344" fill="#94A3B8" font-family="sans-serif" font-size="13">Explore &amp; Leaderboard</text>
+  <text x="54" y="382" fill="#94A3B8" font-family="sans-serif" font-size="13">Notifications</text>
+
+  <text x="276" y="122" fill="#0F172A" font-family="sans-serif" font-size="22" font-weight="700">Helplytics — Helpdesk, AI Center &amp; Analytics</text>
+  <text x="276" y="144" fill="#64748B" font-family="sans-serif" font-size="13">Next.js 16 &amp; React 19 SaaS experience with Redux Toolkit state management and Framer Motion transitions</text>
+
+  <rect x="276" y="174" width="560" height="516" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="304" y="212" fill="#0F172A" font-family="sans-serif" font-size="16" font-weight="700">Helpdesk Request Queue &amp; Activity</text>
+  <line x1="304" y1="230" x2="808" y2="230" stroke="#E2E8F0"/>
+
+  <rect x="304" y="252" width="504" height="76" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="324" y="280" fill="#0F172A" font-family="sans-serif" font-size="14" font-weight="600">Support Request #HL-104 — Account Onboarding</text>
+  <text x="324" y="304" fill="#64748B" font-family="sans-serif" font-size="12">Assigned via Helpdesk Workflow · Real-time Notification Dispatched</text>
+
+  <rect x="304" y="344" width="504" height="76" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="324" y="372" fill="#0F172A" font-family="sans-serif" font-size="14" font-weight="600">AI Center Triage — Support Thread Summary</text>
+  <text x="324" y="396" fill="#64748B" font-family="sans-serif" font-size="12">Processed in /ai-center · Linked to /messages conversation</text>
+
+  <rect x="856" y="174" width="288" height="516" rx="8" fill="#FFFFFF" stroke="#E2E8F0"/>
+  <text x="880" y="212" fill="#0F172A" font-family="sans-serif" font-size="16" font-weight="700">Platform Modules</text>
+  <line x1="880" y1="230" x2="1120" y2="230" stroke="#E2E8F0"/>
+  <rect x="880" y="252" width="240" height="90" rx="6" fill="#EFF6FF" stroke="#BFDBFE"/>
+  <text x="898" y="282" fill="#1D4ED8" font-family="sans-serif" font-size="13" font-weight="700">Middleware Auth Guard</text>
+  <text x="898" y="306" fill="#1E3A8A" font-family="sans-serif" font-size="11">Protected routes via proxy.ts</text>
+  <text x="898" y="324" fill="#1E3A8A" font-family="sans-serif" font-size="11">&amp; cookie session management</text>
+
+  <rect x="880" y="360" width="240" height="90" rx="6" fill="#F8FAFC" stroke="#E2E8F0"/>
+  <text x="898" y="390" fill="#0F172A" font-family="sans-serif" font-size="13" font-weight="700">Built-In Messaging</text>
+  <text x="898" y="414" fill="#475569" font-family="sans-serif" font-size="11">Direct communication &amp; live</text>
+  <text x="898" y="432" fill="#475569" font-family="sans-serif" font-size="11">notification center</text>
+</svg>
