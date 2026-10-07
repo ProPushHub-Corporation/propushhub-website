@@ -83,7 +83,7 @@ export const COMPANY_INFO = {
   developerPortfolio: 'https://ali-portfolio-nine.vercel.app/',
   whatsappUrl: 'https://wa.me/923190586822?text=Hello%20PropushHub%2C%20I%20would%20like%20to%20discuss%20a%20software%20project.',
   whatsappNumberDisplay: '+92 319 0586822',
-  email: 'syeadmuhammedalimazhar@gmail.com',
+  email: 'info.propushhub@gmail.com',
   linkedinUrl: 'https://www.linkedin.com/in/syed-muhammed-ali/',
 };
 

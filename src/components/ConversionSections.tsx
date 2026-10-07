@@ -228,21 +228,30 @@ export const ProjectInquiryModal: React.FC<{
       formData.append('email', email.trim());
       formData.append('project_type', projectType);
       formData.append('message', details.trim());
+      formData.append('_subject', `New Project Inquiry — ${projectType}`);
+      formData.append('_template', 'table');
+      formData.append('_captcha', 'false');
 
       const res = await fetch(
         `https://formsubmit.co/ajax/${COMPANY_INFO.email}`,
         {
           method: 'POST',
+          headers: { Accept: 'application/json' },
           body: formData,
         }
       );
-      if (res.ok) {
+      const result = await res.json().catch(() => null);
+      if (res.ok && result && String(result.success) === 'true') {
         setSubmitted(true);
       } else {
-        setSubmitted(true);
+        setErrorMessage(
+          'We could not send your brief right now. Please use WhatsApp or email us directly.'
+        );
       }
     } catch {
-      setSubmitted(true);
+      setErrorMessage(
+        'We could not send your brief right now. Please use WhatsApp or email us directly.'
+      );
     } finally {
       setSubmitting(false);
     }
