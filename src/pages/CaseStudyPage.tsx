@@ -167,7 +167,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
             </div>
 
             {/* Project Classification Metadata Panel */}
-            <div className="lg:col-span-4 bg-base border border-line rounded-2xl p-6 space-y-4">
+            <div className="lg:col-span-4 glass rounded-3xl p-6 space-y-4">
               <div>
                 <p className="text-xs font-mono text-dim mb-1">Project Classification</p>
                 <p className="text-sm font-semibold text-fg">
@@ -235,7 +235,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
           </div>
 
           {activeShot && (
-            <div className="bg-surface border border-line rounded-2xl p-4 sm:p-6">
+            <div className="glass bg-surface/60 rounded-3xl p-4 sm:p-6">
               <div
                 onClick={() => setLightboxOpen(true)}
                 className="relative w-full aspect-16/10 bg-surface-2 rounded-xl overflow-hidden border border-line cursor-zoom-in group"
@@ -277,7 +277,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
       <section className="py-16 sm:py-20 border-b border-line bg-surface">
         <div className="max-w-[1240px] mx-auto px-6">
           <div className="grid lg:grid-cols-3 gap-10">
-            <div className="p-7 rounded-2xl bg-base border border-line">
+            <div className="p-7 rounded-3xl glass">
               <p className="text-xs font-mono text-accent font-semibold mb-2">
                 01. Project Overview
               </p>
@@ -289,7 +289,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
               </p>
             </div>
 
-            <div className="p-7 rounded-2xl bg-base border border-line">
+            <div className="p-7 rounded-3xl glass">
               <p className="text-xs font-mono text-accent font-semibold mb-2">
                 02. The Problem
               </p>
@@ -301,7 +301,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
               </p>
             </div>
 
-            <div className="p-7 rounded-2xl bg-base border border-line">
+            <div className="p-7 rounded-3xl glass">
               <p className="text-xs font-mono text-accent font-semibold mb-2">
                 03. The Solution
               </p>
@@ -336,7 +336,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
             {project.caseStudy.keyFeatures.map((feat, idx) => (
               <div
                 key={feat.title}
-                className="p-6 rounded-2xl bg-surface border border-line"
+                className="p-6 rounded-3xl glass"
               >
                 <p className="text-xs font-mono text-accent mb-2">
                   Feature 0{idx + 1}
@@ -449,7 +449,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                 {project.caseStudy.challenges.map((c, idx) => (
                   <div
                     key={idx}
-                    className="p-6 rounded-2xl bg-surface border border-line"
+                    className="p-6 rounded-3xl glass"
                   >
                     <p className="text-xs font-mono text-dim mb-1">
                       Challenge 0{idx + 1}
@@ -475,7 +475,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                 Development Approach
               </h2>
 
-              <div className="p-6 rounded-2xl bg-surface border border-line space-y-4 mb-6">
+              <div className="p-6 rounded-3xl glass space-y-4 mb-6">
                 {project.caseStudy.developmentApproach.map((item, idx) => (
                   <div key={idx} className="flex items-start gap-3 text-sm text-muted">
                     <span className="font-mono text-xs font-bold text-accent pt-0.5">
@@ -487,7 +487,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
               </div>
 
               {/* 11. LIVE DEMO / GITHUB VERIFICATION BOX */}
-              <div className="p-6 rounded-2xl bg-surface-2 text-white">
+              <div className="p-6 rounded-3xl bg-surface-2 border border-line text-white">
                 <p className="text-xs font-mono text-accent mb-1">
                   09. Direct Verification
                 </p>
@@ -543,7 +543,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
       {/* 12. BOTTOM CASE STUDY CTA: "Have a similar project in mind?" -> [Start Your Project] */}
       <section className="py-20 bg-surface border-b border-line">
         <div className="max-w-[1240px] mx-auto px-6">
-          <div className="p-8 sm:p-12 rounded-2xl bg-base border border-line flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="p-8 sm:p-12 rounded-3xl glass flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             <div className="max-w-2xl">
               <p className="text-xs font-semibold text-accent mb-2">
                 Build With PropushHub

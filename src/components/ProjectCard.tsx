@@ -23,7 +23,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <article
-      className={`group bg-surface border border-line rounded-2xl overflow-hidden flex flex-col justify-between transition-transform duration-200 hover:-translate-y-0.5 ${
+      className={`group glass bg-surface/60 card-glow rounded-3xl overflow-hidden flex flex-col justify-between ${
         isProminent ? 'p-6 sm:p-8' : 'p-5 sm:p-6'
       }`}
     >
@@ -75,7 +75,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
                 }}
                 className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors whitespace-nowrap cursor-pointer ${
                   activeScreenshotIndex === idx
-                    ? 'bg-surface text-fg shadow-xs'
+                    ? 'bg-white/15 text-fg'
                     : 'text-muted hover:text-fg'
                 }`}
               >

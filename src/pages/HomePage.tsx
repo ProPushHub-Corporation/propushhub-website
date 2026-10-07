@@ -315,7 +315,7 @@ export const HomePage: React.FC = () => {
             {CORE_CAPABILITIES.map((cap) => (
               <div
                 key={cap.number}
-                className="p-7 rounded-2xl bg-base border border-line flex flex-col justify-between"
+                className="p-7 rounded-3xl glass card-glow flex flex-col justify-between"
               >
                 <div>
                   <p className="text-xs font-mono text-accent font-semibold mb-2">

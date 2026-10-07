@@ -73,7 +73,7 @@ export const TrustExperienceSection: React.FC = () => {
           {PROOF_AREAS.map((item) => (
             <div
               key={item.index}
-              className="p-6 rounded-2xl bg-base border border-line flex flex-col justify-between"
+              className="p-6 rounded-3xl glass card-glow flex flex-col justify-between"
             >
               <div>
                 <div className="text-xs font-mono text-accent font-medium mb-3">
@@ -101,7 +101,7 @@ export const GithubExploreSection: React.FC = () => {
   return (
     <section className="py-16 border-t border-line bg-base">
       <div className="max-w-[1240px] mx-auto px-6">
-        <div className="p-8 sm:p-10 rounded-2xl bg-surface-2 text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-indigo-600/30 via-surface-2 to-teal-500/20 border border-line-strong text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="max-w-2xl">
             <p className="text-xs font-mono text-accent mb-2">
               Open Source &amp; Public Repositories
@@ -270,7 +270,7 @@ export const ProjectInquiryModal: React.FC<{
       aria-labelledby="project-modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-base/60 backdrop-blur-xs"
     >
-      <div className="bg-surface border border-line rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-xl relative max-h-[90vh] overflow-y-auto">
+      <div className="bg-surface border border-line-strong rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-xl relative max-h-[90vh] overflow-y-auto">
         <button
           type="button"
           onClick={resetAndClose}
@@ -341,7 +341,7 @@ export const ProjectInquiryModal: React.FC<{
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="e.g. Tariq Mahmood"
-                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-line-strong focus:outline-none focus:border-accent"
+                  className="w-full px-3.5 py-2.5 text-sm text-fg placeholder:text-dim bg-white/5 rounded-xl border border-line-strong focus:outline-none focus:border-accent"
                 />
               </div>
 
@@ -358,7 +358,7 @@ export const ProjectInquiryModal: React.FC<{
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@company.com"
-                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-line-strong focus:outline-none focus:border-accent"
+                  className="w-full px-3.5 py-2.5 text-sm text-fg placeholder:text-dim bg-white/5 rounded-xl border border-line-strong focus:outline-none focus:border-accent"
                 />
               </div>
 
@@ -373,7 +373,7 @@ export const ProjectInquiryModal: React.FC<{
                   id="inquiry-type"
                   value={projectType}
                   onChange={(e) => setProjectType(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-line-strong bg-surface focus:outline-none focus:border-accent"
+                  className="w-full px-3.5 py-2.5 text-sm text-fg rounded-xl border border-line-strong bg-surface-2 focus:outline-none focus:border-accent"
                 >
                   <option value="Custom ERP / Business Software">
                     Custom ERP / Business Software
@@ -409,7 +409,7 @@ export const ProjectInquiryModal: React.FC<{
                   value={details}
                   onChange={(e) => setDetails(e.target.value)}
                   placeholder="Describe the workflows, user roles, or platform you want to build..."
-                  className="w-full px-3.5 py-2.5 text-sm rounded-lg border border-line-strong focus:outline-none focus:border-accent"
+                  className="w-full px-3.5 py-2.5 text-sm text-fg placeholder:text-dim bg-white/5 rounded-xl border border-line-strong focus:outline-none focus:border-accent"
                 />
               </div>
 
