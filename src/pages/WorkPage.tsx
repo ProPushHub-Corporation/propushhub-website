@@ -73,7 +73,7 @@ export const WorkPage: React.FC = () => {
             <div
               role="tablist"
               aria-label="Filter projects by category"
-              className="flex flex-wrap items-center gap-1.5 p-1.5 bg-base border border-line rounded-xl w-fit"
+              className="flex flex-wrap items-center gap-1.5 p-1.5 bg-ink border border-line rounded-xl w-fit"
             >
               {PROJECT_FILTERS.map((filter) => {
                 const isActive = activeFilter === filter;

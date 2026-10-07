@@ -43,7 +43,7 @@ export const Navbar: React.FC = () => {
       <div
         className={`max-w-[1240px] mx-auto h-14 px-4 sm:px-5 flex items-center justify-between rounded-full border transition-all duration-300 backdrop-blur-xl ${
           scrolled
-            ? 'bg-base/80 border-line-strong shadow-[0_10px_40px_-12px_rgb(0_0_0/0.7)]'
+            ? 'bg-ink/80 border-line-strong shadow-[0_10px_40px_-12px_rgb(0_0_0/0.7)]'
             : 'bg-white/[0.03] border-line'
         }`}
       >

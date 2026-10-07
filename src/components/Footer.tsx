@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
   const { navigate, openProjectModal } = useRouter();
 
   return (
-    <footer className="bg-base text-muted border-t border-line py-16">
+    <footer className="bg-ink text-muted border-t border-line py-16">
       <div className="max-w-[1240px] mx-auto px-6">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-line">
           {/* Column 1: Brand & Philosophy */}

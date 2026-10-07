@@ -105,7 +105,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
 
               {/* Important Disclaimer if applicable (e.g. Clinic Software / AI QA Agent) */}
               {project.caseStudy.disclaimer && (
-                <div className="p-4 rounded-xl bg-base border border-line-strong text-xs text-fg-2 leading-relaxed mb-6 max-w-[68ch]">
+                <div className="p-4 rounded-xl bg-ink border border-line-strong text-xs text-fg-2 leading-relaxed mb-6 max-w-[68ch]">
                   {project.caseStudy.disclaimer}
                 </div>
               )}
@@ -145,7 +145,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-fg bg-base border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
+                    className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-fg bg-ink border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
                   >
                     <Github className="w-4 h-4" />
                     <span>View Source on GitHub</span>
@@ -157,7 +157,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                     href={project.secondaryGithubUrl.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-3 text-xs font-semibold text-fg-2 bg-base border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
+                    className="inline-flex items-center gap-2 px-4 py-3 text-xs font-semibold text-fg-2 bg-ink border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
                   >
                     <span>{project.secondaryGithubUrl.label}</span>
                     <ExternalLink className="w-3.5 h-3.5" />
@@ -373,7 +373,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                 {project.caseStudy.workflowSteps.map((step) => (
                   <div
                     key={step.step}
-                    className="p-5 rounded-xl bg-base border border-line flex items-start gap-4"
+                    className="p-5 rounded-xl bg-ink border border-line flex items-start gap-4"
                   >
                     <span className="font-mono text-xs font-bold text-accent pt-1 shrink-0">
                       {step.step}.
@@ -407,7 +407,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                 {project.caseStudy.techStackByLayer.map((layer) => (
                   <div
                     key={layer.layer}
-                    className="p-5 rounded-xl bg-base border border-line"
+                    className="p-5 rounded-xl bg-ink border border-line"
                   >
                     <p className="text-xs font-mono text-dim mb-2">
                       {layer.layer}
@@ -601,7 +601,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
           role="dialog"
           aria-modal="true"
           onClick={() => setLightboxOpen(false)}
-          className="fixed inset-0 z-50 bg-base/90 p-4 sm:p-8 flex flex-col items-center justify-center"
+          className="fixed inset-0 z-50 bg-ink/90 p-4 sm:p-8 flex flex-col items-center justify-center"
         >
           <div
             onClick={(e) => e.stopPropagation()}
@@ -625,7 +625,7 @@ export const CaseStudyPage: React.FC<CaseStudyPageProps> = ({ slug }) => {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <div className="p-4 bg-base">
+            <div className="p-4 bg-ink">
               <img
                 src={activeShot.url}
                 alt={activeShot.label}

@@ -99,7 +99,7 @@ export const TrustExperienceSection: React.FC = () => {
 
 export const GithubExploreSection: React.FC = () => {
   return (
-    <section className="py-16 border-t border-line bg-base">
+    <section className="py-16 border-t border-line bg-ink">
       <div className="max-w-[1240px] mx-auto px-6">
         <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-indigo-600/30 via-surface-2 to-teal-500/20 border border-line-strong text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="max-w-2xl">
@@ -167,7 +167,7 @@ export const FinalConversionSection: React.FC = () => {
               href={COMPANY_INFO.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold text-fg bg-base border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold text-fg bg-ink border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
             >
               <MessageSquare className="w-4 h-4 text-emerald-700" />
               <span>Talk on WhatsApp</span>
@@ -177,7 +177,7 @@ export const FinalConversionSection: React.FC = () => {
               href={`mailto:${COMPANY_INFO.email}?subject=${encodeURIComponent(
                 'Project Inquiry — PropushHub'
               )}`}
-              className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold text-fg bg-base border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold text-fg bg-ink border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap"
             >
               <Mail className="w-4 h-4 text-fg-2" />
               <span>Email Us</span>
@@ -268,7 +268,7 @@ export const ProjectInquiryModal: React.FC<{
       role="dialog"
       aria-modal="true"
       aria-labelledby="project-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-base/60 backdrop-blur-xs"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/60 backdrop-blur-xs"
     >
       <div className="bg-surface border border-line-strong rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-xl relative max-h-[90vh] overflow-y-auto">
         <button

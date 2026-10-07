@@ -5,7 +5,7 @@
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
-  --color-base: #06080f;
+  --color-ink: #06080f;
   --color-surface: #0d1220;
   --color-surface-2: #131a2c;
   --color-fg: #f3f5fb;
@@ -34,12 +34,12 @@
     font-family: var(--font-sans);
     scroll-behavior: smooth;
     color: var(--color-fg);
-    background-color: var(--color-base);
+    background-color: var(--color-ink);
     color-scheme: dark;
   }
 
   body {
-    background-color: var(--color-base);
+    background-color: var(--color-ink);
     background-image:
       radial-gradient(60rem 40rem at 85% -10%, rgb(99 102 241 / 0.18), transparent 60%),
       radial-gradient(50rem 36rem at -10% 10%, rgb(45 212 191 / 0.10), transparent 60%);
@@ -55,7 +55,7 @@
   ::selection { background: rgb(99 102 241 / 0.6); color: #fff; }
 
   ::-webkit-scrollbar { width: 10px; }
-  ::-webkit-scrollbar-track { background: var(--color-base); }
+  ::-webkit-scrollbar-track { background: var(--color-ink); }
   ::-webkit-scrollbar-thumb { background: #232c44; border-radius: 8px; }
 }
 

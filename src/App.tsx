@@ -40,7 +40,7 @@ export default function App() {
 
   return (
     <RouterProvider onOpenProjectModal={handleOpenProjectModal}>
-      <div className="min-h-screen flex flex-col bg-base text-fg">
+      <div className="min-h-screen flex flex-col bg-ink text-fg">
         <Navbar />
         <div className="flex-1">
           <AppRoutes />
