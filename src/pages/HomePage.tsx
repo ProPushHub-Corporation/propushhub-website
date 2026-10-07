@@ -1,5 +1,6 @@
 import React from 'react';
-import { ArrowRight, ArrowUpRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { motion } from 'motion/react';
 import {
   getHomepageFeaturedProjects,
   PROJECTS,
@@ -67,34 +68,44 @@ export const HomePage: React.FC = () => {
   return (
     <main>
       {/* HERO SECTION */}
-      <section className="pt-14 pb-20 sm:pt-20 sm:pb-24 border-b border-line">
+      <section className="relative overflow-hidden pt-16 pb-20 sm:pt-24 sm:pb-28">
+        <div className="grid-bg absolute inset-0 -z-10" aria-hidden="true" />
+        <div
+          className="absolute -top-24 left-1/2 -translate-x-1/2 -z-10 w-[60rem] h-[30rem] rounded-full bg-indigo-500/20 blur-[120px] animate-float"
+          aria-hidden="true"
+        />
         <div className="max-w-[1240px] mx-auto px-6">
-          <div className="grid lg:grid-cols-12 gap-12 items-start">
-            {/* Left Column: Proposition & Primary Action */}
-            <div className="lg:col-span-7">
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-semibold text-accent mb-4">
-                <span>PropushHub Software Engineering</span>
-                <span aria-hidden="true">·</span>
-                <span className="text-muted font-medium">
-                  ERP, Web, Mobile &amp; AI Product Development
+          <div className="grid lg:grid-cols-12 gap-14 items-center">
+            <motion.div
+              className="lg:col-span-7"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
+            >
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 mb-7 rounded-full glass text-xs font-medium text-fg-2">
+                <span className="relative flex w-2 h-2">
+                  <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+                  <span className="relative inline-flex w-2 h-2 rounded-full bg-emerald-400" />
                 </span>
+                ERP · Web · Mobile · AI Product Engineering
               </div>
 
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-[54px] font-bold text-fg tracking-tight leading-[1.08] mb-6">
-                We don’t just build landing pages. We build complete digital products.
+              <h1 className="font-display text-[40px] sm:text-6xl lg:text-[68px] font-bold text-fg leading-[1.04] mb-6">
+                We don’t just build landing pages.{' '}
+                <span className="gradient-text">We build complete digital products.</span>
               </h1>
 
-              <p className="text-muted text-base sm:text-lg leading-relaxed mb-8 max-w-[62ch]">
+              <p className="text-muted text-base sm:text-lg leading-relaxed mb-9 max-w-[60ch]">
                 PropushHub designs, engineers, and deploys custom ERP platforms, multi-site
                 warehouse systems, synchronized web and React Native mobile applications, and
                 AI-powered business software—backed by verifiable, production-deployed code.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 mb-10">
+              <div className="flex flex-wrap items-center gap-3.5 mb-12">
                 <button
                   type="button"
                   onClick={() => openProjectModal()}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-white btn-primary rounded-full whitespace-nowrap cursor-pointer"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-semibold btn-primary rounded-full whitespace-nowrap cursor-pointer"
                 >
                   <span>Start Your Project</span>
                   <ArrowUpRight className="w-4 h-4" />
@@ -102,103 +113,94 @@ export const HomePage: React.FC = () => {
 
                 <button
                   type="button"
-                  onClick={() => {
-                    const el = document.getElementById('selected-work');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="inline-flex items-center gap-2 px-5 py-3.5 text-sm font-semibold text-fg bg-surface border border-line-strong rounded-lg hover:bg-surface/10 transition-colors whitespace-nowrap cursor-pointer"
+                  onClick={() => document.getElementById('selected-work')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-fg glass rounded-full hover:bg-white/10 transition-colors whitespace-nowrap cursor-pointer"
                 >
                   <span>Explore Selected Work</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
 
-              {/* 10-Pillar Product Capability Strip (Clean unboxed typography) */}
-              <div className="pt-6 border-t border-line">
-                <p className="text-xs font-mono text-dim mb-2.5">
-                  End-to-End Engineering Scope:
-                </p>
-                <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-xs sm:text-[13px] font-medium text-fg-2">
-                  {DIGITAL_PRODUCT_PILLARS.map((pillar, index) => (
-                    <React.Fragment key={pillar}>
-                      <span>{pillar}</span>
-                      {index < DIGITAL_PRODUCT_PILLARS.length - 1 && (
-                        <span aria-hidden="true" className="text-accent font-bold">
-                          +
-                        </span>
-                      )}
-                    </React.Fragment>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Immediate Proof Matrix of Real Built Systems */}
-            <div className="lg:col-span-5 bg-surface border border-line rounded-2xl p-6 sm:p-7">
-              <div className="flex items-center justify-between pb-4 mb-5 border-b border-line">
-                <div>
-                  <p className="text-xs font-semibold text-accent">
-                    Projects Built by Our Development Team
-                  </p>
-                  <h2 className="font-display text-lg font-bold text-fg">
-                    Real-World Software Systems
-                  </h2>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => navigate('/work')}
-                  className="text-xs font-semibold text-muted hover:text-accent transition-colors whitespace-nowrap cursor-pointer"
-                >
-                  All {PROJECTS.length} Projects →
-                </button>
-              </div>
-
-              <div className="divide-y divide-line">
-                {featuredProjects.slice(0, 6).map((proj) => (
-                  <div
-                    key={proj.id}
-                    className="py-3.5 first:pt-0 last:pb-0 flex items-start justify-between gap-4 group"
-                  >
-                    <div>
-                      <p className="text-[11px] font-mono text-dim mb-0.5">
-                        {proj.visualHierarchyLabel}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => navigate(`/work/${proj.slug}`)}
-                        className="font-display text-sm sm:text-base font-bold text-fg group-hover:text-accent transition-colors text-left cursor-pointer"
-                      >
-                        {proj.title}
-                      </button>
-                      <p className="text-xs text-dim mt-0.5 line-clamp-1">
-                        {proj.technologies.slice(0, 4).join(' · ')}
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-2 shrink-0 pt-1">
-                      {proj.liveUrl && (
-                        <a
-                          href={proj.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          title={`Open ${proj.title} live deployment`}
-                          className="text-xs font-medium text-dim hover:text-accent transition-colors inline-flex items-center gap-1"
-                        >
-                          <span>Live</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
-                      <button
-                        type="button"
-                        onClick={() => navigate(`/work/${proj.slug}`)}
-                        className="text-xs font-semibold text-fg hover:text-accent transition-colors whitespace-nowrap cursor-pointer"
-                      >
-                        Case Study →
-                      </button>
-                    </div>
+              <div className="grid grid-cols-3 gap-4 max-w-md">
+                {[
+                  [`${PROJECTS.length}+`, 'Products shipped'],
+                  ['3', 'Platforms: Web · Mobile · AI'],
+                  ['100%', 'Verifiable code'],
+                ].map(([value, label]) => (
+                  <div key={label}>
+                    <p className="font-display text-3xl font-bold text-fg">{value}</p>
+                    <p className="text-xs text-dim leading-snug mt-1">{label}</p>
                   </div>
                 ))}
               </div>
+            </motion.div>
+
+            {/* Right: floating glass proof card */}
+            <motion.div
+              className="lg:col-span-5"
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
+            >
+              <div className="relative">
+                <div className="absolute -inset-px rounded-[28px] bg-gradient-to-br from-indigo-400/50 via-transparent to-teal-300/40 blur-sm" aria-hidden="true" />
+                <div className="relative glass bg-surface/70 rounded-[28px] p-6 sm:p-7 shadow-2xl">
+                  <div className="flex items-center justify-between pb-4 mb-4 border-b border-line">
+                    <div>
+                      <p className="text-xs font-semibold text-accent mb-0.5">
+                        Built by our development team
+                      </p>
+                      <h2 className="font-display text-lg font-bold text-fg">
+                        Real-World Software Systems
+                      </h2>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/work')}
+                      className="text-xs font-semibold text-muted hover:text-accent transition-colors whitespace-nowrap cursor-pointer"
+                    >
+                      All {PROJECTS.length} →
+                    </button>
+                  </div>
+
+                  <div className="space-y-1">
+                    {featuredProjects.slice(0, 6).map((proj) => (
+                      <div
+                        key={proj.id}
+                        onClick={() => navigate(`/work/${proj.slug}`)}
+                        className="p-3 -mx-3 rounded-2xl flex items-center justify-between gap-4 group cursor-pointer hover:bg-white/5 transition-colors"
+                      >
+                        <div className="min-w-0">
+                          <p className="text-[11px] font-mono text-dim mb-0.5 truncate">
+                            {proj.visualHierarchyLabel}
+                          </p>
+                          <p className="font-display text-sm sm:text-base font-semibold text-fg group-hover:text-accent transition-colors truncate">
+                            {proj.title}
+                          </p>
+                          <p className="text-xs text-dim mt-0.5 truncate">
+                            {proj.technologies.slice(0, 4).join(' · ')}
+                          </p>
+                        </div>
+                        <ArrowUpRight className="w-4 h-4 shrink-0 text-dim group-hover:text-accent group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Scope marquee */}
+          <div className="mt-20 overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_12%,#000_88%,transparent)]">
+            <div className="flex w-max gap-3 animate-marquee">
+              {[...DIGITAL_PRODUCT_PILLARS, ...DIGITAL_PRODUCT_PILLARS].map((pillar, i) => (
+                <span
+                  key={`${pillar}-${i}`}
+                  className="px-4 py-2 rounded-full glass text-sm font-medium text-fg-2 whitespace-nowrap"
+                >
+                  {pillar}
+                </span>
+              ))}
             </div>
           </div>
         </div>
