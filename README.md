@@ -1,20 +1,16 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# PropushHub Website
 
-# Run and deploy your AI Studio app
+Portfolio and marketing site for PropushHub — custom ERP, web, mobile and AI-integrated software.
 
-This contains everything you need to run your app locally.
+## Run locally
 
-View your app in AI Studio: https://ai.studio/apps/df19c45d-ae13-44fd-8272-e732507024a3
+Prerequisite: Node.js
 
-## Run Locally
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
+npm run lint     # type-check
+```
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+See [CLAUDE.md](CLAUDE.md) for project structure and contribution workflow.
