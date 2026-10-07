@@ -11,9 +11,11 @@ import { ProjectInquiryModal } from './components/ConversionSections';
 import { HomePage } from './pages/HomePage';
 import { WorkPage } from './pages/WorkPage';
 import { CaseStudyPage } from './pages/CaseStudyPage';
+import { useSeo } from './lib/useSeo';
 
 const AppRoutes: React.FC = () => {
   const { pathname } = useRouter();
+  useSeo(pathname);
 
   if (pathname === '/work' || pathname === '/work/') {
     return <WorkPage />;
