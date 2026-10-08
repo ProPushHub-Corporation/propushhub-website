@@ -6,7 +6,7 @@ import { useRouter } from '../lib/router';
 import { Breadcrumbs, Container } from '../components/ui';
 import { Reassurance } from '../components/sections';
 
-const OTHER = 'Not sure yet / something else';
+const OTHER = 'Not sure yet';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Label: React.FC<{ htmlFor: string; children: React.ReactNode; optional?: boolean }> = ({

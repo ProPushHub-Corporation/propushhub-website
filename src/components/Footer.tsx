@@ -10,7 +10,7 @@ export const Footer: React.FC = () => (
   <footer className="border-t border-line bg-ink">
     <div className="container-x py-16 sm:py-20">
       <div className="grid gap-12 lg:grid-cols-12">
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-3">
           <Logo />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
             Websites, CMS, mobile apps, desktop software and custom ERP. Designed, built and
@@ -50,11 +50,11 @@ export const Footer: React.FC = () => (
           </ul>
         </nav>
 
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-3">
           <h2 className="eyebrow mb-5 !text-fg">Contact</h2>
           <ul className="space-y-3">
             <li>
-              <a href={`mailto:${COMPANY_INFO.email}`} className={`${linkCls} break-all`}>
+              <a href={`mailto:${COMPANY_INFO.email}`} className={`${linkCls} break-words`}>
                 {COMPANY_INFO.email}
               </a>
             </li>
