@@ -15,16 +15,16 @@ Official website of **PropushHub Corporation (PPH)**, a software development com
 
 ## Tech stack
 
-| Area | Choice |
-| --- | --- |
-| UI | React 19, TypeScript |
-| Build | Vite 8, Tailwind CSS v4 |
-| Routing | Small custom History-API router (`src/lib/router.tsx`) |
-| Data | Firebase Firestore (lite SDK) for projects, team, partners, jobs and the home partner ribbon |
-| Images | Cloudinary delivery URLs |
-| Motion | CSS splash and hero text, plus lazy-loaded GSAP (scroll and hover only) |
-| Icons and fonts | `lucide-react`, self-hosted Noto Sans and DM Sans |
-| Hosting | Vercel |
+| Area            | Choice                                                                                       |
+| --------------- | -------------------------------------------------------------------------------------------- |
+| UI              | React 19, TypeScript                                                                         |
+| Build           | Vite 8, Tailwind CSS v4                                                                      |
+| Routing         | Small custom History-API router (`src/lib/router.tsx`)                                       |
+| Data            | Firebase Firestore (lite SDK) for projects, team, partners, jobs and the home partner ribbon |
+| Images          | Cloudinary delivery URLs                                                                     |
+| Motion          | CSS splash and hero text, plus lazy-loaded GSAP (scroll and hover only)                      |
+| Icons and fonts | `lucide-react`, self-hosted Noto Sans and DM Sans                                            |
+| Hosting         | Vercel                                                                                       |
 
 ## Getting started
 
@@ -41,16 +41,16 @@ The dev server runs at <http://localhost:3000>. It is unminified, so do not use 
 
 ### Scripts
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Start the dev server on port 3000 |
-| `npm run build` | Production build, then prerender every route into `dist/` |
-| `npm run preview` | Serve the built `dist/` locally |
-| `npm run lint` | Type-check with `tsc --noEmit` |
-| `npm run seed -- --dry-run` | Validate the Firestore seed data without writing anything |
-| `npm run seed` | Write the portfolio and sample data to Firestore (needs a service-account key) |
-| `npm run seed -- --clear-samples` | Remove the sample documents again |
-| `npm run seed:data -- <collection> file.json` | Load your own JSON into `projects`, `team`, `partners` or `jobs` |
+| Command                                       | What it does                                                                   |
+| --------------------------------------------- | ------------------------------------------------------------------------------ |
+| `npm run dev`                                 | Start the dev server on port 3000                                              |
+| `npm run build`                               | Production build, then prerender every route into `dist/`                      |
+| `npm run preview`                             | Serve the built `dist/` locally                                                |
+| `npm run lint`                                | Type-check with `tsc --noEmit`                                                 |
+| `npm run seed -- --dry-run`                   | Validate the Firestore seed data without writing anything                      |
+| `npm run seed`                                | Write the portfolio and sample data to Firestore (needs a service-account key) |
+| `npm run seed -- --clear-samples`             | Remove the sample documents again                                              |
+| `npm run seed:data -- <collection> file.json` | Load your own JSON into `projects`, `team`, `partners` or `jobs`               |
 
 Run `npm run lint` and `npm run build` before committing.
 
@@ -85,7 +85,7 @@ Content lives in `src/data/`, not inside components:
 
 - Route metadata, canonical URLs and JSON-LD are defined in `src/lib/seo.ts`.
 - The canonical origin is `SITE_URL` in the same file. **Change it when a custom domain is connected.**
-- Official name: *PropushHub Corporation (PPH)*. Also searched as "PropushHub" and "PPH Corporation"; these are listed as alternate names in the structured data.
+- Official name: _PropushHub Corporation (PPH)_. Also searched as "PropushHub" and "PPH Corporation"; these are listed as alternate names in the structured data.
 - Keep one `<h1>` per page, titles under about 60 characters and descriptions under 160.
 - Anything that touches `window` or `document` must run inside an effect, otherwise the prerender step breaks.
 
