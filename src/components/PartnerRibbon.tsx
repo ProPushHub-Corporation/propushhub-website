@@ -1,25 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { HomePartner } from '../data/homePartnerTypes';
 import { cloudinaryImage } from '../lib/cloudinary';
 import { useHomePartners } from '../lib/useHomePartners';
 import { Container } from './ui';
 
-const MIN_PER_SET = 8;
-const SECONDS_PER_LOGO = 3.5;
+/** Every logo sits in a square box of this many CSS pixels (kept in sync with the h-/w- classes below). */
+const LOGO_BOX = 120;
+const MIN_PER_SET = 12;
+const SECONDS_PER_LOGO = 2.4;
 
 const Logo: React.FC<{ partner: HomePartner; decorative: boolean }> = ({ partner, decorative }) => {
-  const logo = cloudinaryImage(partner.logo.url, 360, { aspect: '2:1', crop: 'fit', gravity: 'center' });
-  const image = (
+  // Logos hosted elsewhere (instead of Cloudinary) can be blocked or removed; show the name rather than a broken image.
+  const [failed, setFailed] = useState(false);
+  const logo = cloudinaryImage(partner.logo.url, LOGO_BOX * 2, {
+    aspect: '1:1',
+    crop: 'fit',
+    gravity: 'center',
+    widths: [LOGO_BOX, LOGO_BOX * 2, LOGO_BOX * 3],
+  });
+  const image = failed ? (
+    <span className="text-center font-display text-lg font-medium leading-tight text-muted transition-colors group-hover:text-fg">
+      {partner.name}
+    </span>
+  ) : (
     <img
       src={logo.src}
       srcSet={logo.srcSet}
-      sizes="180px"
-      width={360}
-      height={180}
+      sizes="120px"
+      width={LOGO_BOX * 2}
+      height={LOGO_BOX * 2}
       alt={decorative ? '' : partner.logo.alt}
       loading="lazy"
       decoding="async"
-      className="max-h-14 w-auto max-w-full object-contain opacity-60 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+      referrerPolicy="no-referrer"
+      onError={() => setFailed(true)}
+      className="h-full w-full object-contain opacity-60 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
     />
   );
   return partner.url ? (
@@ -63,7 +78,7 @@ export const PartnerRibbon: React.FC = () => {
       </Container>
 
       <div
-        className="ribbon mt-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)]"
+        className="ribbon mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)]"
         style={{ '--ribbon-seconds': `${seconds}s` } as React.CSSProperties}
       >
         <div className="ribbon-track">
@@ -72,10 +87,10 @@ export const PartnerRibbon: React.FC = () => {
               key={decorative ? 'copy' : 'original'}
               aria-hidden={decorative || undefined}
               aria-label={decorative ? undefined : 'Partners and collaborating companies'}
-              className="flex shrink-0 items-center gap-12 pr-12"
+              className="flex shrink-0 items-center gap-6 pr-6 sm:gap-8 sm:pr-8"
             >
               {copy.map((partner, i) => (
-                <li key={`${partner.slug}-${i}`} className="h-20 w-44 shrink-0">
+                <li key={`${partner.slug}-${i}`} className="h-[120px] w-[120px] shrink-0">
                   <Logo partner={partner} decorative={decorative || i >= items.length} />
                 </li>
               ))}

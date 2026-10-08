@@ -23,13 +23,18 @@ export const cloudinaryOgImage = (url: string): string =>
 export const cloudinaryImage = (
   url: string,
   width = 1200,
-  { aspect = '16:10', gravity = 'north', crop = 'fill' }: { aspect?: string; gravity?: string; crop?: 'fill' | 'fit' } = {}
+  {
+    aspect = '16:10',
+    gravity = 'north',
+    crop = 'fill',
+    widths = WIDTHS,
+  }: { aspect?: string; gravity?: string; crop?: 'fill' | 'fit'; widths?: number[] } = {}
 ): ResponsiveImage => {
   const transform = (w: number) => `f_auto,q_auto,c_${crop},g_${gravity},ar_${aspect},w_${w}`;
   const src = withTransform(url, transform(width));
   if (!src) return { src: url };
   return {
     src,
-    srcSet: WIDTHS.map((w) => `${withTransform(url, transform(w))} ${w}w`).join(', '),
+    srcSet: widths.map((w) => `${withTransform(url, transform(w))} ${w}w`).join(', '),
   };
 };

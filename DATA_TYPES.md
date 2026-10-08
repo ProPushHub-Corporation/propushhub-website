@@ -371,7 +371,7 @@ logo are used, in `order` (left to right in the first loop). Logos are Cloudinar
 
 ```ts
 interface HomePartnerLogo {
-  url: string;             // Cloudinary delivery URL (2:1); required
+  url: string;             // Cloudinary delivery URL; shown uncropped in a 120 x 120 px box; required
   alt: string;             // required
 }
 
@@ -386,8 +386,11 @@ interface HomePartner {
 }
 ```
 
-Upload logos at **360 x 180 px** or larger (2:1). They are shown uncropped, in grey, and turn to colour on hover; the
-ribbon pauses while the pointer is over it. A short list is repeated so the ribbon always fills the screen.
+Each logo is shown in a **120 x 120 px** box, centred and never cropped, so any shape works. Upload at **240 x 240 px** or
+larger so it stays sharp on high-density screens. Logos are grey and turn to colour on hover; the ribbon pauses while the
+pointer is over it. A short list is repeated so the ribbon always fills the screen. If a logo URL cannot be loaded (for
+example a site that blocks other websites from displaying its images), the company name is shown instead; hosting the
+logo on Cloudinary avoids that.
 
 Example (`home_collaboration_partner/acme-labs`):
 
