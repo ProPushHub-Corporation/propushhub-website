@@ -78,7 +78,7 @@ export interface Project {
 
 export const COMPANY_INFO = {
   name: 'PropushHub',
-  tagline: 'We don’t just build landing pages. We build complete digital products.',
+  tagline: 'We build the software your business runs on.',
   githubProfile: 'https://github.com/syedmuhammadali-dev',
   developerPortfolio: 'https://ali-portfolio-nine.vercel.app/',
   whatsappUrl: 'https://wa.me/923190586822?text=Hello%20PropushHub%2C%20I%20would%20like%20to%20discuss%20a%20software%20project.',
