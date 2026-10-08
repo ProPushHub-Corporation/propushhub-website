@@ -1,5 +1,9 @@
 import React from 'react';
 import { Link } from '../lib/router';
+import { SplitText } from './reactbits/SplitText';
+
+/** Order index for the `.hero-anim` load-in animation (see index.css). */
+export const anim = (i: number) => ({ '--i': i }) as React.CSSProperties;
 
 export const Container: React.FC<{ className?: string; children: React.ReactNode }> = ({
   className = '',
@@ -45,9 +49,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
 }) => (
   <div className={`mb-12 max-w-3xl sm:mb-16 ${className}`}>
     <p className="eyebrow mb-5">{eyebrow}</p>
-    <h2 id={id} className="text-3xl leading-[1.08] sm:text-5xl">
-      {title}
-    </h2>
+    <SplitText tag="h2" id={id} text={title} className="text-3xl leading-[1.08] sm:text-5xl" />
     {intro && <p className="mt-5 max-w-[58ch] text-lg leading-relaxed text-muted">{intro}</p>}
   </div>
 );

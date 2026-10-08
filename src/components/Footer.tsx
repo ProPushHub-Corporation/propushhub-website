@@ -43,8 +43,13 @@ export const Footer: React.FC = () => (
               </Link>
             </li>
             <li>
+              <Link to="/showcase" className={linkCls}>
+                Showcase
+              </Link>
+            </li>
+            <li>
               <Link to="/contact" className={linkCls}>
-                Contact
+                Contact form
               </Link>
             </li>
           </ul>
@@ -68,7 +73,7 @@ export const Footer: React.FC = () => (
       </div>
 
       <div className="mt-16 flex flex-col gap-2 border-t border-line pt-6 text-xs text-dim sm:flex-row sm:justify-between">
-        <p>© <span suppressHydrationWarning>{new Date().getFullYear()}</span> PropushHub. All rights reserved.</p>
+        <p>© <span suppressHydrationWarning>{new Date().getFullYear()}</span> PropushHub Corporation (PPH). All rights reserved.</p>
         <p>Website · CMS · Mobile · Desktop · ERP</p>
       </div>
     </div>

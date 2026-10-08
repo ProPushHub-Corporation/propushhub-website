@@ -1,29 +1,26 @@
 @import "tailwindcss";
-@import "@fontsource-variable/arimo";
+@import "@fontsource-variable/noto-sans";
+@import "@fontsource-variable/dm-sans";
 
 /*
  * Monochrome design system: white background, black text, no accent colour.
  * Components only use these tokens, so the palette lives in one place.
  */
 @theme {
-  --font-sans: "Arimo Variable", Arimo, Arial, Helvetica, sans-serif;
-  --font-display: "Arimo Variable", Arimo, Arial, Helvetica, sans-serif;
+  /* Miro pairs Roobert PRO (paid licence) with Noto Sans. Body is Noto Sans; DM Sans stands in for Roobert. */
+  --font-sans: "Noto Sans Variable", "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "DM Sans Variable", "DM Sans", "Noto Sans Variable", system-ui, sans-serif;
 
   --color-ink: #ffffff;
   --color-surface: #f5f5f5;
   --color-surface-2: #ebebeb;
-  --color-fg: #0a0a0a;
-  --color-fg-2: #262626;
-  --color-muted: #525252;
+  --color-fg: #111111;
+  --color-fg-2: #2b2b2b;
+  --color-muted: #555555;
   --color-dim: #6b6b6b;
-  --color-line: #e5e5e5;
-  --color-line-strong: #8a8a8a;
-
-  --animate-rise: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(14px); }
-    to { opacity: 1; transform: none; }
-  }
+  --color-line: #ececec;
+  --color-line-strong: #d6d6d6;
+  --color-field: #949494;
 }
 
 @layer base {
@@ -41,17 +38,14 @@
     color: var(--color-fg);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: -0.02em;
     text-wrap: balance;
   }
-
-  p { text-wrap: pretty; }
 
   [id] { scroll-margin-top: 5rem; }
 
@@ -79,6 +73,7 @@
   }
 
   .eyebrow {
+    font-family: var(--font-display);
     font-size: 0.75rem;
     line-height: 1;
     font-weight: 500;
@@ -93,9 +88,11 @@
     justify-content: center;
     gap: 0.5rem;
     height: 3rem;
-    padding-inline: 1.5rem;
+    padding-inline: 1.75rem;
     border: 1px solid var(--color-fg);
-    font-size: 0.9375rem;
+    border-radius: 9999px;
+    font-family: var(--font-display);
+    font-size: 1rem;
     font-weight: 500;
     line-height: 1;
     white-space: nowrap;
@@ -110,26 +107,103 @@
 
   .field {
     width: 100%;
-    background: transparent;
+    background: var(--color-ink);
     color: var(--color-fg);
-    border: 1px solid var(--color-line-strong);
-    padding: 0.8125rem 1rem;
+    border: 1px solid var(--color-field);
+    padding: 0.8125rem 1.125rem;
     font-size: 1rem;
     line-height: 1.4;
-    border-radius: 0;
+    border-radius: 0.875rem;
     transition: border-color 0.15s ease;
   }
   .field::placeholder { color: var(--color-dim); }
   .field:hover { border-color: var(--color-muted); }
   .field:focus { outline: none; border-color: var(--color-fg); }
   select.field { appearance: none; background-image: none; }
-  select.field option { background: #fff; color: #0a0a0a; }
+  select.field option { background: #fff; color: #111; }
+
+  /* Soft cursor-following highlight (React Bits "Spotlight Card"). --mx / --my are set by <Reveal spotlight>. */
+  .spotlight { position: relative; overflow: hidden; isolation: isolate; }
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgb(0 0 0 / 0.07), transparent 65%);
+  }
+  @media (hover: hover) {
+    .spotlight:hover::before { opacity: 1; }
+  }
 }
 
-/* First-visit intro (see components/Intro.tsx). Hidden unless index.html marks the visit. */
-#intro { display: none; }
-html.intro-pending #intro { display: grid; }
-html.intro-pending { overflow: hidden; }
+/*
+ * Load-in animation. Pure CSS, so it runs at first paint without waiting for any JavaScript.
+ *
+ * On the home page an inline script in index.html adds `splash` to <html> (the PPH loading screen)
+ * and later `splash-exit` once the page has loaded. Hero text is held back until the splash starts to
+ * leave. Without JavaScript neither class exists: no splash, and the hero is simply visible.
+ */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+html { --hero-base: 0ms; }
+html.splash { --hero-base: 320ms; }
+
+.hero-anim {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--hero-base) + var(--i, 0) * 65ms);
+}
+html.splash:not(.splash-exit) .hero-anim { animation: none; opacity: 0; }
+html.splash:not(.splash-exit) { overflow: hidden; }
+
+#splash {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  place-items: center;
+  overflow: hidden;
+  background: var(--color-ink);
+  color: var(--color-fg);
+}
+html.splash #splash { display: grid; }
+
+.splash-mark { width: min(68vw, 560px); height: auto; overflow: visible; }
+.splash-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: splash-draw 0.55s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: calc(var(--i) * 100ms + 60ms);
+}
+.splash-bar {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 3px;
+  background: var(--color-fg);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: splash-bar 1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes splash-draw { to { stroke-dashoffset: 0; } }
+@keyframes splash-bar { to { transform: scaleX(1); } }
+@keyframes splash-zoom { to { transform: scale(48); } }
+@keyframes splash-out { to { opacity: 0; visibility: hidden; } }
+/* Same effect as splash-out under a different name: reusing the name would keep the failsafe's old start time. */
+@keyframes splash-fade { to { opacity: 0; visibility: hidden; } }
+
+/* Page has loaded: the word grows until it fills the screen, then the splash fades away. */
+html.splash-exit .splash-mark { animation: splash-zoom 0.9s cubic-bezier(0.76, 0, 0.24, 1) forwards; }
+html.splash-exit #splash { pointer-events: none; animation: splash-fade 0.38s ease-in 0.55s forwards; }
+html.splash-exit .splash-bar { opacity: 0; }
+/* Failsafe: never leave the page covered if the exit script did not run. */
+html.splash:not(.splash-exit) #splash { animation: splash-out 0.4s ease-in 6s forwards; }
 
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

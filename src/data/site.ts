@@ -12,6 +12,7 @@ export const COMPANY_INFO = {
 
 export const NAV_LINKS: { label: string; to: string }[] = [
   { label: 'Services', to: '/services' },
+  { label: 'Showcase', to: '/showcase' },
   { label: 'Process', to: '/#process' },
   { label: 'Contact', to: '/contact' },
 ];

@@ -1,7 +1,9 @@
 import React from 'react';
 
 interface SiteImageProps {
-  image: { width: number; height: number; alt: string; src?: string };
+  image: { width: number; height: number; alt: string; src?: string; srcSet?: string };
+  /** `sizes` attribute for responsive `srcSet` images. */
+  sizes?: string;
   /** Short caption shown inside the placeholder, e.g. "Hero image". */
   label?: string;
   /** Above-the-fold image: loaded eagerly with high fetch priority. */
@@ -13,20 +15,22 @@ interface SiteImageProps {
  * Renders the real image when `src` is set, otherwise a "W × H" placeholder
  * with the same aspect ratio, so layout never shifts when the real file arrives.
  */
-export const SiteImage: React.FC<SiteImageProps> = ({ image, label, priority, className = '' }) => {
-  const { width, height, alt, src } = image;
+export const SiteImage: React.FC<SiteImageProps> = ({ image, sizes, label, priority, className = '' }) => {
+  const { width, height, alt, src, srcSet } = image;
 
   if (src) {
     return (
       <img
         src={src}
+        srcSet={srcSet}
+        sizes={srcSet ? sizes : undefined}
         width={width}
         height={height}
         alt={alt}
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
         fetchPriority={priority ? 'high' : 'auto'}
-        className={`block h-auto w-full border border-line ${className}`}
+        className={`block h-auto w-full rounded-3xl border border-line ${className}`}
       />
     );
   }
@@ -36,7 +40,7 @@ export const SiteImage: React.FC<SiteImageProps> = ({ image, label, priority, cl
       role="img"
       aria-label={alt}
       style={{ aspectRatio: `${width} / ${height}` }}
-      className={`relative w-full overflow-hidden border border-line bg-surface-2 ${className}`}
+      className={`relative w-full overflow-hidden rounded-3xl border border-line bg-surface-2 ${className}`}
     >
       <svg
         className="absolute inset-0 h-full w-full text-line-strong"
@@ -48,7 +52,7 @@ export const SiteImage: React.FC<SiteImageProps> = ({ image, label, priority, cl
         <line x1="100" y1="0" x2="0" y2="100" stroke="currentColor" strokeWidth="1" vectorEffect="non-scaling-stroke" />
       </svg>
       <div className="absolute inset-0 grid place-items-center p-4 text-center">
-        <div className="bg-surface-2 px-3 py-2">
+        <div className="rounded-xl bg-surface-2 px-3 py-2">
           <p className="text-sm font-medium tracking-wide text-fg sm:text-base">
             {width} × {height}
           </p>

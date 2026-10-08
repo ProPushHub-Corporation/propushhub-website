@@ -3,7 +3,9 @@ import { ArrowUpRight } from 'lucide-react';
 import { getServiceBySlug } from '../data/services';
 import { Link } from '../lib/router';
 import { SiteImage } from '../components/SiteImage';
-import { Breadcrumbs, Container, Section, SectionHeader } from '../components/ui';
+import { Reveal } from '../components/reactbits/Reveal';
+import { SplitWords } from '../components/reactbits/SplitWords';
+import { Breadcrumbs, Container, Section, SectionHeader, anim } from '../components/ui';
 import { FaqSection, FinalCta, ProcessSection, Reassurance } from '../components/sections';
 import { NotFoundPage } from './NotFoundPage';
 
@@ -22,21 +24,22 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
           <Breadcrumbs
             items={[{ name: 'Home', to: '/' }, { name: 'Services', to: '/services' }, { name: service.name }]}
           />
-          <p className="eyebrow animate-rise">Service</p>
-          <h1
+          <p className="eyebrow hero-anim" style={anim(0)}>
+            Service
+          </p>
+          <SplitWords
+            tag="h1"
             id="service-title"
-            className="animate-rise mt-6 max-w-4xl text-[length:clamp(2.5rem,6vw,4.75rem)] leading-[1] tracking-[-0.03em]"
-            style={{ animationDelay: '80ms' }}
-          >
-            {service.h1}
-          </h1>
+            text={service.h1}
+            className="mt-6 max-w-4xl text-[length:clamp(2.5rem,6vw,4.75rem)] leading-[1.06] tracking-[-0.02em]"
+          />
           <p
-            className="animate-rise mt-8 max-w-[58ch] text-lg leading-relaxed text-muted sm:text-xl"
-            style={{ animationDelay: '160ms' }}
+            className="hero-anim mt-8 max-w-[58ch] text-lg leading-relaxed text-muted sm:text-xl"
+            style={anim(10)}
           >
             {service.intro}
           </p>
-          <div className="animate-rise mt-10 flex flex-wrap items-center gap-3" style={{ animationDelay: '240ms' }}>
+          <div className="hero-anim mt-10 flex flex-wrap items-center gap-3" style={anim(11)}>
             <Link to={`/contact?service=${service.slug}`} className="btn btn-primary">
               Get a quote
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -58,11 +61,11 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
         />
         <ul className="grid gap-x-10 gap-y-10 md:grid-cols-2">
           {service.deliverables.map((item, i) => (
-            <li key={item.title} className="border-t border-fg pt-5">
+            <Reveal as="li" key={item.title} spotlight delay={(i % 2) * 0.1} className="rounded-3xl bg-surface p-7">
               <span className="text-xs text-dim">{String(i + 1).padStart(2, '0')}</span>
               <h3 className="mt-5 text-xl">{item.title}</h3>
               <p className="mt-2 max-w-[48ch] leading-relaxed text-muted">{item.detail}</p>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </Section>
@@ -74,9 +77,9 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
             <h2 id="fit-title" className="text-3xl leading-[1.08] sm:text-4xl">
               Built for teams like yours
             </h2>
-            <ul className="mt-8 border-t border-line-strong">
+            <ul className="mt-8 space-y-3">
               {service.forWho.map((item) => (
-                <li key={item} className="border-b border-line py-4 text-lg">
+                <li key={item} className="rounded-2xl bg-surface px-5 py-4 text-lg">
                   {item}
                 </li>
               ))}
@@ -87,7 +90,7 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
             <h2 className="text-3xl leading-[1.08] sm:text-4xl">Tools we use</h2>
             <ul className="mt-8 flex flex-wrap gap-2">
               {service.stack.map((tech) => (
-                <li key={tech} className="border border-line-strong px-3 py-1.5 text-sm text-fg-2">
+                <li key={tech} className="rounded-full border border-line-strong px-4 py-1.5 text-sm text-fg-2">
                   {tech}
                 </li>
               ))}
@@ -110,12 +113,12 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
 
       <Section id="related-services" labelledBy="related-services-title">
         <SectionHeader id="related-services-title" eyebrow="Related services" title="Often combined with" />
-        <ul className="grid gap-px border border-line bg-line md:grid-cols-3">
+        <ul className="grid gap-4 md:grid-cols-3">
           {related.map((item) => (
-            <li key={item.slug} className="bg-ink">
+            <li key={item.slug}>
               <Link
                 to={`/services/${item.slug}`}
-                className="group flex h-full flex-col justify-between gap-8 p-6 transition-colors hover:bg-fg"
+                className="group flex h-full flex-col justify-between gap-8 rounded-3xl bg-surface p-7 transition-colors hover:bg-fg"
               >
                 <div>
                   <h3 className="text-xl transition-colors group-hover:text-ink">{item.name}</h3>

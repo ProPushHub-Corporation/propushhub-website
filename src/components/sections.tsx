@@ -4,6 +4,8 @@ import { SERVICES } from '../data/services';
 import { COMPANY_INFO, CTA_REASSURANCE, PROCESS_STEPS } from '../data/site';
 import type { ServiceFaq } from '../data/services';
 import { Link } from '../lib/router';
+import { Magnet } from './reactbits/Magnet';
+import { Reveal } from './reactbits/Reveal';
 import { Container, Section, SectionHeader } from './ui';
 
 export const Reassurance: React.FC<{ className?: string }> = ({ className = '' }) => (
@@ -23,15 +25,15 @@ export const ServiceList: React.FC<{ exclude?: string[] }> = ({ exclude = [] }) 
   return (
     <ul className="border-t border-line-strong">
       {items.map((s, i) => (
-        <li key={s.slug} className="border-b border-line">
+        <Reveal as="li" key={s.slug} className="border-b border-line">
           <Link
             to={`/services/${s.slug}`}
-            className="group -mx-4 grid items-baseline gap-x-8 gap-y-2 px-4 py-7 transition-colors hover:bg-fg sm:grid-cols-12"
+            className="group -mx-4 grid items-baseline gap-x-8 gap-y-2 rounded-2xl px-4 py-7 transition-colors hover:bg-fg sm:grid-cols-12"
           >
             <span className="text-xs text-dim transition-colors group-hover:text-ink sm:col-span-1">
               {String(i + 1).padStart(2, '0')}
             </span>
-            <h3 className="text-2xl font-semibold tracking-tight transition-colors group-hover:text-ink sm:col-span-5 sm:text-3xl">
+            <h3 className="text-2xl font-medium tracking-tight transition-colors group-hover:text-ink sm:col-span-5 sm:text-3xl">
               {s.name}
             </h3>
             <p className="text-muted transition-colors group-hover:text-ink/70 sm:col-span-5">{s.summary}</p>
@@ -40,7 +42,7 @@ export const ServiceList: React.FC<{ exclude?: string[] }> = ({ exclude = [] }) 
               className="hidden h-5 w-5 justify-self-end transition-all group-hover:translate-x-1 group-hover:text-ink sm:col-span-1 sm:block"
             />
           </Link>
-        </li>
+        </Reveal>
       ))}
     </ul>
   );
@@ -54,13 +56,13 @@ export const ProcessSection: React.FC = () => (
       title="A clear process from first call to launch"
       intro="Five steps, each with a clear outcome, so you always know what happens next."
     />
-    <ol className="grid gap-x-8 gap-y-10 md:grid-cols-5">
+    <ol className="grid gap-4 md:grid-cols-5">
       {PROCESS_STEPS.map((step, i) => (
-        <li key={step.title} className="border-t border-fg pt-5">
+        <Reveal as="li" key={step.title} spotlight delay={i * 0.08} className="rounded-3xl bg-surface p-6">
           <span className="text-xs text-dim">{String(i + 1).padStart(2, '0')}</span>
-          <h3 className="mt-8 text-2xl">{step.title}</h3>
+          <h3 className="mt-10 text-2xl">{step.title}</h3>
           <p className="mt-3 text-sm leading-relaxed text-muted">{step.detail}</p>
-        </li>
+        </Reveal>
       ))}
     </ol>
   </Section>
@@ -94,14 +96,14 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
           .
         </p>
       </div>
-      <div className="border-t border-line-strong lg:col-span-8">
+      <div className="space-y-3 lg:col-span-8">
         {faqs.map((faq, i) => (
-          <details key={faq.q} className="group border-b border-line" open={i === 0}>
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-lg font-medium [&::-webkit-details-marker]:hidden">
+          <details key={faq.q} className="group rounded-2xl bg-surface px-6" open={i === 0}>
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-medium [&::-webkit-details-marker]:hidden">
               <h3 className="text-lg font-medium tracking-normal">{faq.q}</h3>
               <Plus aria-hidden="true" className="h-5 w-5 shrink-0 transition-transform group-open:rotate-45" />
             </summary>
-            <p className="max-w-[62ch] pb-7 leading-relaxed text-muted">{faq.a}</p>
+            <p className="max-w-[62ch] pb-6 leading-relaxed text-muted">{faq.a}</p>
           </details>
         ))}
       </div>
@@ -132,10 +134,12 @@ export const FinalCta: React.FC<FinalCtaProps> = ({
         Share a few details and get a clear scope and a written quote. No obligation.
       </p>
       <div className="mt-10 flex flex-wrap items-center gap-3">
-        <Link to={serviceSlug ? `/contact?service=${serviceSlug}` : '/contact'} className="btn btn-primary">
-          Get a free quote
-          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
+        <Magnet>
+          <Link to={serviceSlug ? `/contact?service=${serviceSlug}` : '/contact'} className="btn btn-primary">
+            Get a free quote
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </Magnet>
         <a href={COMPANY_INFO.whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
           Chat on WhatsApp
         </a>

@@ -2,109 +2,82 @@
  * Adapted from the React Bits "SplitText" component (https://reactbits.dev/text-animations/split-text).
  *
  * Differences from the original:
- *  - GSAP and its SplitText plugin are imported on demand, so they stay out of the main bundle.
- *  - The animation is released by the intro (`intro:reveal`) instead of a ScrollTrigger.
- *  - It does nothing unless the intro is playing. In every other case the plain, server-rendered
- *    text is left untouched, which keeps the heading fully visible to crawlers and no-JS visitors.
+ *  - GSAP, SplitText and ScrollTrigger are loaded on demand (see lib/motion.ts), not bundled up front.
+ *  - It only touches headings that start below the fold, after the page has loaded. Everything else stays
+ *    plain server-rendered text, which keeps headings visible to crawlers and no-JS visitors.
+ *  - It splits into words (readable at heading sizes) and reverts to plain text when the animation ends.
  */
 import React, { useEffect, useRef } from 'react';
-import { INTRO_REVEAL_EVENT, introPending, introRevealed } from '../../lib/introState';
-
-type Vars = Record<string, unknown>;
-
-const DEFAULT_FROM: Vars = { opacity: 0, y: 48 };
-const DEFAULT_TO: Vars = { opacity: 1, y: 0 };
+import { belowFold, loadMotion } from '../../lib/motion';
 
 interface SplitTextProps {
   text: string;
-  tag?: 'h1' | 'h2' | 'h3' | 'p' | 'span';
+  tag?: 'h1' | 'h2' | 'h3' | 'p';
   id?: string;
   className?: string;
-  style?: React.CSSProperties;
-  /** Gap between each piece, in milliseconds. */
-  delay?: number;
+  /** Seconds between each word. */
+  stagger?: number;
   duration?: number;
   ease?: string;
-  splitType?: 'chars' | 'words' | 'lines';
-  from?: Vars;
-  to?: Vars;
 }
 
 export const SplitText: React.FC<SplitTextProps> = ({
   text,
-  tag = 'p',
+  tag = 'h2',
   id,
   className = '',
-  style,
-  delay = 22,
-  duration = 0.85,
+  stagger = 0.06,
+  duration = 0.9,
   ease = 'power3.out',
-  splitType = 'chars',
-  from = DEFAULT_FROM,
-  to = DEFAULT_TO,
 }) => {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || !introPending()) return;
-
-    let disposed = false;
+    if (!el) return;
+    let off = false;
     let cleanup = () => {};
 
-    (async () => {
-      const [{ gsap }, { SplitText: GSAPSplitText }] = await Promise.all([
-        import('gsap'),
-        import('gsap/SplitText'),
-      ]);
-      // Split only after the web font is ready, otherwise line widths are measured wrong.
+    loadMotion().then(async (m) => {
+      if (!m || off || !belowFold(el)) return;
+      // Split only after the web fonts are ready, otherwise word widths are measured wrong.
       await document.fonts.ready;
-      // If the intro already finished (very slow connection), leave the plain text alone.
-      if (disposed || !introPending()) return;
+      if (off || !belowFold(el, 1)) return;
 
-      gsap.registerPlugin(GSAPSplitText);
-      const split = new GSAPSplitText(el, {
-        type: splitType,
-        smartWrap: true,
-        reduceWhiteSpace: false,
-        charsClass: 'split-char',
-        wordsClass: 'split-word',
-        linesClass: 'split-line',
+      const { gsap, ScrollTrigger, SplitText: Splitter } = m;
+      const split = new Splitter(el, { type: 'words', smartWrap: true });
+      gsap.set(split.words, { opacity: 0, y: 28 });
+      const trigger = ScrollTrigger.create({
+        trigger: el,
+        start: 'top 88%',
+        once: true,
+        onEnter: () =>
+          gsap.to(split.words, {
+            opacity: 1,
+            y: 0,
+            duration,
+            ease,
+            stagger,
+            force3D: true,
+            onComplete: () => split.revert(),
+          }),
       });
-      const targets = split[splitType];
-      gsap.set(targets, { ...from });
-
-      const play = () => {
-        gsap.to(targets, {
-          ...to,
-          duration,
-          ease,
-          stagger: delay / 1000,
-          force3D: true,
-          // Put the original text back so resizing, selection and screen readers behave normally.
-          onComplete: () => split.revert(),
-        });
-      };
-
-      if (introRevealed()) play();
-      else window.addEventListener(INTRO_REVEAL_EVENT, play, { once: true });
-
       cleanup = () => {
-        window.removeEventListener(INTRO_REVEAL_EVENT, play);
-        gsap.killTweensOf(targets);
+        trigger.kill();
+        gsap.killTweensOf(split.words);
         split.revert();
       };
-    })();
+    });
 
     return () => {
-      disposed = true;
+      off = true;
       cleanup();
     };
-  }, [text, delay, duration, ease, splitType, from, to]);
+  }, [text, stagger, duration, ease]);
 
   const Tag = tag as React.ElementType;
   return (
-    <Tag ref={ref} id={id} className={className} style={style}>
+    <Tag ref={ref} id={id} className={className}>
       {text}
     </Tag>
   );

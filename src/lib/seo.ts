@@ -1,10 +1,14 @@
 import { SERVICES, getServiceBySlug } from '../data/services';
 import type { Service, ServiceFaq } from '../data/services';
+import type { ShowcaseProject } from '../data/showcaseTypes';
 import { COMPANY_INFO, HOME_FAQS } from '../data/site';
+import { cloudinaryOgImage } from './cloudinary';
 
 /** Canonical origin. Change this when a custom domain is connected. */
 export const SITE_URL = 'https://pphcorporation.vercel.app';
 export const SITE_NAME = 'PropushHub';
+/** Other names people search for. Used in schema.org `alternateName` and a few headings. */
+export const BRAND_ALIASES = ['PPH Corporation', 'PropushHub Corporation', 'PPH'];
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 export const OG_IMAGE_ALT = 'PropushHub: websites, CMS, mobile, desktop and ERP software development';
 
@@ -28,6 +32,7 @@ export const ORGANIZATION_LD = {
   '@type': 'Organization',
   '@id': ORG_ID,
   name: SITE_NAME,
+  alternateName: BRAND_ALIASES,
   url: `${SITE_URL}/`,
   logo: { '@type': 'ImageObject', url: `${SITE_URL}/icon-512.png`, width: 512, height: 512 },
   image: DEFAULT_OG_IMAGE,
@@ -50,6 +55,7 @@ const WEBSITE_LD = {
   '@id': `${SITE_URL}/#website`,
   url: `${SITE_URL}/`,
   name: SITE_NAME,
+  alternateName: BRAND_ALIASES,
   inLanguage: 'en',
   publisher: { '@id': ORG_ID },
 };
@@ -96,9 +102,9 @@ const serviceLd = (service: Service) => ({
 });
 
 const HOME: RouteSeo = {
-  title: 'PropushHub — Web, Mobile & Custom Software Development',
+  title: 'PPH Corporation (PropushHub) — Custom Software Development',
   description:
-    'PropushHub builds websites, CMS, e-commerce, mobile apps, desktop software and custom ERP. One team from design to launch and support. Get a free quote.',
+    'PPH Corporation (PropushHub) builds websites, CMS, mobile apps, desktop software and custom ERP. One team from design to launch and support. Free quote.',
   path: '/',
   canonical: absolute('/'),
   image: DEFAULT_OG_IMAGE,
@@ -184,10 +190,101 @@ const serviceSeo = (slug: string): RouteSeo | null => {
   };
 };
 
-const CONTACT: RouteSeo = {
-  title: 'Contact PropushHub — Get a Free Project Quote',
+const showcaseSeo = (projects: ShowcaseProject[] = []): RouteSeo => ({
+  title: 'Project Showcase: Web, Mobile & ERP Software | PropushHub',
   description:
-    'Tell PropushHub about your website, app or software project and get a clear scope and written quote. Reach us by form, WhatsApp or email.',
+    'Browse software built by PropushHub: ERP and inventory systems, web and mobile apps, SaaS dashboards and AI tools, with live demos and source code.',
+  path: '/showcase',
+  canonical: absolute('/showcase'),
+  image: DEFAULT_OG_IMAGE,
+  type: 'website',
+  jsonLd: [
+    breadcrumb([
+      { name: 'Home', path: '/' },
+      { name: 'Showcase', path: '/showcase' },
+    ]),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: 'PropushHub project showcase',
+      url: absolute('/showcase'),
+      isPartOf: { '@id': `${SITE_URL}/#website` },
+      ...(projects.length
+        ? {
+            mainEntity: {
+              '@type': 'ItemList',
+              itemListElement: projects.map((p, i) => ({
+                '@type': 'ListItem',
+                position: i + 1,
+                item: {
+                  '@type': 'CreativeWork',
+                  name: p.title,
+                  description: p.shortDescription,
+                  url: absolute(`/showcase/${p.slug}`),
+                  keywords: p.allTechnologies.join(', '),
+                  creator: { '@id': ORG_ID },
+                  ...(p.images.find((i) => i.url)?.url ? { image: cloudinaryOgImage(p.images.find((i) => i.url)!.url as string) } : {}),
+                },
+              })),
+            },
+          }
+        : {}),
+    },
+  ],
+});
+
+const clip = (text: string, max = 158): string => {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(' '))}…`;
+};
+
+const projectSeo = (slug: string, projects: ShowcaseProject[]): RouteSeo | null => {
+  const project = projects.find((p) => p.slug === slug);
+  if (!project) return null;
+  const path = `/showcase/${project.slug}`;
+  const firstImage = project.images.find((i) => i.url)?.url;
+  const image = firstImage ? cloudinaryOgImage(firstImage) : DEFAULT_OG_IMAGE;
+  return {
+    // Long names (e.g. "CoreStock — Inventory & Warehouse Management Platform") keep just the brand part so the title fits.
+    title: `${project.title.length + 26 > 62 ? project.title.split(' — ')[0] : project.title} — Case Study | ${SITE_NAME}`,
+    description: clip(project.shortDescription),
+    path,
+    canonical: absolute(path),
+    image,
+    type: 'article',
+    jsonLd: [
+      breadcrumb([
+        { name: 'Home', path: '/' },
+        { name: 'Showcase', path: '/showcase' },
+        { name: project.title, path },
+      ]),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'CreativeWork',
+        '@id': `${absolute(path)}#project`,
+        name: project.title,
+        headline: `${project.title}: ${project.type}`,
+        description: clip(project.shortDescription),
+        url: absolute(path),
+        genre: project.category,
+        keywords: project.allTechnologies.join(', '),
+        image,
+        creator: { '@id': ORG_ID },
+        publisher: { '@id': ORG_ID },
+        isPartOf: { '@type': 'CollectionPage', '@id': `${absolute('/showcase')}`, name: 'PropushHub project showcase' },
+        ...(project.updatedAt ? { dateModified: project.updatedAt } : {}),
+        sameAs: [project.liveUrl, project.githubUrl, project.secondaryLiveUrl?.url, project.secondaryGithubUrl?.url].filter(Boolean),
+      },
+    ],
+  };
+};
+
+const CONTACT: RouteSeo = {
+  title: 'Contact PPH Corporation (PropushHub) — Contact Form',
+  description:
+    'Contact form for PPH Corporation (PropushHub): tell us about your website, app or software project and get a written quote. Or reach us on WhatsApp or email.',
   path: '/contact',
   canonical: absolute('/contact'),
   image: DEFAULT_OG_IMAGE,
@@ -200,7 +297,8 @@ const CONTACT: RouteSeo = {
     {
       '@context': 'https://schema.org',
       '@type': 'ContactPage',
-      name: 'Contact PropushHub',
+      name: 'Contact PPH Corporation (PropushHub)',
+      description: 'Contact form, WhatsApp and email for PPH Corporation (PropushHub).',
       url: absolute('/contact'),
       isPartOf: { '@id': `${SITE_URL}/#website` },
       about: { '@id': ORG_ID },
@@ -219,19 +317,23 @@ const NOT_FOUND: RouteSeo = {
   jsonLd: [],
 };
 
-export const getRouteSeo = (pathname: string): RouteSeo => {
+export const getRouteSeo = (pathname: string, showcase?: ShowcaseProject[] | null): RouteSeo => {
   const path = pathname.replace(/\/+$/, '') || '/';
   if (path === '/') return HOME;
   if (path === '/services') return SERVICES_INDEX;
   if (path.startsWith('/services/')) return serviceSeo(path.slice('/services/'.length)) ?? NOT_FOUND;
+  if (path === '/showcase') return showcaseSeo(showcase ?? []);
+  if (path.startsWith('/showcase/')) return projectSeo(path.slice('/showcase/'.length), showcase ?? []) ?? NOT_FOUND;
   if (path === '/contact') return CONTACT;
   return NOT_FOUND;
 };
 
-export const getAllIndexablePaths = (): string[] => [
+export const getAllIndexablePaths = (showcase: ShowcaseProject[] = []): string[] => [
   '/',
   '/services',
   ...SERVICES.map((s) => `/services/${s.slug}`),
+  '/showcase',
+  ...showcase.map((p) => `/showcase/${p.slug}`),
   '/contact',
 ];
 

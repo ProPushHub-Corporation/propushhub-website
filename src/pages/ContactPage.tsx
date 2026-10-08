@@ -3,7 +3,8 @@ import { ArrowUpRight, CheckCircle2, ChevronDown, Mail, MessageCircle } from 'lu
 import { SERVICES } from '../data/services';
 import { BUDGET_OPTIONS, COMPANY_INFO } from '../data/site';
 import { useRouter } from '../lib/router';
-import { Breadcrumbs, Container } from '../components/ui';
+import { SplitWords } from '../components/reactbits/SplitWords';
+import { Breadcrumbs, Container, anim } from '../components/ui';
 import { Reassurance } from '../components/sections';
 
 const OTHER = 'Not sure yet';
@@ -103,19 +104,21 @@ export const ContactPage: React.FC = () => {
         <Breadcrumbs items={[{ name: 'Home', to: '/' }, { name: 'Contact' }]} />
         <div className="grid gap-16 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <p className="eyebrow animate-rise">Contact</p>
-            <h1
-              className="animate-rise mt-6 text-[length:clamp(2.5rem,5.5vw,4.25rem)] leading-[1] tracking-[-0.03em]"
-              style={{ animationDelay: '80ms' }}
-            >
-              Tell us about your project
-            </h1>
+            <p className="eyebrow hero-anim" style={anim(0)}>
+              Contact form · PPH Corporation
+            </p>
+            <SplitWords
+              tag="h1"
+              text="Tell us about your project"
+              className="mt-6 text-[length:clamp(2.5rem,5.5vw,4.25rem)] leading-[1.06] tracking-[-0.02em]"
+            />
             <p
-              className="animate-rise mt-6 max-w-[44ch] text-lg leading-relaxed text-muted"
-              style={{ animationDelay: '160ms' }}
+              className="hero-anim mt-6 max-w-[44ch] text-lg leading-relaxed text-muted"
+              style={anim(8)}
             >
-              Share what you want to build and roughly when you need it. We will come back with
-              questions, a suggested approach and a written quote.
+              Use this contact form to reach PPH Corporation (PropushHub). Share what you want to build
+              and roughly when you need it, and we will come back with questions, a suggested approach
+              and a written quote.
             </p>
             <Reassurance className="mt-8" />
 
@@ -154,7 +157,7 @@ export const ContactPage: React.FC = () => {
 
           <div className="lg:col-span-7">
             {sent ? (
-              <div role="status" className="border border-line-strong p-8 sm:p-12">
+              <div role="status" className="rounded-3xl bg-surface p-8 sm:p-12">
                 <CheckCircle2 className="h-10 w-10" aria-hidden="true" />
                 <h2 className="mt-6 text-3xl">Thank you, {name.split(' ')[0]}.</h2>
                 <p className="mt-4 max-w-[48ch] leading-relaxed text-muted">
@@ -175,7 +178,13 @@ export const ContactPage: React.FC = () => {
                 </a>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} noValidate className="border border-line-strong p-6 sm:p-10">
+              <form
+                id="contact-form"
+                aria-label="PPH Corporation contact form"
+                onSubmit={handleSubmit}
+                noValidate
+                className="rounded-3xl bg-surface p-6 sm:p-10"
+              >
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div>
                     <Label htmlFor="contact-name">Name</Label>
@@ -256,7 +265,7 @@ export const ContactPage: React.FC = () => {
                 </div>
 
                 {error && (
-                  <p role="alert" className="mt-6 border border-fg px-4 py-3 text-sm">
+                  <p role="alert" className="mt-6 rounded-xl border border-fg px-4 py-3 text-sm">
                     {error}
                   </p>
                 )}

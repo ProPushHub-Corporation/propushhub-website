@@ -10,19 +10,26 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <!--seo-preload-->
     <script>
-      // First visit of the session to the home page: show the intro. Skipped for reduced motion
-      // and crawlers/audit tools. Pages are fully server-rendered, so nothing depends on this.
+      // Home page only: show the PPH loading screen on every full page load, then let it exit once the
+      // page has loaded (but not before the letters have drawn). Skipped for reduced motion and crawlers.
       (function () {
         try {
           var root = document.documentElement;
-          if (location.pathname !== '/' || sessionStorage.getItem('ph-intro')) return;
+          if (location.pathname !== '/') return;
           if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-          if (/bot|crawl|spider|slurp|lighthouse|pagespeed|headless|prerender/i.test(navigator.userAgent)) return;
-          sessionStorage.setItem('ph-intro', '1');
-          root.classList.add('intro-pending');
-          // Safety net: never leave the page covered if the app fails to start.
-          setTimeout(function () { root.classList.remove('intro-pending'); }, 6000);
+          if (/bot|crawl|spider|slurp|prerender|headless/i.test(navigator.userAgent)) return;
+          root.classList.add('splash');
+          var start = Date.now();
+          var exited = false;
+          var exit = function () {
+            if (exited) return;
+            exited = true;
+            setTimeout(function () { root.classList.add('splash-exit'); }, Math.max(0, 1150 - (Date.now() - start)));
+          };
+          if (document.readyState === 'complete') exit(); else addEventListener('load', exit);
+          setTimeout(exit, 4000);
         } catch (e) {}
       })();
     </script>
@@ -33,6 +40,7 @@
   </head>
   <body class="bg-ink text-fg antialiased">
     <div id="root"><!--seo-root--></div>
+    <!--seo-data-->
     <noscript>PropushHub builds websites, CMS, mobile apps, desktop software and custom ERP. Please enable JavaScript for the full experience.</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -5,8 +5,8 @@ import { NAV_LINKS } from '../data/site';
 
 export const Logo: React.FC<{ className?: string }> = ({ className = '' }) => (
   <Link to="/" aria-label="PropushHub home" className={`flex items-center gap-3 ${className}`}>
-    <img src="/logo.png" width={40} height={40} alt="" className="block h-10 w-10" />
-    <span className="text-[17px] font-semibold tracking-tight">PropushHub</span>
+    <img src="/logo.png" width={40} height={40} alt="" className="block h-10 w-10 rounded-lg" />
+    <span className="font-display text-[19px] font-medium tracking-tight">PropushHub</span>
   </Link>
 );
 
@@ -19,7 +19,7 @@ export const Navbar: React.FC = () => {
   const isActive = (to: string) => pathname === to || pathname.startsWith(`${to}/`);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-ink/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 border-b border-line bg-ink">
       <div className="container-x flex h-16 items-center justify-between">
         <Logo />
 
