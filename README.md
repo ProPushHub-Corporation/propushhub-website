@@ -1,6 +1,6 @@
 # PropushHub Website
 
-Portfolio and marketing site for PropushHub — custom ERP, web, mobile and AI-integrated software.
+Marketing site for PropushHub — website, CMS, mobile, desktop and ERP software development services.
 
 ## Run locally
 
