@@ -24,6 +24,20 @@ const parse = (to: string) => {
   return { pathname: normalizePath(url.pathname), search: url.search, hash: url.hash };
 };
 
+let navigated = false;
+
+/**
+ * True once the visitor has moved around inside the app (a link click or Back/Forward). The "PPH" splash belongs to
+ * the first page load only: it is skipped on any later visit to the home page.
+ */
+export const hasNavigated = (): boolean => navigated;
+
+/** Marks the app as navigated and clears the splash classes the inline script put on <html> at load time. */
+const leaveInitialLoad = () => {
+  navigated = true;
+  document.documentElement.classList.remove('splash', 'splash-exit');
+};
+
 const scrollAfterRender = (hash: string) => {
   window.setTimeout(() => {
     const target = hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
@@ -47,6 +61,7 @@ export const RouterProvider: React.FC<{
 
   useEffect(() => {
     const onPopState = () => {
+      leaveInitialLoad();
       setLocation({ pathname: normalizePath(window.location.pathname), search: window.location.search });
       scrollAfterRender(window.location.hash);
     };
@@ -55,6 +70,7 @@ export const RouterProvider: React.FC<{
   }, []);
 
   const navigate = useCallback((to: string) => {
+    leaveInitialLoad();
     const next = parse(to);
     const changed = next.pathname !== normalizePath(window.location.pathname) || next.search !== window.location.search;
     if (changed) {

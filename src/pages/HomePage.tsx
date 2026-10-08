@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { SERVICES } from '../data/services';
 import { HERO, HOME_FAQS, PROCESS_STEPS, REASONS } from '../data/site';
 import { HOME_HERO_IMAGE } from '../data/images';
-import { Link } from '../lib/router';
+import { Link, hasNavigated } from '../lib/router';
 import { SiteImage } from '../components/SiteImage';
 import { Splash } from '../components/Splash';
 import { CountUp } from '../components/reactbits/CountUp';
@@ -28,9 +28,12 @@ export const HomePage: React.FC = () => {
     { value: 'Web · Mobile · Desktop', label: 'Every platform your business uses' },
   ];
 
+  // The splash is for the first load of the site only, not for coming back to the home page inside the app.
+  const [showSplash] = useState(() => !hasNavigated());
+
   return (
     <>
-      <Splash />
+      {showSplash && <Splash />}
       <main id="main">
         <section aria-labelledby="hero-title" className="bg-ink pt-16 sm:pt-24">
           <Container className="text-center">

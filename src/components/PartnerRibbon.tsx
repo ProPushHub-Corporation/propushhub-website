@@ -5,9 +5,10 @@ import { useHomePartners } from '../lib/useHomePartners';
 import { Container } from './ui';
 
 /** Every logo sits in a square box of this many CSS pixels (kept in sync with the h-/w- classes below). */
-const LOGO_BOX = 120;
-const MIN_PER_SET = 12;
-const SECONDS_PER_LOGO = 2.4;
+const LOGO_BOX = 60;
+/** One copy of the list must be wider than a large screen, or the loop would show a gap. */
+const MIN_PER_SET = 24;
+const SECONDS_PER_LOGO = 1.4;
 
 const Logo: React.FC<{ partner: HomePartner; decorative: boolean }> = ({ partner, decorative }) => {
   // Logos hosted elsewhere (instead of Cloudinary) can be blocked or removed; show the name rather than a broken image.
@@ -19,14 +20,14 @@ const Logo: React.FC<{ partner: HomePartner; decorative: boolean }> = ({ partner
     widths: [LOGO_BOX, LOGO_BOX * 2, LOGO_BOX * 3],
   });
   const image = failed ? (
-    <span className="text-center font-display text-lg font-medium leading-tight text-muted transition-colors group-hover:text-fg">
+    <span className="text-center font-display text-xs font-medium leading-tight text-muted transition-colors group-hover:text-fg">
       {partner.name}
     </span>
   ) : (
     <img
       src={logo.src}
       srcSet={logo.srcSet}
-      sizes="120px"
+      sizes="60px"
       width={LOGO_BOX * 2}
       height={LOGO_BOX * 2}
       alt={decorative ? '' : partner.logo.alt}
@@ -87,10 +88,10 @@ export const PartnerRibbon: React.FC = () => {
               key={decorative ? 'copy' : 'original'}
               aria-hidden={decorative || undefined}
               aria-label={decorative ? undefined : 'Partners and collaborating companies'}
-              className="flex shrink-0 items-center gap-6 pr-6 sm:gap-8 sm:pr-8"
+              className="flex shrink-0 items-center gap-5 pr-5 sm:gap-6 sm:pr-6"
             >
               {copy.map((partner, i) => (
-                <li key={`${partner.slug}-${i}`} className="h-[120px] w-[120px] shrink-0">
+                <li key={`${partner.slug}-${i}`} className="h-[60px] w-[60px] shrink-0">
                   <Logo partner={partner} decorative={decorative || i >= items.length} />
                 </li>
               ))}

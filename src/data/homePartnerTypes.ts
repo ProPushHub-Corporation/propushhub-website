@@ -22,7 +22,7 @@ export interface RoleFlag {
 }
 
 export interface HomePartnerLogo {
-  /** Cloudinary delivery URL. Shown uncropped, centred in a 120 x 120 px box: upload at 240 x 240 px or larger. */
+  /** Cloudinary delivery URL. Shown uncropped, centred in a 60 x 60 px box: upload at 120 x 120 px or larger. */
   url: string;
   alt: string;
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { ArrowRight, ArrowUpRight, Check, Plus } from 'lucide-react';
 import { SERVICES } from '../data/services';
 import { COMPANY_INFO, CTA_REASSURANCE, PROCESS_STEPS } from '../data/site';
@@ -68,24 +68,49 @@ export const ProcessSection: React.FC = () => (
   </Section>
 );
 
-/** Expandable question list. Plain <details>, so it works without JavaScript and every answer stays in the HTML. */
+/**
+ * Expandable question list: opening one question closes the one that was open, like an accordion.
+ *
+ * Plain <details> elements, so it works without JavaScript and every answer stays in the HTML. The shared `name`
+ * makes modern browsers close the others natively; the toggle handler does the same where `name` is not supported.
+ */
 export const FaqList: React.FC<{ faqs: ServiceFaq[]; className?: string; openFirst?: boolean }> = ({
   faqs,
   className = '',
   openFirst = true,
-}) => (
-  <div className={`space-y-3 ${className}`}>
-    {faqs.map((faq, i) => (
-      <details key={faq.q} className="group rounded-2xl bg-surface px-6" open={openFirst && i === 0}>
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-medium [&::-webkit-details-marker]:hidden">
-          <h3 className="text-lg font-medium tracking-normal">{faq.q}</h3>
-          <Plus aria-hidden="true" className="h-5 w-5 shrink-0 transition-transform group-open:rotate-45" />
-        </summary>
-        <p className="max-w-[62ch] pb-6 leading-relaxed text-muted">{faq.a}</p>
-      </details>
-    ))}
-  </div>
-);
+}) => {
+  const group = `faq-${useId()}`;
+
+  const closeOthers = (event: React.SyntheticEvent<HTMLDetailsElement>) => {
+    const opened = event.currentTarget;
+    if (!opened.open) return;
+    opened.parentElement
+      ?.querySelectorAll<HTMLDetailsElement>(':scope > details[open]')
+      .forEach((other) => {
+        if (other !== opened) other.open = false;
+      });
+  };
+
+  return (
+    <div className={`space-y-3 ${className}`}>
+      {faqs.map((faq, i) => (
+        <details
+          key={faq.q}
+          name={group}
+          onToggle={closeOthers}
+          className="group rounded-2xl bg-surface px-6"
+          open={openFirst && i === 0}
+        >
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 text-lg font-medium [&::-webkit-details-marker]:hidden">
+            <h3 className="text-lg font-medium tracking-normal">{faq.q}</h3>
+            <Plus aria-hidden="true" className="h-5 w-5 shrink-0 transition-transform group-open:rotate-45" />
+          </summary>
+          <p className="max-w-[62ch] pb-6 leading-relaxed text-muted">{faq.a}</p>
+        </details>
+      ))}
+    </div>
+  );
+};
 
 interface FaqSectionProps {
   faqs: ServiceFaq[];
