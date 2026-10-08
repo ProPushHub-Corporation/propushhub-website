@@ -19,9 +19,12 @@ import { SERVICES } from '../src/data/services';
 import { COMPANY_INFO } from '../src/data/site';
 import { seedShowcaseProjects } from '../src/data/showcaseSeed';
 import type { ShowcaseProject } from '../src/data/showcaseTypes';
+import { COMPANY_LINKS } from '../src/data/company';
 import { SITE_URL, getAllIndexablePaths, getRouteSeo, renderHeadTags } from '../src/lib/seo';
 import { fetchShowcaseProjects } from '../src/lib/showcase';
 import { SHOWCASE_DATA_ELEMENT_ID, setShowcaseSnapshot } from '../src/lib/showcaseStore';
+import type { RemoteCollection, RemoteDoc } from '../src/lib/collection';
+import { jobData, partnerData, teamData } from '../src/lib/remote';
 
 const DIST = join(process.cwd(), 'dist');
 const template = readFileSync(join(DIST, 'index.html'), 'utf-8');
@@ -53,16 +56,51 @@ const loadShowcase = async (): Promise<ShowcaseProject[]> => {
   }
 };
 
+/** Reads a data-driven page's Firestore collection. An unreadable collection becomes an empty list. */
+const loadRemote = async <T extends RemoteDoc>(label: string, source: RemoteCollection<T>): Promise<T[]> => {
+  try {
+    const items = await withTimeout(source.fetch(), 12000);
+    console.log(`${label}: ${items.length} published documents read from Firestore`);
+    return items;
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error);
+    console.warn(`\n⚠  ${label}: could not use Firestore (${reason}).\n   The page will show its empty state until the "${source.name}" collection can be read.\n`);
+    return [];
+  }
+};
+
 const showcase = await loadShowcase();
+const team = await loadRemote('Team', teamData);
+const partners = await loadRemote('Partners', partnerData);
+const jobs = await loadRemote('Jobs', jobData);
+
+// Pages whose content comes from a Firestore collection: the data is rendered into the HTML and embedded as
+// JSON so the browser can hydrate with exactly the same data.
+const REMOTE_PAGES: Record<string, { source: RemoteCollection<RemoteDoc>; items: RemoteDoc[] }> = {
+  '/team': { source: teamData as unknown as RemoteCollection<RemoteDoc>, items: team },
+  '/collaboration': { source: partnerData as unknown as RemoteCollection<RemoteDoc>, items: partners },
+  '/jobs': { source: jobData as unknown as RemoteCollection<RemoteDoc>, items: jobs },
+};
 
 const render = (path: string) => {
   const isShowcase = path === '/showcase' || path.startsWith('/showcase/');
+  const remote = REMOTE_PAGES[path];
   setShowcaseSnapshot(isShowcase ? showcase : null);
-  const seo = getRouteSeo(path, isShowcase ? showcase : null);
+  for (const page of Object.values(REMOTE_PAGES)) page.source.setSnapshot(page === remote ? page.items : null);
+  const seo = getRouteSeo(path, {
+    showcase: isShowcase ? showcase : null,
+    team: path === '/team' ? team : null,
+    partners: path === '/collaboration' ? partners : null,
+    jobs: path === '/jobs' ? jobs : null,
+  });
   const body = renderToString(createElement(App, { initialPath: path }));
+  const embedded = (id: string, value: unknown) =>
+    `<script id="${id}" type="application/json">${JSON.stringify(value).replace(/</g, '\\u003c')}</script>`;
   const data = isShowcase
-    ? `<script id="${SHOWCASE_DATA_ELEMENT_ID}" type="application/json">${JSON.stringify(showcase).replace(/</g, '\\u003c')}</script>`
-    : '';
+    ? embedded(SHOWCASE_DATA_ELEMENT_ID, showcase)
+    : remote
+      ? embedded(remote.source.elementId, remote.items)
+      : '';
   return template
     .replace(HEAD_RE, () => `<!--seo-head-start-->\n    ${renderHeadTags(seo)}\n    <!--seo-head-end-->`)
     .replace('<!--seo-preload-->', () => preloadTags)
@@ -123,6 +161,9 @@ ${SERVICES.map((s) => `- [${s.name}](${SITE_URL}/services/${s.slug}): ${s.summar
 ## Showcase
 - [All projects](${SITE_URL}/showcase)
 ${showcase.map((p) => `- [${p.title}](${SITE_URL}/showcase/${p.slug}): ${p.shortDescription}`).join('\n')}
+
+## Company
+${COMPANY_LINKS.map((link) => `- [${link.label}](${SITE_URL}${link.to}): ${link.description}`).join('\n')}
 
 ## Contact
 - [Contact page](${SITE_URL}/contact)

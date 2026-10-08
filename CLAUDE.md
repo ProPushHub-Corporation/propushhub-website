@@ -11,21 +11,24 @@ Originally scaffolded from Google AI Studio (see `metadata.json`, `.env.example`
 - `npm run dev` — dev server on port 3000 (unminified: **do not run Lighthouse against it**)
 - `npm run build` — production build to `dist/` (Vite build, then `scripts/prerender.ts`)
 - `npm run lint` — type-check only (`tsc --noEmit`)
-- `npm run seed:showcase -- --dry-run` — validate/load the portfolio into Firestore (see DATA_TYPES.md)
+- `npm run seed -- --dry-run` — root `seed.ts`: fills Firestore with the portfolio plus **sample** team/partners/jobs for testing (`--clear-samples` removes the samples; run it before launch). `npm run seed:data -- <collection> file.json` loads your own JSON. See DATA_TYPES.md
 
 Run `npm run lint` and `npm run build` before committing code changes.
 
 ## Structure
-- `src/App.tsx` — layout + route switch (`/`, `/services`, `/services/:slug`, `/showcase`, `/showcase/:slug`, `/contact`, else 404)
+- `src/App.tsx` — layout + route switch (`/`, `/services`, `/services/:slug`, `/showcase`, `/showcase/:slug`, `/about`, `/team`, `/jobs`, `/collaboration`, `/help`, `/contact`, else 404)
 - `src/lib/router.tsx` — custom minimal History-API router (no react-router); supports query strings and hashes. Use `Link` / `useRouter().navigate()`
-- `src/pages/` — HomePage, ServicesPage, ServicePage, ShowcasePage, ProjectPage, ContactPage, NotFoundPage
+- `src/pages/` — HomePage, ServicesPage, ServicePage, ShowcasePage, ProjectPage, AboutPage, TeamPage, JobsPage, CollaborationPage, HelpPage, ContactPage, NotFoundPage
 - `src/components/` — Navbar, Footer, Splash, `sections.tsx` (ServiceList, ProcessSection, FaqSection, FinalCta), `ui.tsx` (Section, SectionHeader, Breadcrumbs, `anim()`), `SiteImage.tsx`, `reactbits/` (animation components)
 - `src/data/services.ts` — the service catalog (copy, SEO title/description, FAQs). Add or edit services here; pages, nav, sitemap and JSON-LD follow automatically
 - `src/data/site.ts` — company info, nav links, hero copy, process steps, FAQs, budget options
 - `src/data/images.ts` — every image slot with its exact size
-- `src/data/showcaseTypes.ts` — TypeScript mirror of **DATA_TYPES.md** (Firestore `projects` collection). Change both together
+- `src/data/showcaseTypes.ts`, `teamTypes.ts`, `partnerTypes.ts`, `jobTypes.ts` — TypeScript mirrors of **DATA_TYPES.md** (Firestore `projects`, `team`, `partners`, `jobs`). Change both together
+- `src/data/company.ts` — the Company dropdown links, team disciplines, collaboration copy, job traits and help FAQs. People, partners and jobs come from Firestore
 - `src/data/projects.ts` + `showcaseSeed.ts` — the portfolio bundled with the repo. It seeds Firestore and is the build-time fallback; it is not rendered directly
-- `src/lib/firebase.ts` (Firestore lite), `showcase.ts` (fetch), `showcaseStore.ts` (shared snapshot), `cloudinary.ts` (delivery URLs)
+- `seed.ts` (repo root) + `scripts/seed-core.ts` / `seed-data.ts` — Firestore seeding and validation (Admin SDK; needs a service-account key, never commit it)
+- `src/lib/firebase.ts` (Firestore lite), `collection.ts` + `remote.ts` (one generic definition for the `team`, `partners` and `jobs` collections: fetch, shared snapshot, embedded JSON), `useRemoteCollection.ts` (page hook), `showcase.ts` / `showcaseStore.ts` (projects), `cloudinary.ts` (delivery URLs)
+- Navigation: the navbar's **Company** dropdown (About us, Our team, Jobs, Collaboration, Help) is driven by `COMPANY_LINKS`; the footer and sitemap use the same list. There is no separate Process page: the process section lives on the home, services and About pages
 
 ## Design system (white background, black text)
 - Monochrome only: no accent colour, gradients or glows. Soft shapes: pill buttons, rounded-3xl panels/images, rounded-2xl rows. Primary buttons are black with white text.
@@ -50,7 +53,7 @@ Every image is declared in `src/data/images.ts` (or a service's `image`). Withou
 ## SEO
 - Route metadata lives in `src/lib/seo.ts` (titles, descriptions, canonical, OG, JSON-LD: Organization with `alternateName` "PPH Corporation", WebSite, ProfessionalService, Service, FAQPage, BreadcrumbList, ContactPage, CollectionPage/ItemList, CreativeWork per project). `SITE_URL` there must be changed when a custom domain is connected.
 - The home and contact titles/descriptions deliberately include "PPH Corporation (PropushHub)" and "contact form" so brand searches land on them.
-- `npm run build` runs `scripts/prerender.ts`: it reads the showcase from Firestore (falls back to the bundled seed data with a warning), server-renders every route with `react-dom/server` into `dist/<route>/index.html` (including one page per project), embeds the showcase JSON for hydration, and writes `404.html`, `sitemap.xml`, `robots.txt` and `llms.txt`. `src/main.tsx` hydrates that HTML. `vercel.json` has no catch-all rewrite, so unknown URLs get a real 404.
+- `npm run build` runs `scripts/prerender.ts`: it reads the showcase, team, partners and jobs from Firestore (the showcase falls back to the bundled seed data, the others to an empty list, each with a warning), server-renders every route with `react-dom/server` into `dist/<route>/index.html` (including one page per project), embeds the showcase JSON for hydration, and writes `404.html`, `sitemap.xml`, `robots.txt` and `llms.txt`. `src/main.tsx` hydrates that HTML. `vercel.json` has no catch-all rewrite, so unknown URLs get a real 404.
 - New Firestore project => redeploy (or use a Vercel Deploy Hook) to get its static, indexable page. Until then `/showcase/<slug>` still loads on demand in the browser (404.html is re-rendered, not hydrated).
 - `src/lib/useSeo.ts` updates the head on client-side navigation (and skips the first render of a prerendered page).
 - Keep one `<h1>` per page, titles under about 60 characters, descriptions under 160. Use `Link` (real `<a href>`) for internal navigation, never `onClick` buttons.

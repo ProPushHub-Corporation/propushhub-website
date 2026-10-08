@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { ROBOTS_INDEX, ROBOTS_NOINDEX, getRouteSeo } from './seo';
 import type { RouteSeo } from './seo';
 import { getShowcaseSnapshot } from './showcaseStore';
+import { jobData, partnerData, teamData } from './remote';
 
 const setMeta = (selector: string, attr: 'name' | 'property', key: string, content: string) => {
   let el = document.head.querySelector<HTMLMetaElement>(selector);
@@ -55,6 +56,13 @@ export const useSeo = (pathname: string) => {
     const isFirst = first.current;
     first.current = false;
     if (isFirst && document.head.querySelector('link[rel="canonical"]')) return;
-    applySeo(getRouteSeo(pathname, getShowcaseSnapshot()));
+    applySeo(
+      getRouteSeo(pathname, {
+        showcase: getShowcaseSnapshot(),
+        team: teamData.getSnapshot(),
+        partners: partnerData.getSnapshot(),
+        jobs: jobData.getSnapshot(),
+      })
+    );
   }, [pathname]);
 };

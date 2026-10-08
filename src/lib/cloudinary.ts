@@ -20,8 +20,12 @@ export const cloudinaryOgImage = (url: string): string =>
  * Right-sized, auto-format (WebP/AVIF) delivery for a Cloudinary image at 16:10, anchored to the top
  * so screenshots keep their header. Non-Cloudinary URLs are returned untouched.
  */
-export const cloudinaryImage = (url: string, width = 1200): ResponsiveImage => {
-  const transform = (w: number) => `f_auto,q_auto,c_fill,g_north,ar_16:10,w_${w}`;
+export const cloudinaryImage = (
+  url: string,
+  width = 1200,
+  { aspect = '16:10', gravity = 'north', crop = 'fill' }: { aspect?: string; gravity?: string; crop?: 'fill' | 'fit' } = {}
+): ResponsiveImage => {
+  const transform = (w: number) => `f_auto,q_auto,c_${crop},g_${gravity},ar_${aspect},w_${w}`;
   const src = withTransform(url, transform(width));
   if (!src) return { src: url };
   return {

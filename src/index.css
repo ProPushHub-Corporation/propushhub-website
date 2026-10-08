@@ -44,8 +44,10 @@
     font-family: var(--font-display);
     font-weight: 500;
     letter-spacing: -0.02em;
-    text-wrap: balance;
   }
+
+  /* Balanced wrapping costs layout time per heading, so only the big page titles get it. */
+  h1, h2 { text-wrap: balance; }
 
   [id] { scroll-margin-top: 5rem; }
 

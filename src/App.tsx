@@ -14,6 +14,11 @@ import { ServicePage } from './pages/ServicePage';
 import { ContactPage } from './pages/ContactPage';
 import { ShowcasePage } from './pages/ShowcasePage';
 import { ProjectPage } from './pages/ProjectPage';
+import { AboutPage } from './pages/AboutPage';
+import { TeamPage } from './pages/TeamPage';
+import { JobsPage } from './pages/JobsPage';
+import { CollaborationPage } from './pages/CollaborationPage';
+import { HelpPage } from './pages/HelpPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 const AppRoutes: React.FC = () => {
@@ -29,6 +34,11 @@ const AppRoutes: React.FC = () => {
   if (pathname.startsWith('/showcase/')) {
     return <ProjectPage key={pathname} slug={pathname.slice('/showcase/'.length)} />;
   }
+  if (pathname === '/about') return <AboutPage />;
+  if (pathname === '/team') return <TeamPage />;
+  if (pathname === '/jobs') return <JobsPage />;
+  if (pathname === '/collaboration') return <CollaborationPage />;
+  if (pathname === '/help') return <HelpPage />;
   if (pathname === '/contact') return <ContactPage />;
   return <NotFoundPage />;
 };

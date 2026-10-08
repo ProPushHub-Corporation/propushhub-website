@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '../lib/router';
 import { SplitText } from './reactbits/SplitText';
+import { SplitWords } from './reactbits/SplitWords';
 
 /** Order index for the `.hero-anim` load-in animation (see index.css). */
 export const anim = (i: number) => ({ '--i': i }) as React.CSSProperties;
@@ -74,3 +75,46 @@ export const Breadcrumbs: React.FC<{ items: { name: string; to?: string }[] }> =
     </ol>
   </nav>
 );
+
+interface PageHeroProps {
+  crumbs: { name: string; to?: string }[];
+  eyebrow: string;
+  /** The page's single <h1>. */
+  title: string;
+  titleId: string;
+  intro: string;
+  /** Buttons shown under the intro. */
+  children?: React.ReactNode;
+}
+
+/** Standard top-of-page block: breadcrumbs, eyebrow, animated H1, intro and optional actions. */
+export const PageHero: React.FC<PageHeroProps> = ({ crumbs, eyebrow, title, titleId, intro, children }) => {
+  const words = title.split(' ').length;
+  return (
+    <section aria-labelledby={titleId} className="bg-ink pb-16 pt-10 sm:pb-24">
+      <Container>
+        <Breadcrumbs items={crumbs} />
+        <p className="eyebrow hero-anim" style={anim(0)}>
+          {eyebrow}
+        </p>
+        <SplitWords
+          tag="h1"
+          id={titleId}
+          text={title}
+          className="mt-6 max-w-4xl text-[length:clamp(2.5rem,6vw,4.75rem)] leading-[1.06] tracking-[-0.02em]"
+        />
+        <p
+          className="hero-anim mt-8 max-w-[58ch] text-lg leading-relaxed text-muted sm:text-xl"
+          style={anim(words + 2)}
+        >
+          {intro}
+        </p>
+        {children && (
+          <div className="hero-anim mt-10 flex flex-wrap items-center gap-3" style={anim(words + 3)}>
+            {children}
+          </div>
+        )}
+      </Container>
+    </section>
+  );
+};

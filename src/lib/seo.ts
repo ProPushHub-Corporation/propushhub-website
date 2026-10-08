@@ -1,6 +1,10 @@
 import { SERVICES, getServiceBySlug } from '../data/services';
 import type { Service, ServiceFaq } from '../data/services';
 import type { ShowcaseProject } from '../data/showcaseTypes';
+import type { TeamMember } from '../data/teamTypes';
+import { ALL_HELP_FAQS, COMPANY_LINKS } from '../data/company';
+import type { Job } from '../data/jobTypes';
+import type { Partner } from '../data/partnerTypes';
 import { COMPANY_INFO, HOME_FAQS } from '../data/site';
 import { cloudinaryOgImage } from './cloudinary';
 
@@ -306,6 +310,167 @@ const CONTACT: RouteSeo = {
   ],
 };
 
+/* ----------------------------------------------------------- company pages */
+
+export interface SeoData {
+  showcase?: ShowcaseProject[] | null;
+  team?: TeamMember[] | null;
+  partners?: Partner[] | null;
+  jobs?: Job[] | null;
+}
+
+const pageLd = (type: string, name: string, description: string, path: string) => ({
+  '@context': 'https://schema.org',
+  '@type': type,
+  name,
+  description,
+  url: absolute(path),
+  isPartOf: { '@id': `${SITE_URL}/#website` },
+  about: { '@id': ORG_ID },
+});
+
+const crumbs = (name: string, path: string) =>
+  breadcrumb([
+    { name: 'Home', path: '/' },
+    { name, path },
+  ]);
+
+const ABOUT_DESC =
+  'Learn about PPH Corporation (PropushHub): a software development company building websites, apps and ERP, with one team from first call to launch and support.';
+const ABOUT: RouteSeo = {
+  title: 'About PPH Corporation (PropushHub) | Software Company',
+  description: ABOUT_DESC,
+  path: '/about',
+  canonical: absolute('/about'),
+  image: DEFAULT_OG_IMAGE,
+  type: 'website',
+  jsonLd: [crumbs('About us', '/about'), pageLd('AboutPage', 'About PPH Corporation (PropushHub)', ABOUT_DESC, '/about')],
+};
+
+const TEAM_DESC =
+  'Meet the founders and team behind PropushHub (PPH Corporation): the engineers and designers who build and support your software.';
+const teamSeo = (members: TeamMember[] = []): RouteSeo => ({
+  title: 'Our Team and Founders | PropushHub (PPH Corporation)',
+  description: TEAM_DESC,
+  path: '/team',
+  canonical: absolute('/team'),
+  image: DEFAULT_OG_IMAGE,
+  type: 'website',
+  jsonLd: [
+    crumbs('Our team', '/team'),
+    {
+      ...pageLd('CollectionPage', 'PropushHub founders and team', TEAM_DESC, '/team'),
+      ...(members.length
+        ? {
+            mainEntity: {
+              '@type': 'ItemList',
+              itemListElement: members.map((m, i) => ({
+                '@type': 'ListItem',
+                position: i + 1,
+                item: {
+                  '@type': 'Person',
+                  name: m.name,
+                  jobTitle: m.role,
+                  worksFor: { '@id': ORG_ID },
+                  ...(m.bio ? { description: m.bio } : {}),
+                  ...(m.photo?.url ? { image: m.photo.url } : {}),
+                  ...(m.links?.length ? { sameAs: m.links.map((l) => l.url) } : {}),
+                },
+              })),
+            },
+          }
+        : {}),
+    },
+  ],
+});
+
+const EMPLOYMENT: Record<Job['type'], string> = {
+  'Full-time': 'FULL_TIME',
+  'Part-time': 'PART_TIME',
+  Contract: 'CONTRACTOR',
+  Internship: 'INTERN',
+};
+
+const jobPosting = (job: Job) => ({
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: job.title,
+  description: [job.summary, ...job.responsibilities, ...job.requirements].join('\n'),
+  datePosted: job.postedAt,
+  ...(job.validThrough ? { validThrough: job.validThrough } : {}),
+  employmentType: EMPLOYMENT[job.type],
+  hiringOrganization: { '@type': 'Organization', name: SITE_NAME, sameAs: `${SITE_URL}/` },
+  directApply: false,
+  url: `${absolute('/jobs')}#${job.slug}`,
+  ...(job.remote
+    ? { jobLocationType: 'TELECOMMUTE', applicantLocationRequirements: { '@type': 'Country', name: job.location } }
+    : {
+        jobLocation: {
+          '@type': 'Place',
+          address: { '@type': 'PostalAddress', addressLocality: job.location },
+        },
+      }),
+});
+
+const JOBS_DESC =
+  'Jobs and careers at PropushHub (PPH Corporation). See open positions or send us your CV and a link to your work.';
+const jobsSeo = (jobs: Job[] = []): RouteSeo => ({
+  title: 'Jobs & Careers at PropushHub (PPH Corporation)',
+  description: JOBS_DESC,
+  path: '/jobs',
+  canonical: absolute('/jobs'),
+  image: DEFAULT_OG_IMAGE,
+  type: 'website',
+  jsonLd: [crumbs('Jobs', '/jobs'), pageLd('WebPage', 'Jobs at PropushHub', JOBS_DESC, '/jobs'), ...jobs.map(jobPosting)],
+});
+
+const COLLAB_DESC =
+  'Partner with PropushHub (PPH Corporation): white-label development for agencies, technology and integration partners, referrals and specialists.';
+const collabSeo = (partners: Partner[] = []): RouteSeo => ({
+  title: 'Collaborate With PropushHub | Agency & Tech Partners',
+  description: COLLAB_DESC,
+  path: '/collaboration',
+  canonical: absolute('/collaboration'),
+  image: DEFAULT_OG_IMAGE,
+  type: 'website',
+  jsonLd: [
+    crumbs('Collaboration', '/collaboration'),
+    {
+      ...pageLd('WebPage', 'Collaborate with PropushHub', COLLAB_DESC, '/collaboration'),
+      ...(partners.length
+        ? {
+            mainEntity: {
+              '@type': 'ItemList',
+              itemListElement: partners.map((p, i) => ({
+                '@type': 'ListItem',
+                position: i + 1,
+                item: {
+                  '@type': 'Organization',
+                  name: p.name,
+                  ...(p.url ? { url: p.url } : {}),
+                  ...(p.description ? { description: p.description } : {}),
+                  ...(p.logo?.url ? { logo: p.logo.url } : {}),
+                },
+              })),
+            },
+          }
+        : {}),
+    },
+  ],
+});
+
+const HELP_DESC =
+  'Help center for PropushHub (PPH Corporation): how to start a project, pricing and timelines, working together and support after launch.';
+const HELP: RouteSeo = {
+  title: 'Help Center — FAQ & Support | PropushHub',
+  description: HELP_DESC,
+  path: '/help',
+  canonical: absolute('/help'),
+  image: DEFAULT_OG_IMAGE,
+  type: 'website',
+  jsonLd: [crumbs('Help', '/help'), pageLd('WebPage', 'PropushHub help center', HELP_DESC, '/help'), faqPage(ALL_HELP_FAQS)],
+};
+
 const NOT_FOUND: RouteSeo = {
   title: 'Page not found | PropushHub',
   description: 'The page you are looking for could not be found.',
@@ -317,13 +482,19 @@ const NOT_FOUND: RouteSeo = {
   jsonLd: [],
 };
 
-export const getRouteSeo = (pathname: string, showcase?: ShowcaseProject[] | null): RouteSeo => {
+export const getRouteSeo = (pathname: string, data: SeoData = {}): RouteSeo => {
   const path = pathname.replace(/\/+$/, '') || '/';
+  const showcase = data.showcase;
   if (path === '/') return HOME;
   if (path === '/services') return SERVICES_INDEX;
   if (path.startsWith('/services/')) return serviceSeo(path.slice('/services/'.length)) ?? NOT_FOUND;
   if (path === '/showcase') return showcaseSeo(showcase ?? []);
   if (path.startsWith('/showcase/')) return projectSeo(path.slice('/showcase/'.length), showcase ?? []) ?? NOT_FOUND;
+  if (path === '/about') return ABOUT;
+  if (path === '/team') return teamSeo(data.team ?? []);
+  if (path === '/jobs') return jobsSeo(data.jobs ?? []);
+  if (path === '/collaboration') return collabSeo(data.partners ?? []);
+  if (path === '/help') return HELP;
   if (path === '/contact') return CONTACT;
   return NOT_FOUND;
 };
@@ -334,6 +505,7 @@ export const getAllIndexablePaths = (showcase: ShowcaseProject[] = []): string[]
   ...SERVICES.map((s) => `/services/${s.slug}`),
   '/showcase',
   ...showcase.map((p) => `/showcase/${p.slug}`),
+  ...COMPANY_LINKS.map((link) => link.to),
   '/contact',
 ];
 

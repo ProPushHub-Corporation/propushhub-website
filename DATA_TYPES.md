@@ -1,12 +1,16 @@
 # Data types
 
-Data contracts for the website. Today there is one Firestore collection, `projects`, which feeds the
-`/showcase` page. The TypeScript mirror of everything below lives in
-[`src/data/showcaseTypes.ts`](src/data/showcaseTypes.ts). **Change both together.**
+Data contracts for the website. Four Firestore collections feed pages:
 
-- Firebase project: `propushhub` (config in [`src/lib/firebase.ts`](src/lib/firebase.ts))
-- Database: Cloud Firestore, collection `projects`, one document per project, **document id = `slug`**
-- Images: hosted on Cloudinary. Documents store the delivery URL only; no image bytes live in Firebase
+| Collection | Feeds | TypeScript mirror |
+| --- | --- | --- |
+| [`projects`](#projectsslug) | `/showcase` and `/showcase/<slug>` | [`src/data/showcaseTypes.ts`](src/data/showcaseTypes.ts) |
+| [`team`](#teamslug) | `/team` (Founders and Our team sections) | [`src/data/teamTypes.ts`](src/data/teamTypes.ts) |
+| [`partners`](#partnersslug) | `/collaboration` (partnerships, ownership, sponsors) | [`src/data/partnerTypes.ts`](src/data/partnerTypes.ts) |
+| [`jobs`](#jobsslug) | `/jobs` (open roles + `JobPosting` structured data) | [`src/data/jobTypes.ts`](src/data/jobTypes.ts) |
+
+**Change the Markdown and the TypeScript mirror together.** All four work the same way: one document per item,
+**document id = `slug`**, readable by the website only while `published` is `true`, sorted by `order`.
 
 ## Pages generated from this data
 
@@ -22,7 +26,7 @@ canonical URL, Open Graph image (first Cloudinary image, cropped to 1200 x 630),
 
 ## How the data flows
 
-1. `npm run build` reads `projects` from Firestore ([`scripts/prerender.ts`](scripts/prerender.ts)) and writes the
+1. `npm run build` reads `projects`, `team`, `partners` and `jobs` from Firestore ([`scripts/prerender.ts`](scripts/prerender.ts)) and writes the
    showcase page as static HTML with the data embedded, so crawlers and no-JS visitors see every project.
    If Firestore can't be reached, the build falls back to the bundled seed data in
    [`src/data/projects.ts`](src/data/projects.ts) and prints a warning.
@@ -165,9 +169,183 @@ https://res.cloudinary.com/<cloud_name>/image/upload/<optional version>/<public_
 }
 ```
 
+## `team/{slug}`
+
+One document per person, **document id = `slug`**. The `/team` page shows `group: "founders"` people in the Founders
+section and `group: "team"` people in the Our team section, each sorted by `order`. Photos are Cloudinary URLs.
+
+```ts
+type TeamGroup = 'founders' | 'team';
+
+interface TeamPhoto {
+  url?: string;            // Cloudinary delivery URL (portrait, 4:5); omit until uploaded (a placeholder is shown)
+  alt?: string;            // accessible description; defaults to "<name>, <role>"
+}
+
+interface TeamLink {
+  label: string;           // e.g. "LinkedIn"
+  url: string;             // absolute https URL
+}
+
+interface TeamMember {
+  slug: string;            // = document id
+  name: string;
+  role: string;            // e.g. "Co-founder & CEO"
+  group: TeamGroup;
+  bio?: string;
+  photo?: TeamPhoto;
+  links?: TeamLink[];
+  order: number;           // ascending, within the group
+  published: boolean;      // only `true` documents are readable by the website
+  updatedAt?: string;      // ISO 8601
+}
+```
+
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `slug` | string | yes | Lowercase, hyphenated; must equal the document id |
+| `name` | string | yes | |
+| `role` | string | yes | |
+| `group` | `"founders"` or `"team"` | yes | Decides the section |
+| `bio` | string | no | One or two sentences |
+| `photo.url` | string | no | Cloudinary URL. Upload at **600 x 750 px** (4:5) or larger; the site crops to 4:5 around the face |
+| `photo.alt` | string | when `photo.url` is set | |
+| `links` | TeamLink[] | no | |
+| `order` | number | yes | Lower numbers come first |
+| `published` | boolean | yes | Set `false` to hide a person |
+| `updatedAt` | string | no | |
+
+Example (`team/jane-doe`):
+
+```json
+{
+  "slug": "jane-doe",
+  "name": "Jane Doe",
+  "role": "Co-founder & CEO",
+  "group": "founders",
+  "bio": "Leads strategy and client relationships.",
+  "photo": {
+    "url": "https://res.cloudinary.com/your-cloud/image/upload/v1730000000/propushhub/team/jane-doe.jpg",
+    "alt": "Jane Doe, Co-founder and CEO of PropushHub"
+  },
+  "links": [{ "label": "LinkedIn", "url": "https://www.linkedin.com/in/jane-doe/" }],
+  "order": 1,
+  "published": true
+}
+```
+
+The `/team` page is prerendered at build time from this collection (people appear in the static HTML and in
+`Person` structured data), then refreshed in the browser. If the collection is empty or unreadable, each section shows a
+"profiles will appear here soon" message. Add people with the Firebase console, or in bulk with
+`npm run seed:data -- team people.json` or the sample data with `npm run seed` (see [Loading the initial data](#loading-the-initial-data)).
+
+## `partners/{slug}`
+
+Companies on the `/collaboration` page, grouped by `kind`. A group only appears once it has at least one published
+document. Logos are Cloudinary URLs.
+
+```ts
+type PartnerKind = 'partner' | 'owner' | 'sponsor';
+
+interface PartnerLogo {
+  url?: string;            // Cloudinary delivery URL (2:1); omit until uploaded (a 320 x 160 placeholder is shown)
+  alt?: string;
+}
+
+interface Partner {
+  slug: string;            // = document id
+  name: string;            // company name
+  kind: PartnerKind;       // which section it appears in
+  description?: string;    // one or two sentences about the relationship
+  url?: string;            // company website, absolute https URL
+  logo?: PartnerLogo;
+  order: number;           // ascending, within the group
+  published: boolean;
+  updatedAt?: string;      // ISO 8601
+}
+```
+
+| `kind` | Section on the page | Use it for |
+| --- | --- | --- |
+| `partner` | Our partners | Partnerships and collaborations |
+| `owner` | Ownership | Parent companies and owners |
+| `sponsor` | Sponsors | Organisations that support us |
+
+To add a new kind (for example `investor`), add it to `PartnerKind` and `PARTNER_GROUPS` in
+[`src/data/partnerTypes.ts`](src/data/partnerTypes.ts) and to this table; the page picks it up automatically.
+
+Logos: upload at **320 x 160 px** or larger (2:1). They are shown uncropped on a white tile, so transparent or white
+backgrounds work best. `logo.alt` is required when `logo.url` is set.
+
+Example (`partners/acme-labs`):
+
+```json
+{
+  "slug": "acme-labs",
+  "name": "Acme Labs",
+  "kind": "partner",
+  "description": "Technology partner for cloud infrastructure.",
+  "url": "https://acme.example",
+  "logo": {
+    "url": "https://res.cloudinary.com/your-cloud/image/upload/v1730000000/propushhub/partners/acme-labs.png",
+    "alt": "Acme Labs logo"
+  },
+  "order": 1,
+  "published": true
+}
+```
+
+## `jobs/{slug}`
+
+Open roles on `/jobs`. Each published document appears in the list and in `JobPosting` structured data, so roles can
+show up in job search. The slug is also the role's `#anchor` on the page.
+
+```ts
+type JobType = 'Full-time' | 'Part-time' | 'Contract' | 'Internship';
+
+interface Job {
+  slug: string;              // = document id
+  title: string;
+  department: string;
+  location: string;          // city and country; for remote roles, the country candidates may work from
+  type: JobType;
+  remote: boolean;
+  summary: string;
+  responsibilities: string[];
+  requirements: string[];
+  postedAt: string;          // ISO date, e.g. "2026-10-08" (JobPosting.datePosted)
+  validThrough?: string;     // ISO date (JobPosting.validThrough)
+  applyUrl?: string;         // defaults to an email to the company address
+  order: number;             // ascending
+  published: boolean;        // set false to take a role down
+  updatedAt?: string;        // ISO 8601
+}
+```
+
+Example (`jobs/senior-react-developer`):
+
+```json
+{
+  "slug": "senior-react-developer",
+  "title": "Senior React Developer",
+  "department": "Engineering",
+  "location": "Pakistan",
+  "type": "Full-time",
+  "remote": true,
+  "summary": "Build web applications for our clients, from first prototype to production.",
+  "responsibilities": ["Build and review features", "Estimate and plan work with the team"],
+  "requirements": ["Strong React and TypeScript", "Clear written communication"],
+  "postedAt": "2026-10-08",
+  "order": 1,
+  "published": true
+}
+```
+
+When no job is published, the page shows "No open positions right now" with a way to send a CV.
+
 ## Firestore security rules
 
-The website only ever **reads** published projects with the public web SDK. Writes happen from the seed script
+The website only ever **reads** published documents with the public web SDK. Writes happen from the seed script
 (Admin SDK, bypasses rules) or the Firebase console. Recommended rules:
 
 ```
@@ -175,6 +353,18 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /projects/{slug} {
+      allow read: if resource.data.published == true;
+      allow write: if false;
+    }
+    match /team/{slug} {
+      allow read: if resource.data.published == true;
+      allow write: if false;
+    }
+    match /partners/{slug} {
+      allow read: if resource.data.published == true;
+      allow write: if false;
+    }
+    match /jobs/{slug} {
       allow read: if resource.data.published == true;
       allow write: if false;
     }
@@ -190,16 +380,43 @@ filter would be rejected.
 
 ## Loading the initial data
 
-[`scripts/seed-showcase.ts`](scripts/seed-showcase.ts) converts the existing projects in `src/data/projects.ts` into
-`ShowcaseProject` documents and writes them to Firestore. It needs a Firebase service-account key, which is a secret:
-keep it out of the repo.
+Prerequisites (once): create the Firestore database in the Firebase console, paste the security rules above, and create
+a service-account key (Project settings > Service accounts > Generate new private key). The key is a secret: keep it
+outside the repo and point `GOOGLE_APPLICATION_CREDENTIALS` at it.
+
+### One command, everything: [`seed.ts`](seed.ts)
+
+For testing. It fills all four collections in one go:
+
+| Collection | What is written |
+| --- | --- |
+| `projects` | Your real portfolio from `src/data/projects.ts` (9 projects, no images yet) |
+| `team` | **Sample** people: 2 founders and 6 team members (two with Cloudinary demo photos, the rest show the placeholder) |
+| `partners` | **Sample** companies: 3 partners, 1 owner, 1 sponsor (some with Cloudinary demo logos) |
+| `jobs` | **Sample** roles (remote, on-site, internship) that expire after 14 days |
 
 ```bash
-npm run seed:showcase -- --dry-run     # print what would be written, touches nothing
-GOOGLE_APPLICATION_CREDENTIALS=path/to/service-account.json npm run seed:showcase
-GOOGLE_APPLICATION_CREDENTIALS=path/to/service-account.json npm run seed:showcase -- --force   # overwrite existing docs
+npm run seed -- --dry-run          # validate and list everything; writes nothing, needs no credentials
+npm run seed                       # write everything (Windows PowerShell: $env:GOOGLE_APPLICATION_CREDENTIALS = "C:\keys\propushhub.json")
+npm run seed -- --only=team,jobs   # only some collections
+npm run seed -- --force            # overwrite documents that already exist (default: skip them)
+npm run seed -- --hidden           # write samples with published: false, so they are not shown on the site
+npm run seed -- --clear-samples    # delete every "sample-*" document again
 ```
 
+Then run `npm run build` (or open the site in development) to see the pages filled in.
+
+**Sample data is public once written.** Every sample document has a slug starting with `sample-` and "Sample" in its
+name, and `--clear-samples` removes exactly those (real documents and projects are never touched). Run it before launch:
+sample jobs would otherwise be sent to search engines as real job postings.
+
+### Your own content: [`scripts/seed-data.ts`](scripts/seed-data.ts)
+
+Put your real documents in a JSON file (an array of objects as in the examples above) and run
+`npm run seed:data -- team people.json --dry-run` (or `partners` / `jobs` / `projects`). It validates every document and
+prints what it would write; run it again with `GOOGLE_APPLICATION_CREDENTIALS` set and without `--dry-run` to write them.
+Adding documents by hand in the Firebase console works just as well.
+
 Existing documents are skipped unless `--force` is passed, so Cloudinary URLs you added by hand are not overwritten.
-Seeded documents have no image `url` yet: upload screenshots to Cloudinary, then paste each delivery URL into the
+Seeded projects have no image `url` yet: upload screenshots to Cloudinary, then paste each delivery URL into the
 matching `images[].url` field in the Firebase console.

@@ -303,7 +303,7 @@ export const ProjectPage: React.FC<{ slug: string }> = ({ slug }) => {
         setShowcaseSnapshot(all);
         setProject(found);
         setStatus('ready');
-        applySeo(getRouteSeo(pathname, all));
+        applySeo(getRouteSeo(pathname, { showcase: all }));
       })
       .catch(() => {
         if (!cancelled) setStatus('missing');

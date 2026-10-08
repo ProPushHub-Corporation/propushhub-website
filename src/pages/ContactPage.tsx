@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowUpRight, CheckCircle2, ChevronDown, Mail, MessageCircle } from 'lucide-react';
+import { CONTACT_TOPICS } from '../data/company';
 import { SERVICES } from '../data/services';
 import { BUDGET_OPTIONS, COMPANY_INFO } from '../data/site';
 import { useRouter } from '../lib/router';
@@ -50,7 +51,7 @@ export const ContactPage: React.FC = () => {
   // Pre-select the service from /contact?service=<slug> (read after mount to keep SSR and client markup identical).
   useEffect(() => {
     const slug = new URLSearchParams(search).get('service');
-    const match = SERVICES.find((s) => s.slug === slug);
+    const match = [...SERVICES, ...CONTACT_TOPICS].find((s) => s.slug === slug);
     if (match) setService(match.name);
   }, [search]);
 
@@ -218,6 +219,11 @@ export const ContactPage: React.FC = () => {
                       {SERVICES.map((s) => (
                         <option key={s.slug} value={s.name}>
                           {s.name}
+                        </option>
+                      ))}
+                      {CONTACT_TOPICS.map((topic) => (
+                        <option key={topic.slug} value={topic.name}>
+                          {topic.name}
                         </option>
                       ))}
                       <option value={OTHER}>{OTHER}</option>

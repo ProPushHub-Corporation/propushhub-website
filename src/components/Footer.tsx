@@ -1,5 +1,6 @@
 import React from 'react';
 import { COMPANY_INFO } from '../data/site';
+import { COMPANY_LINKS } from '../data/company';
 import { SERVICES } from '../data/services';
 import { Link } from '../lib/router';
 import { Logo } from './Navbar';
@@ -47,6 +48,13 @@ export const Footer: React.FC = () => (
                 Showcase
               </Link>
             </li>
+            {COMPANY_LINKS.map((item) => (
+              <li key={item.to}>
+                <Link to={item.to} className={linkCls}>
+                  {item.label}
+                </Link>
+              </li>
+            ))}
             <li>
               <Link to="/contact" className={linkCls}>
                 Contact form

@@ -19,6 +19,8 @@ export const HERO_SIZE = { width: 1600, height: 900 };
 export const SERVICE_SIZE = { width: 1600, height: 800 };
 export const PROJECT_SIZE = { width: 1600, height: 1000 };
 export const OG_SIZE = { width: 1200, height: 630 };
+/** Team portraits (4:5). */
+export const MEMBER_SIZE = { width: 600, height: 750 };
 
 export const HOME_HERO_IMAGE: ImageSlot = {
   ...HERO_SIZE,
