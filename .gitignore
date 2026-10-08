@@ -10,3 +10,8 @@ coverage/
 .vercel
 .env*
 .vercel
+
+# Firebase / Google Cloud service-account keys (secrets: never commit)
+*-firebase-adminsdk-*.json
+service-account*.json
+*serviceAccount*.json
