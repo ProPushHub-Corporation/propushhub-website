@@ -28,7 +28,7 @@ export const ServicesPage: React.FC = () => (
       </Container>
     </section>
 
-    <Section tone="light" labelledBy="all-services-title">
+    <Section labelledBy="all-services-title">
       <SectionHeader
         id="all-services-title"
         eyebrow="All services"
@@ -45,7 +45,7 @@ export const ServicesPage: React.FC = () => (
       </p>
     </Section>
 
-    <ProcessSection tone="dark" />
-    <FinalCta tone="light" />
+    <ProcessSection />
+    <FinalCta />
   </main>
 );

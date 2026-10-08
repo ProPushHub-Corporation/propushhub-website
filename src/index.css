@@ -2,23 +2,22 @@
 @import "@fontsource-variable/arimo";
 
 /*
- * Monochrome design system. Black and white only: no accent colour.
- * Tokens below are the dark (default) theme. Wrapping any block in `.light`
- * re-maps the same tokens to a white surface, so components never hard-code a theme.
+ * Monochrome design system: white background, black text, no accent colour.
+ * Components only use these tokens, so the palette lives in one place.
  */
 @theme {
   --font-sans: "Arimo Variable", Arimo, Arial, Helvetica, sans-serif;
   --font-display: "Arimo Variable", Arimo, Arial, Helvetica, sans-serif;
 
-  --color-ink: #000000;
-  --color-surface: #0a0a0a;
-  --color-surface-2: #141414;
-  --color-fg: #ffffff;
-  --color-fg-2: #d4d4d4;
-  --color-muted: #a3a3a3;
-  --color-dim: #8a8a8a;
-  --color-line: #262626;
-  --color-line-strong: #404040;
+  --color-ink: #ffffff;
+  --color-surface: #f5f5f5;
+  --color-surface-2: #ebebeb;
+  --color-fg: #0a0a0a;
+  --color-fg-2: #262626;
+  --color-muted: #525252;
+  --color-dim: #6b6b6b;
+  --color-line: #e5e5e5;
+  --color-line-strong: #8a8a8a;
 
   --animate-rise: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   @keyframes rise {
@@ -32,7 +31,7 @@
     font-family: var(--font-sans);
     color: var(--color-fg);
     background-color: var(--color-ink);
-    color-scheme: dark;
+    color-scheme: light;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
@@ -69,22 +68,6 @@
 }
 
 @layer components {
-  /* White surface variant. Same token names, inverted values. */
-  .light {
-    --color-ink: #ffffff;
-    --color-surface: #f5f5f5;
-    --color-surface-2: #ebebeb;
-    --color-fg: #0a0a0a;
-    --color-fg-2: #262626;
-    --color-muted: #525252;
-    --color-dim: #6b6b6b;
-    --color-line: #e5e5e5;
-    --color-line-strong: #a3a3a3;
-    color-scheme: light;
-    background-color: var(--color-ink);
-    color: var(--color-fg);
-  }
-
   .container-x {
     width: 100%;
     max-width: 1200px;
@@ -140,8 +123,13 @@
   .field:hover { border-color: var(--color-muted); }
   .field:focus { outline: none; border-color: var(--color-fg); }
   select.field { appearance: none; background-image: none; }
-  select.field option { background: #000; color: #fff; }
+  select.field option { background: #fff; color: #0a0a0a; }
 }
+
+/* First-visit intro (see components/Intro.tsx). Hidden unless index.html marks the visit. */
+#intro { display: none; }
+html.intro-pending #intro { display: grid; }
+html.intro-pending { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

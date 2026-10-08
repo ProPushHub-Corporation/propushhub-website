@@ -8,6 +8,7 @@ import { RouterProvider, useRouter } from './lib/router';
 import { useSeo } from './lib/useSeo';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import { Intro } from './components/Intro';
 import { HomePage } from './pages/HomePage';
 import { ServicesPage } from './pages/ServicesPage';
 import { ServicePage } from './pages/ServicePage';
@@ -31,6 +32,7 @@ export default function App({ initialPath }: { initialPath?: string }) {
   return (
     <RouterProvider initialPath={initialPath}>
       <div className="flex min-h-screen flex-col bg-ink text-fg">
+        <Intro />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-fg focus:px-4 focus:py-3 focus:text-ink"

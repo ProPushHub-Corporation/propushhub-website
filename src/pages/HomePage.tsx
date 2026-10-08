@@ -5,6 +5,7 @@ import { HERO, HOME_FAQS, PROCESS_STEPS, REASONS } from '../data/site';
 import { HOME_HERO_IMAGE } from '../data/images';
 import { Link } from '../lib/router';
 import { SiteImage } from '../components/SiteImage';
+import { SplitText } from '../components/reactbits/SplitText';
 import { Container, Section, SectionHeader } from '../components/ui';
 import {
   FaqSection,
@@ -25,21 +26,22 @@ export const HomePage: React.FC = () => {
     <main id="main">
       <section aria-labelledby="hero-title" className="bg-ink pt-16 sm:pt-24">
         <Container className="text-center">
-          <p className="eyebrow animate-rise">{HERO.eyebrow}</p>
-          <h1
+          <p className="eyebrow" data-reveal>
+            {HERO.eyebrow}
+          </p>
+          <SplitText
+            tag="h1"
             id="hero-title"
-            className="animate-rise mx-auto mt-6 max-w-5xl text-[length:clamp(2.75rem,7.2vw,5.75rem)] leading-[0.98] tracking-[-0.035em]"
-            style={{ animationDelay: '80ms' }}
-          >
-            {HERO.title}
-          </h1>
+            text={HERO.title}
+            className="mx-auto mt-6 max-w-5xl text-[length:clamp(2.75rem,7.2vw,5.75rem)] leading-[0.98] tracking-[-0.035em]"
+          />
           <p
-            className="animate-rise mx-auto mt-8 max-w-[52ch] text-lg leading-relaxed text-muted sm:text-xl"
-            style={{ animationDelay: '160ms' }}
+            className="mx-auto mt-8 max-w-[52ch] text-lg leading-relaxed text-muted sm:text-xl"
+            data-reveal
           >
             {HERO.subtitle}
           </p>
-          <div className="animate-rise mt-10 flex flex-wrap items-center justify-center gap-3" style={{ animationDelay: '240ms' }}>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3" data-reveal>
             <Link to="/contact" className="btn btn-primary">
               Get a free quote
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
@@ -48,11 +50,15 @@ export const HomePage: React.FC = () => {
               Explore services
             </Link>
           </div>
-          <Reassurance className="animate-rise mt-8 justify-center" />
+          <div data-reveal>
+            <Reassurance className="mt-8 justify-center" />
+          </div>
 
-          <SiteImage image={HOME_HERO_IMAGE} label="Hero image" priority className="mt-16 sm:mt-20" />
+          <div className="mt-16 sm:mt-20" data-reveal>
+            <SiteImage image={HOME_HERO_IMAGE} label="Hero image" priority />
+          </div>
 
-          <dl className="grid gap-8 border-b border-line py-10 sm:grid-cols-3 sm:py-12">
+          <dl data-reveal className="grid gap-8 border-b border-line py-10 sm:grid-cols-3 sm:py-12">
             {facts.map((fact) => (
               <div key={fact.label}>
                 <dt className="sr-only">{fact.label}</dt>
@@ -66,7 +72,7 @@ export const HomePage: React.FC = () => {
         </Container>
       </section>
 
-      <Section id="services" tone="light" labelledBy="services-title">
+      <Section id="services" labelledBy="services-title">
         <SectionHeader
           id="services-title"
           eyebrow="Services"
@@ -95,11 +101,11 @@ export const HomePage: React.FC = () => {
         </div>
       </Section>
 
-      <ProcessSection tone="light" />
+      <ProcessSection />
 
-      <FaqSection faqs={HOME_FAQS} tone="dark" title="Questions before you start" />
+      <FaqSection faqs={HOME_FAQS} title="Questions before you start" />
 
-      <FinalCta tone="light" />
+      <FinalCta />
     </main>
   );
 };

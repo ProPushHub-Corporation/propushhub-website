@@ -3,7 +3,7 @@
 Marketing site for PropushHub. It sells development services: websites, CMS, e-commerce, web apps, mobile, desktop, ERP, APIs, UI/UX, AI and DevOps.
 
 ## Stack
-React 19 + TypeScript, Vite, Tailwind CSS v4 (`@tailwindcss/vite`), `lucide-react` icons, self-hosted Arimo font (`@fontsource-variable/arimo`) for everything.
+React 19 + TypeScript, Vite, Tailwind CSS v4 (`@tailwindcss/vite`), `lucide-react` icons, GSAP for the intro animation, self-hosted Arimo font (`@fontsource-variable/arimo`) for everything.
 Originally scaffolded from Google AI Studio (see `metadata.json`, `.env.example`).
 
 ## Commands
@@ -24,11 +24,17 @@ Run `npm run lint` and `npm run build` before committing code changes.
 - `src/data/images.ts` — every image slot with its exact size
 - `src/data/projects.ts` — portfolio/case-study data. **Not rendered right now** (the Work pages were removed on purpose); the old `WorkPage`/`CaseStudyPage` are in git history if they come back
 
-## Design system (black and white only)
-- No accent colour, gradients, glass, glows or looping animation. Keep it monochrome and sharp (no rounded corners).
-- Tokens live in `src/index.css`: `bg-ink`, `bg-surface`, `bg-surface-2`, `text-fg`, `text-fg-2`, `text-muted`, `text-dim`, `border-line`, `border-line-strong`. Classes: `btn btn-primary`, `btn btn-secondary`, `field`, `eyebrow`, `container-x`.
-- Wrap a block in `.light` (or `<Section tone="light">`) to flip the same tokens to a white surface. Alternate dark and light sections down each page.
-- Don't hide content until JavaScript runs (no opacity-0 initial states): pages are prerendered. The only entrance animation is the CSS `animate-rise` on hero text.
+## Design system (white background, black text)
+- Monochrome only: no accent colour, gradients, glass, glows or rounded corners. Primary buttons are black with white text.
+- Tokens live in `src/index.css` and are the only place colours are defined: `bg-ink` (white), `bg-surface`, `bg-surface-2`, `text-fg` (black), `text-fg-2`, `text-muted`, `text-dim`, `border-line`, `border-line-strong`. Classes: `btn btn-primary`, `btn btn-secondary`, `field`, `eyebrow`, `container-x`.
+- Sections are separated by hairline borders (`<Section>` in `components/ui.tsx`), not by alternating background colours.
+- Don't hide content until JavaScript runs: pages are prerendered. The only exception is the first-visit intro below.
+
+## Intro animation (GSAP + React Bits)
+- Plays once per browser session, on the home page only. `index.html` has a tiny inline script that adds `intro-pending` to `<html>`; it skips reduced-motion users, crawlers and audit tools (bot/lighthouse/headless user agents). Without that class nothing animates and the page is plain server-rendered HTML.
+- `components/Intro.tsx` is the overlay (always in the prerendered HTML, hidden by CSS unless `intro-pending`). `lib/intro.ts` is the GSAP timeline; it is loaded on demand, so GSAP stays out of the main bundle. Clicking the intro fast-forwards it.
+- The hero headline uses `components/reactbits/SplitText.tsx`, adapted from React Bits SplitText (GSAP SplitText plugin): it splits into characters only while the intro runs, then reverts to plain text. Other hero blocks opt in with a `data-reveal` attribute.
+- To remove the intro: delete the inline script in `index.html`. To change the timing: edit `lib/intro.ts`.
 
 ## Images
 Every image is declared in `src/data/images.ts` (or a service's `image`). Without a `src`, `SiteImage` renders a "W × H" placeholder at the exact size. To use a real image: save it at the slot's `path` (under `public/`) and set `src` to its public URL. Always keep meaningful `alt` text. OG image is `public/og-image.png` (1200 × 630).

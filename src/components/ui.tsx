@@ -8,8 +8,6 @@ export const Container: React.FC<{ className?: string; children: React.ReactNode
 
 interface SectionProps {
   id?: string;
-  /** `light` renders a white surface; the default is black. */
-  tone?: 'dark' | 'light';
   labelledBy?: string;
   className?: string;
   children: React.ReactNode;
@@ -17,7 +15,6 @@ interface SectionProps {
 
 export const Section: React.FC<SectionProps> = ({
   id,
-  tone = 'dark',
   labelledBy,
   className = '',
   children,
@@ -25,7 +22,7 @@ export const Section: React.FC<SectionProps> = ({
   <section
     id={id}
     aria-labelledby={labelledBy}
-    className={`${tone === 'light' ? 'light' : 'bg-ink text-fg'} border-t border-line py-20 sm:py-28 ${className}`}
+    className={`border-t border-line bg-ink py-20 text-fg sm:py-28 ${className}`}
   >
     <Container>{children}</Container>
   </section>

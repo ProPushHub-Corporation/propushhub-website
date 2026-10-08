@@ -1,15 +1,31 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light" />
     <meta name="author" content="PropushHub" />
     <meta name="format-detection" content="telephone=no" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <script>
+      // First visit of the session to the home page: show the intro. Skipped for reduced motion
+      // and crawlers/audit tools. Pages are fully server-rendered, so nothing depends on this.
+      (function () {
+        try {
+          var root = document.documentElement;
+          if (location.pathname !== '/' || sessionStorage.getItem('ph-intro')) return;
+          if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          if (/bot|crawl|spider|slurp|lighthouse|pagespeed|headless|prerender/i.test(navigator.userAgent)) return;
+          sessionStorage.setItem('ph-intro', '1');
+          root.classList.add('intro-pending');
+          // Safety net: never leave the page covered if the app fails to start.
+          setTimeout(function () { root.classList.remove('intro-pending'); }, 6000);
+        } catch (e) {}
+      })();
+    </script>
     <!--seo-head-start-->
     <title>PropushHub — Web, Mobile & Custom Software Development</title>
     <meta name="description" content="PropushHub builds websites, CMS, e-commerce, mobile apps, desktop software and custom ERP. One team from design to launch and support. Get a free quote." />

@@ -15,14 +15,6 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
     .map((s) => getServiceBySlug(s))
     .filter((s): s is NonNullable<typeof s> => Boolean(s));
 
-  // Alternate black / white sections down the page.
-  let tone: 'dark' | 'light' = 'light';
-  const next = () => {
-    const current = tone;
-    tone = tone === 'light' ? 'dark' : 'light';
-    return current;
-  };
-
   return (
     <main id="main">
       <section aria-labelledby="service-title" className="bg-ink pb-20 pt-10 sm:pb-28">
@@ -58,7 +50,7 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
         </Container>
       </section>
 
-      <Section id="included" tone={next()} labelledBy="included-title">
+      <Section id="included" labelledBy="included-title">
         <SectionHeader
           id="included-title"
           eyebrow="What you get"
@@ -75,7 +67,7 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
         </ul>
       </Section>
 
-      <Section id="fit" tone={next()} labelledBy="fit-title">
+      <Section id="fit" labelledBy="fit-title">
         <div className="grid gap-14 lg:grid-cols-2">
           <div>
             <p className="eyebrow mb-5">Who it’s for</p>
@@ -107,16 +99,16 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
         </div>
       </Section>
 
-      <ProcessSection tone={next()} />
+      <ProcessSection />
 
       <FaqSection
         faqs={service.faqs}
-        tone={next()}
+       
         id="faq"
         title={`${service.name}: common questions`}
       />
 
-      <Section id="related-services" tone={next()} labelledBy="related-services-title">
+      <Section id="related-services" labelledBy="related-services-title">
         <SectionHeader id="related-services-title" eyebrow="Related services" title="Often combined with" />
         <ul className="grid gap-px border border-line bg-line md:grid-cols-3">
           {related.map((item) => (

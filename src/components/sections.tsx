@@ -46,8 +46,8 @@ export const ServiceList: React.FC<{ exclude?: string[] }> = ({ exclude = [] }) 
   );
 };
 
-export const ProcessSection: React.FC<{ tone?: 'dark' | 'light' }> = ({ tone = 'light' }) => (
-  <Section id="process" tone={tone} labelledBy="process-title">
+export const ProcessSection: React.FC = () => (
+  <Section id="process" labelledBy="process-title">
     <SectionHeader
       id="process-title"
       eyebrow="How we work"
@@ -68,7 +68,6 @@ export const ProcessSection: React.FC<{ tone?: 'dark' | 'light' }> = ({ tone = '
 
 interface FaqSectionProps {
   faqs: ServiceFaq[];
-  tone?: 'dark' | 'light';
   id?: string;
   eyebrow?: string;
   title?: string;
@@ -76,12 +75,11 @@ interface FaqSectionProps {
 
 export const FaqSection: React.FC<FaqSectionProps> = ({
   faqs,
-  tone = 'light',
   id = 'faq',
   eyebrow = 'FAQ',
   title = 'Questions we hear most',
 }) => (
-  <Section id={id} tone={tone} labelledBy={`${id}-title`}>
+  <Section id={id} labelledBy={`${id}-title`}>
     <div className="grid gap-12 lg:grid-cols-12">
       <div className="lg:col-span-4">
         <p className="eyebrow mb-5">{eyebrow}</p>
@@ -115,17 +113,15 @@ interface FinalCtaProps {
   /** Pre-selects this service on the contact form. */
   serviceSlug?: string;
   title?: string;
-  tone?: 'dark' | 'light';
 }
 
 export const FinalCta: React.FC<FinalCtaProps> = ({
   serviceSlug,
   title = 'Tell us what you need. We’ll show you how we’d build it.',
-  tone = 'dark',
 }) => (
   <section
     aria-labelledby="cta-title"
-    className={`${tone === 'light' ? 'light' : 'bg-ink text-fg'} border-t border-line py-24 sm:py-32`}
+    className="border-t border-line bg-ink py-24 text-fg sm:py-32"
   >
     <Container>
       <p className="eyebrow mb-5">Start a project</p>
