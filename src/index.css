@@ -151,8 +151,9 @@
   to { opacity: 1; transform: none; }
 }
 
-html { --hero-base: 0ms; }
-html.splash { --hero-base: 320ms; }
+/* --splash-k scales every splash timing at once: 1 = fast, 2 = slow. */
+html { --hero-base: 0ms; --splash-k: 1.5; }
+html.splash { --hero-base: calc(320ms * var(--splash-k)); }
 
 .hero-anim {
   animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
@@ -177,8 +178,8 @@ html.splash #splash { display: grid; }
 .splash-stroke {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: splash-draw 0.55s cubic-bezier(0.65, 0, 0.35, 1) forwards;
-  animation-delay: calc(var(--i) * 100ms + 60ms);
+  animation: splash-draw calc(0.55s * var(--splash-k)) cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation-delay: calc((var(--i) * 100ms + 60ms) * var(--splash-k));
 }
 .splash-bar {
   position: absolute;
@@ -188,7 +189,7 @@ html.splash #splash { display: grid; }
   background: var(--color-fg);
   transform: scaleX(0);
   transform-origin: left center;
-  animation: splash-bar 1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation: splash-bar calc(1s * var(--splash-k)) cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
 @keyframes splash-draw { to { stroke-dashoffset: 0; } }
@@ -199,11 +200,11 @@ html.splash #splash { display: grid; }
 @keyframes splash-fade { to { opacity: 0; visibility: hidden; } }
 
 /* Page has loaded: the word grows until it fills the screen, then the splash fades away. */
-html.splash-exit .splash-mark { animation: splash-zoom 0.9s cubic-bezier(0.76, 0, 0.24, 1) forwards; }
-html.splash-exit #splash { pointer-events: none; animation: splash-fade 0.38s ease-in 0.55s forwards; }
+html.splash-exit .splash-mark { animation: splash-zoom calc(0.9s * var(--splash-k)) cubic-bezier(0.76, 0, 0.24, 1) forwards; }
+html.splash-exit #splash { pointer-events: none; animation: splash-fade calc(0.38s * var(--splash-k)) ease-in calc(0.55s * var(--splash-k)) forwards; }
 html.splash-exit .splash-bar { opacity: 0; }
 /* Failsafe: never leave the page covered if the exit script did not run. */
-html.splash:not(.splash-exit) #splash { animation: splash-out 0.4s ease-in 6s forwards; }
+html.splash:not(.splash-exit) #splash { animation: splash-out 0.4s ease-in 9s forwards; }
 
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

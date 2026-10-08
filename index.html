@@ -26,10 +26,12 @@
           var exit = function () {
             if (exited) return;
             exited = true;
-            setTimeout(function () { root.classList.add('splash-exit'); }, Math.max(0, 1150 - (Date.now() - start)));
+            // Keep the splash up long enough for the letters to finish drawing; --splash-k (index.css) sets the pace.
+            var k = parseFloat(getComputedStyle(root).getPropertyValue('--splash-k')) || 1;
+            setTimeout(function () { root.classList.add('splash-exit'); }, Math.max(0, 1150 * k - (Date.now() - start)));
           };
           if (document.readyState === 'complete') exit(); else addEventListener('load', exit);
-          setTimeout(exit, 4000);
+          setTimeout(exit, 5000);
         } catch (e) {}
       })();
     </script>
