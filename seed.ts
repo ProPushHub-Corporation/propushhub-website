@@ -17,12 +17,15 @@
  *   team       SAMPLE people (2 founders, 6 team) - 2 with Cloudinary demo photos, the rest show the placeholder
  *   partners   SAMPLE companies (partner, owner, sponsor) - some with Cloudinary demo logos
  *   jobs       SAMPLE roles that expire after 14 days
+ *   home_collaboration_partner   SAMPLE logos for the home page ribbon, plus the switch
+ *              roles/home_collaboration_partner = { enabled: true } that allows the ribbon to appear
  * Every sample document has a slug starting with "sample-" and "Sample" in its name.
  *
  * IMPORTANT: documents are public as soon as they are written. They appear on the live site on its next
  * build or page refresh, and sample jobs would be sent to search engines as job postings. Run
  * `npm run seed -- --clear-samples` once you have finished testing, before launch.
  */
+import { HOME_PARTNERS_ROLE } from './src/data/homePartnerTypes';
 import { seedShowcaseProjects } from './src/data/showcaseSeed';
 import {
   COLLECTIONS,
@@ -30,6 +33,8 @@ import {
   connect,
   deleteSamples,
   labelOf,
+  roleExists,
+  setRole,
   validate,
   writeDocs,
 } from './scripts/seed-core';
@@ -185,6 +190,21 @@ const jobs: Doc[] = [
   },
 ];
 
+const homePartners: Doc[] = [
+  ['cloud', 'Sample Cloud Co', 'cld-sample-2.jpg'],
+  ['design', 'Sample Design Studio', 'cld-sample-3.jpg'],
+  ['integrations', 'Sample Integrations Ltd', 'cld-sample.jpg'],
+  ['labs', 'Sample Labs', 'sample.jpg'],
+  ['studio', 'Sample Studio', 'kitten.jpg'],
+  ['agency', 'Sample Agency', 'docs/models.jpg'],
+].map(([id, name, file], i) => ({
+  slug: `${SAMPLE_PREFIX}ribbon-${id}`,
+  name,
+  url: 'https://example.com',
+  logo: { url: `${DEMO}/${file}`, alt: `${name} logo` },
+  order: i + 1,
+}));
+
 const stamp = (docs: Doc[]): Doc[] => docs.map((d) => ({ ...d, published, updatedAt: now }));
 
 const data: Record<CollectionName, Doc[]> = {
@@ -192,6 +212,7 @@ const data: Record<CollectionName, Doc[]> = {
   team: stamp(team),
   partners: stamp(partners),
   jobs: stamp(jobs),
+  home_collaboration_partner: stamp(homePartners),
 };
 
 /* ------------------------------------------------------------------- run */
@@ -203,6 +224,8 @@ if (clear) {
     if (name === 'projects') continue; // real portfolio data: never deleted by this script
     total += await deleteSamples(db, name);
   }
+  // The ribbon has no logos left to show, so switch it off until real ones are added.
+  if (selected.includes('home_collaboration_partner')) await setRole(db, HOME_PARTNERS_ROLE, false);
   console.log(`\nRemoved ${total} sample documents.`);
   process.exit(0);
 }
@@ -231,6 +254,10 @@ for (const name of selected) {
   const result = await writeDocs(db, name, data[name], force);
   written += result.written;
   skipped += result.skipped;
+}
+// The switch that lets the home page ribbon appear (kept if it already exists, unless --force).
+if (selected.includes('home_collaboration_partner') && (force || !(await roleExists(db, HOME_PARTNERS_ROLE)))) {
+  await setRole(db, HOME_PARTNERS_ROLE, published);
 }
 
 console.log(`\nDone: ${written} written, ${skipped} skipped.`);

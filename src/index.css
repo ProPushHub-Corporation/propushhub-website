@@ -208,6 +208,16 @@ html.splash-exit .splash-bar { opacity: 0; }
 /* Failsafe: never leave the page covered if the exit script did not run. */
 html.splash:not(.splash-exit) #splash { animation: splash-out 0.4s ease-in 9s forwards; }
 
+/* Home page logo ribbon (components/PartnerRibbon.tsx): two identical copies slide left by half the track. */
+@keyframes ribbon-scroll { to { transform: translateX(-50%); } }
+.ribbon-track {
+  display: flex;
+  width: max-content;
+  animation: ribbon-scroll var(--ribbon-seconds, 30s) linear infinite;
+}
+.ribbon:hover .ribbon-track,
+.ribbon:focus-within .ribbon-track { animation-play-state: paused; }
+
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;

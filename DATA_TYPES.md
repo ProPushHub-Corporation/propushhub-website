@@ -1,6 +1,6 @@
 # Data types
 
-Data contracts for the website. Four Firestore collections feed pages:
+Data contracts for the website. These Firestore collections feed pages:
 
 | Collection | Feeds | TypeScript mirror |
 | --- | --- | --- |
@@ -8,6 +8,7 @@ Data contracts for the website. Four Firestore collections feed pages:
 | [`team`](#teamslug) | `/team` (Founders and Our team sections) | [`src/data/teamTypes.ts`](src/data/teamTypes.ts) |
 | [`partners`](#partnersslug) | `/collaboration` (partnerships, ownership, sponsors) | [`src/data/partnerTypes.ts`](src/data/partnerTypes.ts) |
 | [`jobs`](#jobsslug) | `/jobs` (open roles + `JobPosting` structured data) | [`src/data/jobTypes.ts`](src/data/jobTypes.ts) |
+| [`roles`](#roleshome_collaboration_partner) + [`home_collaboration_partner`](#home_collaboration_partnerslug) | The logo ribbon above the home page footer | [`src/data/homePartnerTypes.ts`](src/data/homePartnerTypes.ts) |
 
 **Change the Markdown and the TypeScript mirror together.** All four work the same way: one document per item,
 **document id = `slug`**, readable by the website only while `published` is `true`, sorted by `order`.
@@ -26,7 +27,7 @@ canonical URL, Open Graph image (first Cloudinary image, cropped to 1200 x 630),
 
 ## How the data flows
 
-1. `npm run build` reads `projects`, `team`, `partners` and `jobs` from Firestore ([`scripts/prerender.ts`](scripts/prerender.ts)) and writes the
+1. `npm run build` reads `projects`, `team`, `partners`, `jobs` and the home ribbon (`roles` switch + logos) from Firestore ([`scripts/prerender.ts`](scripts/prerender.ts)) and writes the
    showcase page as static HTML with the data embedded, so crawlers and no-JS visitors see every project.
    If Firestore can't be reached, the build falls back to the bundled seed data in
    [`src/data/projects.ts`](src/data/projects.ts) and prints a warning.
@@ -343,6 +344,70 @@ Example (`jobs/senior-react-developer`):
 
 When no job is published, the page shows "No open positions right now" with a way to send a CV.
 
+## `roles/home_collaboration_partner`
+
+A switch that decides whether the home page logo ribbon may appear. The ribbon is shown only when this document
+exists **and** `enabled` is exactly `true` **and** the logo collection below has at least one published logo.
+
+```ts
+interface RoleFlag {
+  enabled: boolean;        // true = the section may appear; false, missing or unreadable = hidden
+  updatedAt?: string;      // ISO 8601
+}
+```
+
+```json
+{ "enabled": true }
+```
+
+Flip `enabled` in the Firebase console to hide or show the section. The change reaches visitors on their next page
+view (the site re-reads the switch in the browser), and the prerendered HTML follows on the next build. Other
+sections can get their own switch the same way: a document in `roles` with the section's id.
+
+## `home_collaboration_partner/{slug}`
+
+The company logos that slide across the ribbon, from right to left, in an endless loop. Only published documents with a
+logo are used, in `order` (left to right in the first loop). Logos are Cloudinary URLs.
+
+```ts
+interface HomePartnerLogo {
+  url: string;             // Cloudinary delivery URL (2:1); required
+  alt: string;             // required
+}
+
+interface HomePartner {
+  slug: string;            // = document id
+  name: string;            // company name
+  url?: string;            // company website; the logo links to it when set
+  logo: HomePartnerLogo;
+  order: number;           // ascending
+  published: boolean;
+  updatedAt?: string;      // ISO 8601
+}
+```
+
+Upload logos at **360 x 180 px** or larger (2:1). They are shown uncropped, in grey, and turn to colour on hover; the
+ribbon pauses while the pointer is over it. A short list is repeated so the ribbon always fills the screen.
+
+Example (`home_collaboration_partner/acme-labs`):
+
+```json
+{
+  "slug": "acme-labs",
+  "name": "Acme Labs",
+  "url": "https://acme.example",
+  "logo": {
+    "url": "https://res.cloudinary.com/your-cloud/image/upload/v1730000000/propushhub/ribbon/acme-labs.png",
+    "alt": "Acme Labs logo"
+  },
+  "order": 1,
+  "published": true
+}
+```
+
+This collection is separate from [`partners`](#partnersslug), which feeds the `/collaboration` page: a company can be in
+both, or only in one.
+
 ## Firestore security rules
 
 The website only ever **reads** published documents with the public web SDK. Writes happen from the seed script
@@ -366,6 +431,15 @@ service cloud.firestore {
     }
     match /jobs/{slug} {
       allow read: if resource.data.published == true;
+      allow write: if false;
+    }
+    match /home_collaboration_partner/{slug} {
+      allow read: if resource.data.published == true;
+      allow write: if false;
+    }
+    // Section switches. They hold only { enabled: boolean }, so they can be public.
+    match /roles/{id} {
+      allow read: if true;
       allow write: if false;
     }
     match /{document=**} {
@@ -394,6 +468,7 @@ For testing. It fills all four collections in one go:
 | `team` | **Sample** people: 2 founders and 6 team members (two with Cloudinary demo photos, the rest show the placeholder) |
 | `partners` | **Sample** companies: 3 partners, 1 owner, 1 sponsor (some with Cloudinary demo logos) |
 | `jobs` | **Sample** roles (remote, on-site, internship) that expire after 14 days |
+| `home_collaboration_partner` + `roles` | **Sample** logos for the home page ribbon (6 Cloudinary demo images) and the switch `roles/home_collaboration_partner = { enabled: true }` |
 
 ```bash
 npm run seed -- --dry-run          # validate and list everything; writes nothing, needs no credentials
@@ -401,7 +476,7 @@ npm run seed                       # write everything (Windows PowerShell: $env:
 npm run seed -- --only=team,jobs   # only some collections
 npm run seed -- --force            # overwrite documents that already exist (default: skip them)
 npm run seed -- --hidden           # write samples with published: false, so they are not shown on the site
-npm run seed -- --clear-samples    # delete every "sample-*" document again
+npm run seed -- --clear-samples    # delete every "sample-*" document again (and switch the home ribbon off)
 ```
 
 Then run `npm run build` (or open the site in development) to see the pages filled in.

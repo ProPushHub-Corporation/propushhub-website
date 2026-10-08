@@ -2,6 +2,7 @@ import {createRoot, hydrateRoot} from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 import { readEmbeddedShowcase, setShowcaseSnapshot } from './lib/showcaseStore';
+import { readEmbeddedHomePartners, setHomePartnersSnapshot } from './lib/homePartners';
 import { remoteCollections } from './lib/remote';
 
 const root = document.getElementById('root')!;
@@ -10,6 +11,7 @@ const root = document.getElementById('root')!;
 setShowcaseSnapshot(readEmbeddedShowcase());
 // Same for the data-driven company pages.
 for (const source of remoteCollections) source.setSnapshot(source.readEmbedded());
+setHomePartnersSnapshot(readEmbeddedHomePartners());
 
 // Production HTML is prerendered (see scripts/prerender.ts), so hydrate it. Render from scratch when the root
 // is empty (`vite dev`) or holds the generic 404.html: that file is served for any URL without a prerendered

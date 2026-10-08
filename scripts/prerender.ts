@@ -24,6 +24,12 @@ import { SITE_URL, getAllIndexablePaths, getRouteSeo, renderHeadTags } from '../
 import { fetchShowcaseProjects } from '../src/lib/showcase';
 import { SHOWCASE_DATA_ELEMENT_ID, setShowcaseSnapshot } from '../src/lib/showcaseStore';
 import type { RemoteCollection, RemoteDoc } from '../src/lib/collection';
+import type { HomePartnersData } from '../src/data/homePartnerTypes';
+import {
+  HOME_PARTNERS_ELEMENT_ID,
+  fetchHomePartners,
+  setHomePartnersSnapshot,
+} from '../src/lib/homePartners';
 import { jobData, partnerData, teamData } from '../src/lib/remote';
 
 const DIST = join(process.cwd(), 'dist');
@@ -69,10 +75,24 @@ const loadRemote = async <T extends RemoteDoc>(label: string, source: RemoteColl
   }
 };
 
+/** The home page ribbon: the `roles` switch plus its logos. Unreadable or switched off means no section. */
+const loadHomePartners = async (): Promise<HomePartnersData> => {
+  try {
+    const data = await withTimeout(fetchHomePartners(), 12000);
+    console.log(`Home partners: ${data.enabled ? `${data.items.length} logos (role enabled)` : 'switched off or empty'}`);
+    return data;
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error);
+    console.warn(`\n⚠  Home partners: could not use Firestore (${reason}).\n   The ribbon stays hidden until roles/home_collaboration_partner and its collection can be read.\n`);
+    return { enabled: false, items: [] };
+  }
+};
+
 const showcase = await loadShowcase();
 const team = await loadRemote('Team', teamData);
 const partners = await loadRemote('Partners', partnerData);
 const jobs = await loadRemote('Jobs', jobData);
+const homePartners = await loadHomePartners();
 
 // Pages whose content comes from a Firestore collection: the data is rendered into the HTML and embedded as
 // JSON so the browser can hydrate with exactly the same data.
@@ -86,6 +106,7 @@ const render = (path: string) => {
   const isShowcase = path === '/showcase' || path.startsWith('/showcase/');
   const remote = REMOTE_PAGES[path];
   setShowcaseSnapshot(isShowcase ? showcase : null);
+  setHomePartnersSnapshot(path === '/' ? homePartners : null);
   for (const page of Object.values(REMOTE_PAGES)) page.source.setSnapshot(page === remote ? page.items : null);
   const seo = getRouteSeo(path, {
     showcase: isShowcase ? showcase : null,
@@ -100,7 +121,9 @@ const render = (path: string) => {
     ? embedded(SHOWCASE_DATA_ELEMENT_ID, showcase)
     : remote
       ? embedded(remote.source.elementId, remote.items)
-      : '';
+      : path === '/'
+        ? embedded(HOME_PARTNERS_ELEMENT_ID, homePartners)
+        : '';
   return template
     .replace(HEAD_RE, () => `<!--seo-head-start-->\n    ${renderHeadTags(seo)}\n    <!--seo-head-end-->`)
     .replace('<!--seo-preload-->', () => preloadTags)

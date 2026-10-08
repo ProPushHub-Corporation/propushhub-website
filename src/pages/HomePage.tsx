@@ -11,6 +11,7 @@ import { Magnet } from '../components/reactbits/Magnet';
 import { Reveal } from '../components/reactbits/Reveal';
 import { SplitWords } from '../components/reactbits/SplitWords';
 import { SplitText } from '../components/reactbits/SplitText';
+import { PartnerRibbon } from '../components/PartnerRibbon';
 import { Container, Section, SectionHeader, anim } from '../components/ui';
 import {
   FaqSection,
@@ -120,6 +121,9 @@ export const HomePage: React.FC = () => {
         <FaqSection faqs={HOME_FAQS} title="Questions before you start" />
 
         <FinalCta />
+
+        {/* Shown only when roles/home_collaboration_partner is enabled in Firestore. */}
+        <PartnerRibbon />
       </main>
     </>
   );

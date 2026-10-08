@@ -8,7 +8,7 @@ import { PARTNER_GROUPS } from '../src/data/partnerTypes';
 import { SHOWCASE_FILTERS } from '../src/data/showcaseTypes';
 import { TEAM_GROUPS } from '../src/data/teamTypes';
 
-export const COLLECTIONS = ['projects', 'team', 'partners', 'jobs'] as const;
+export const COLLECTIONS = ['projects', 'team', 'partners', 'jobs', 'home_collaboration_partner'] as const;
 export type CollectionName = (typeof COLLECTIONS)[number];
 export type Doc = Record<string, unknown> & { slug?: string };
 
@@ -61,6 +61,13 @@ export const validate = (collection: CollectionName, docs: Doc[]): string[] => {
       if (!PARTNER_GROUPS.some((g) => g.kind === d.kind)) bad(`kind must be one of: ${PARTNER_GROUPS.map((g) => g.kind).join(', ')}`);
       const logo = d.logo as { url?: string; alt?: string } | undefined;
       if (logo?.url && !logo.alt) bad('logo.alt is required when logo.url is set');
+    }
+
+    if (collection === 'home_collaboration_partner') {
+      if (!isString(d.name)) bad('name is required');
+      const logo = d.logo as { url?: string; alt?: string } | undefined;
+      if (!isString(logo?.url)) bad('logo.url is required (a Cloudinary delivery URL)');
+      if (!isString(logo?.alt)) bad('logo.alt is required');
     }
 
     if (collection === 'jobs') {
@@ -120,3 +127,11 @@ export const deleteSamples = async (db: Firestore, collection: CollectionName): 
   }
   return removed;
 };
+
+/** Switches a section on or off through the `roles` collection (e.g. roles/home_collaboration_partner). */
+export const setRole = async (db: Firestore, id: string, enabled: boolean): Promise<void> => {
+  await db.collection('roles').doc(id).set({ enabled, updatedAt: new Date().toISOString() });
+  console.log(`  role   roles/${id} -> enabled: ${enabled}`);
+};
+
+export const roleExists = async (db: Firestore, id: string): Promise<boolean> => (await db.collection('roles').doc(id).get()).exists;
