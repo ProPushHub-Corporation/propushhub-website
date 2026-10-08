@@ -29,7 +29,7 @@ export const AboutPage: React.FC = () => (
       eyebrow="About us"
       title="We build software that businesses depend on"
       titleId="about-title"
-      intro="PropushHub, also known as PPH Corporation, is a software development company. We design, build and support software for businesses, with one team from the first call to launch and beyond."
+      intro="PropushHub Corporation (PPH) is a software development company. We design, build and support software for businesses, with one team from the first call to launch and beyond."
     >
       <Link to="/contact" className="btn btn-primary">
         Start a project

@@ -1,6 +1,6 @@
 # PropushHub Website
 
-Marketing site for PropushHub (also searched as "PPH Corporation"). It sells development services: websites, CMS, e-commerce, web apps, mobile, desktop, ERP, APIs, UI/UX, AI and DevOps, and shows past projects in a Firebase-backed showcase.
+Marketing site for PropushHub Corporation (PPH), also searched as "PPH Corporation" or "PropushHub". It sells development services: websites, CMS, e-commerce, web apps, mobile, desktop, ERP, APIs, UI/UX, AI and DevOps, and shows past projects in a Firebase-backed showcase.
 
 ## Stack
 React 19 + TypeScript, Vite, Tailwind CSS v4 (`@tailwindcss/vite`), `lucide-react` icons, GSAP (lazy, scroll/hover effects only), Firebase Firestore (showcase data), Cloudinary (project images). Fonts are self-hosted: Noto Sans (body) and DM Sans (headings), the closest free match to Miro's Noto Sans + Roobert PRO.
@@ -51,8 +51,8 @@ Run `npm run lint` and `npm run build` before committing code changes.
 Every image is declared in `src/data/images.ts` (or a service's `image`). Without a `src`, `SiteImage` renders a "W × H" placeholder at the exact size. To use a real image: save it at the slot's `path` (under `public/`) and set `src` to its public URL. Showcase images are Cloudinary URLs stored in Firestore (see DATA_TYPES.md). Always keep meaningful `alt` text. OG image is `public/og-image.png` (1200 × 630).
 
 ## SEO
-- Route metadata lives in `src/lib/seo.ts` (titles, descriptions, canonical, OG, JSON-LD: Organization with `alternateName` "PPH Corporation", WebSite, ProfessionalService, Service, FAQPage, BreadcrumbList, ContactPage, CollectionPage/ItemList, CreativeWork per project). `SITE_URL` there must be changed when a custom domain is connected.
-- The home and contact titles/descriptions deliberately include "PPH Corporation (PropushHub)" and "contact form" so brand searches land on them.
+- Route metadata lives in `src/lib/seo.ts` (titles, descriptions, canonical, OG, JSON-LD: Organization with `legalName` "PropushHub Corporation" and `alternateName` PPH, PropushHub, PPH Corporation, WebSite, ProfessionalService, Service, FAQPage, BreadcrumbList, ContactPage, CollectionPage/ItemList, CreativeWork per project). `SITE_URL` there must be changed when a custom domain is connected.
+- The home and contact titles/descriptions deliberately include "PropushHub Corporation (PPH)" and "contact form" so brand searches land on them.
 - `npm run build` runs `scripts/prerender.ts`: it reads the showcase, team, partners, jobs and the home ribbon from Firestore (the showcase falls back to the bundled seed data, the others to an empty list, each with a warning), server-renders every route with `react-dom/server` into `dist/<route>/index.html` (including one page per project), embeds the showcase JSON for hydration, and writes `404.html`, `sitemap.xml`, `robots.txt` and `llms.txt`. `src/main.tsx` hydrates that HTML. `vercel.json` has no catch-all rewrite, so unknown URLs get a real 404.
 - New Firestore project => redeploy (or use a Vercel Deploy Hook) to get its static, indexable page. Until then `/showcase/<slug>` still loads on demand in the browser (404.html is re-rendered, not hydrated).
 - `src/lib/useSeo.ts` updates the head on client-side navigation (and skips the first render of a prerendered page).

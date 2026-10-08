@@ -106,7 +106,7 @@ export const ContactPage: React.FC = () => {
         <div className="grid gap-16 lg:grid-cols-12">
           <div className="lg:col-span-5">
             <p className="eyebrow hero-anim" style={anim(0)}>
-              Contact form · PPH Corporation
+              Contact form · PropushHub Corporation
             </p>
             <SplitWords
               tag="h1"
@@ -117,7 +117,7 @@ export const ContactPage: React.FC = () => {
               className="hero-anim mt-6 max-w-[44ch] text-lg leading-relaxed text-muted"
               style={anim(8)}
             >
-              Use this contact form to reach PPH Corporation (PropushHub). Share what you want to build
+              Use this contact form to reach PropushHub Corporation (PPH). Share what you want to build
               and roughly when you need it, and we will come back with questions, a suggested approach
               and a written quote.
             </p>
@@ -181,7 +181,7 @@ export const ContactPage: React.FC = () => {
             ) : (
               <form
                 id="contact-form"
-                aria-label="PPH Corporation contact form"
+                aria-label="PropushHub Corporation contact form"
                 onSubmit={handleSubmit}
                 noValidate
                 className="rounded-3xl bg-surface p-6 sm:p-10"

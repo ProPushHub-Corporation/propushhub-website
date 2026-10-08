@@ -10,9 +10,12 @@ import { cloudinaryOgImage } from './cloudinary';
 
 /** Canonical origin. Change this when a custom domain is connected. */
 export const SITE_URL = 'https://pphcorporation.vercel.app';
+/** Short brand, used as the title suffix to keep titles under ~60 characters. */
 export const SITE_NAME = 'PropushHub';
+/** Official company name. Used in schema.org and og:site_name. */
+export const SITE_LEGAL_NAME = 'PropushHub Corporation';
 /** Other names people search for. Used in schema.org `alternateName` and a few headings. */
-export const BRAND_ALIASES = ['PPH Corporation', 'PropushHub Corporation', 'PPH'];
+export const BRAND_ALIASES = ['PPH', 'PropushHub', 'PPH Corporation'];
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 export const OG_IMAGE_ALT = 'PropushHub: websites, CMS, mobile, desktop and ERP software development';
 
@@ -35,7 +38,8 @@ export const ORGANIZATION_LD = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   '@id': ORG_ID,
-  name: SITE_NAME,
+  name: SITE_LEGAL_NAME,
+  legalName: SITE_LEGAL_NAME,
   alternateName: BRAND_ALIASES,
   url: `${SITE_URL}/`,
   logo: { '@type': 'ImageObject', url: `${SITE_URL}/icon-512.png`, width: 512, height: 512 },
@@ -58,7 +62,7 @@ const WEBSITE_LD = {
   '@type': 'WebSite',
   '@id': `${SITE_URL}/#website`,
   url: `${SITE_URL}/`,
-  name: SITE_NAME,
+  name: SITE_LEGAL_NAME,
   alternateName: BRAND_ALIASES,
   inLanguage: 'en',
   publisher: { '@id': ORG_ID },
@@ -106,9 +110,9 @@ const serviceLd = (service: Service) => ({
 });
 
 const HOME: RouteSeo = {
-  title: 'PPH Corporation (PropushHub) — Custom Software Development',
+  title: 'PropushHub Corporation (PPH) — Custom Software Development',
   description:
-    'PPH Corporation (PropushHub) builds websites, CMS, mobile apps, desktop software and custom ERP. One team from design to launch and support. Free quote.',
+    'PropushHub Corporation (PPH) builds websites, CMS, mobile apps, desktop software and custom ERP. One team from design to launch and support. Free quote.',
   path: '/',
   canonical: absolute('/'),
   image: DEFAULT_OG_IMAGE,
@@ -120,7 +124,7 @@ const HOME: RouteSeo = {
       '@context': 'https://schema.org',
       '@type': 'ProfessionalService',
       '@id': `${SITE_URL}/#service`,
-      name: SITE_NAME,
+      name: SITE_LEGAL_NAME,
       url: `${SITE_URL}/`,
       image: DEFAULT_OG_IMAGE,
       email: COMPANY_INFO.email,
@@ -286,9 +290,9 @@ const projectSeo = (slug: string, projects: ShowcaseProject[]): RouteSeo | null 
 };
 
 const CONTACT: RouteSeo = {
-  title: 'Contact PPH Corporation (PropushHub) — Contact Form',
+  title: 'Contact PropushHub Corporation (PPH) — Contact Form',
   description:
-    'Contact form for PPH Corporation (PropushHub): tell us about your website, app or software project and get a written quote. Or reach us on WhatsApp or email.',
+    'Contact form for PropushHub Corporation (PPH): tell us about your website, app or software project and get a written quote. Or reach us on WhatsApp or email.',
   path: '/contact',
   canonical: absolute('/contact'),
   image: DEFAULT_OG_IMAGE,
@@ -301,8 +305,8 @@ const CONTACT: RouteSeo = {
     {
       '@context': 'https://schema.org',
       '@type': 'ContactPage',
-      name: 'Contact PPH Corporation (PropushHub)',
-      description: 'Contact form, WhatsApp and email for PPH Corporation (PropushHub).',
+      name: 'Contact PropushHub Corporation (PPH)',
+      description: 'Contact form, WhatsApp and email for PropushHub Corporation (PPH).',
       url: absolute('/contact'),
       isPartOf: { '@id': `${SITE_URL}/#website` },
       about: { '@id': ORG_ID },
@@ -336,21 +340,21 @@ const crumbs = (name: string, path: string) =>
   ]);
 
 const ABOUT_DESC =
-  'Learn about PPH Corporation (PropushHub): a software development company building websites, apps and ERP, with one team from first call to launch and support.';
+  'Learn about PropushHub Corporation (PPH): a software development company building websites, apps and ERP, with one team from first call to launch and support.';
 const ABOUT: RouteSeo = {
-  title: 'About PPH Corporation (PropushHub) | Software Company',
+  title: 'About PropushHub Corporation (PPH) | Software Company',
   description: ABOUT_DESC,
   path: '/about',
   canonical: absolute('/about'),
   image: DEFAULT_OG_IMAGE,
   type: 'website',
-  jsonLd: [crumbs('About us', '/about'), pageLd('AboutPage', 'About PPH Corporation (PropushHub)', ABOUT_DESC, '/about')],
+  jsonLd: [crumbs('About us', '/about'), pageLd('AboutPage', 'About PropushHub Corporation (PPH)', ABOUT_DESC, '/about')],
 };
 
 const TEAM_DESC =
-  'Meet the founders and team behind PropushHub (PPH Corporation): the engineers and designers who build and support your software.';
+  'Meet the founders and team behind PropushHub Corporation (PPH): the engineers and designers who build and support your software.';
 const teamSeo = (members: TeamMember[] = []): RouteSeo => ({
-  title: 'Our Team and Founders | PropushHub (PPH Corporation)',
+  title: 'Our Team and Founders | PropushHub Corporation (PPH)',
   description: TEAM_DESC,
   path: '/team',
   canonical: absolute('/team'),
@@ -399,7 +403,7 @@ const jobPosting = (job: Job) => ({
   datePosted: job.postedAt,
   ...(job.validThrough ? { validThrough: job.validThrough } : {}),
   employmentType: EMPLOYMENT[job.type],
-  hiringOrganization: { '@type': 'Organization', name: SITE_NAME, sameAs: `${SITE_URL}/` },
+  hiringOrganization: { '@type': 'Organization', name: SITE_LEGAL_NAME, sameAs: `${SITE_URL}/` },
   directApply: false,
   url: `${absolute('/jobs')}#${job.slug}`,
   ...(job.remote
@@ -413,9 +417,9 @@ const jobPosting = (job: Job) => ({
 });
 
 const JOBS_DESC =
-  'Jobs and careers at PropushHub (PPH Corporation). See open positions or send us your CV and a link to your work.';
+  'Jobs and careers at PropushHub Corporation (PPH). See open positions or send us your CV and a link to your work.';
 const jobsSeo = (jobs: Job[] = []): RouteSeo => ({
-  title: 'Jobs & Careers at PropushHub (PPH Corporation)',
+  title: 'Jobs & Careers at PropushHub Corporation (PPH)',
   description: JOBS_DESC,
   path: '/jobs',
   canonical: absolute('/jobs'),
@@ -425,7 +429,7 @@ const jobsSeo = (jobs: Job[] = []): RouteSeo => ({
 });
 
 const COLLAB_DESC =
-  'Partner with PropushHub (PPH Corporation): white-label development for agencies, technology and integration partners, referrals and specialists.';
+  'Partner with PropushHub Corporation (PPH): white-label development for agencies, technology and integration partners, referrals and specialists.';
 const collabSeo = (partners: Partner[] = []): RouteSeo => ({
   title: 'Collaborate With PropushHub | Agency & Tech Partners',
   description: COLLAB_DESC,
@@ -460,7 +464,7 @@ const collabSeo = (partners: Partner[] = []): RouteSeo => ({
 });
 
 const HELP_DESC =
-  'Help center for PropushHub (PPH Corporation): how to start a project, pricing and timelines, working together and support after launch.';
+  'Help center for PropushHub Corporation (PPH): how to start a project, pricing and timelines, working together and support after launch.';
 const HELP: RouteSeo = {
   title: 'Help Center — FAQ & Support | PropushHub',
   description: HELP_DESC,
@@ -522,7 +526,7 @@ export const renderHeadTags = (seo: RouteSeo): string => {
     `<meta name="description" content="${esc(seo.description)}" />`,
     `<meta name="robots" content="${seo.noindex ? ROBOTS_NOINDEX : ROBOTS_INDEX}" />`,
     `<link rel="canonical" href="${seo.canonical}" />`,
-    `<meta property="og:site_name" content="${SITE_NAME}" />`,
+    `<meta property="og:site_name" content="${SITE_LEGAL_NAME}" />`,
     `<meta property="og:locale" content="en_US" />`,
     `<meta property="og:type" content="${seo.type}" />`,
     `<meta property="og:title" content="${esc(seo.title)}" />`,

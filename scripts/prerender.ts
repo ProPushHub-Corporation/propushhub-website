@@ -20,7 +20,7 @@ import { COMPANY_INFO } from '../src/data/site';
 import { seedShowcaseProjects } from '../src/data/showcaseSeed';
 import type { ShowcaseProject } from '../src/data/showcaseTypes';
 import { COMPANY_LINKS } from '../src/data/company';
-import { SITE_URL, getAllIndexablePaths, getRouteSeo, renderHeadTags } from '../src/lib/seo';
+import { SITE_URL, SITE_LEGAL_NAME, getAllIndexablePaths, getRouteSeo, renderHeadTags } from '../src/lib/seo';
 import { fetchShowcaseProjects } from '../src/lib/showcase';
 import { SHOWCASE_DATA_ELEMENT_ID, setShowcaseSnapshot } from '../src/lib/showcaseStore';
 import type { RemoteCollection, RemoteDoc } from '../src/lib/collection';
@@ -174,9 +174,9 @@ Sitemap: ${SITE_URL}/sitemap.xml
 
 write(
   join(DIST, 'llms.txt'),
-  `# ${COMPANY_INFO.name}
+  `# ${SITE_LEGAL_NAME} (PPH)
 
-> Software development company. Websites, CMS, e-commerce, web and mobile apps, desktop software, custom ERP, APIs, UI/UX design, AI automation and DevOps from one team.
+> PropushHub Corporation (PPH), also known as PPH Corporation. Software development company. Websites, CMS, e-commerce, web and mobile apps, desktop software, custom ERP, APIs, UI/UX design, AI automation and DevOps from one team.
 
 ## Services
 ${SERVICES.map((s) => `- [${s.name}](${SITE_URL}/services/${s.slug}): ${s.summary}`).join('\n')}
