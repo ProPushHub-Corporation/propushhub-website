@@ -33,7 +33,7 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
           <p className="eyebrow animate-rise">Service</p>
           <h1
             id="service-title"
-            className="animate-rise mt-6 max-w-4xl text-[length:clamp(2.5rem,6vw,4.75rem)] leading-[1] tracking-[-0.04em]"
+            className="animate-rise mt-6 max-w-4xl text-[length:clamp(2.5rem,6vw,4.75rem)] leading-[1] tracking-[-0.03em]"
             style={{ animationDelay: '80ms' }}
           >
             {service.h1}
@@ -62,12 +62,12 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
         <SectionHeader
           id="included-title"
           eyebrow="What you get"
-          title={`What’s included in our ${service.name.toLowerCase()}`}
+          title={`What you get with ${service.name}`}
         />
         <ul className="grid gap-x-10 gap-y-10 md:grid-cols-2">
           {service.deliverables.map((item, i) => (
             <li key={item.title} className="border-t border-fg pt-5">
-              <span className="font-mono text-xs text-dim">{String(i + 1).padStart(2, '0')}</span>
+              <span className="text-xs text-dim">{String(i + 1).padStart(2, '0')}</span>
               <h3 className="mt-5 text-xl">{item.title}</h3>
               <p className="mt-2 max-w-[48ch] leading-relaxed text-muted">{item.detail}</p>
             </li>
@@ -95,7 +95,7 @@ export const ServicePage: React.FC<{ slug: string }> = ({ slug }) => {
             <h2 className="text-3xl leading-[1.08] sm:text-4xl">Tools we use</h2>
             <ul className="mt-8 flex flex-wrap gap-2">
               {service.stack.map((tech) => (
-                <li key={tech} className="border border-line-strong px-3 py-1.5 font-mono text-sm text-fg-2">
+                <li key={tech} className="border border-line-strong px-3 py-1.5 text-sm text-fg-2">
                   {tech}
                 </li>
               ))}

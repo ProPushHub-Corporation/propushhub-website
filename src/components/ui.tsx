@@ -57,7 +57,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
 
 export const Breadcrumbs: React.FC<{ items: { name: string; to?: string }[] }> = ({ items }) => (
   <nav aria-label="Breadcrumb" className="mb-10">
-    <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-dim">
+    <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-dim">
       {items.map((item, i) => (
         <li key={item.name} className="flex items-center gap-2">
           {item.to ? (

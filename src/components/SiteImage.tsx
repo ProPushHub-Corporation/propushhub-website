@@ -49,10 +49,10 @@ export const SiteImage: React.FC<SiteImageProps> = ({ image, label, priority, cl
       </svg>
       <div className="absolute inset-0 grid place-items-center p-4 text-center">
         <div className="bg-surface-2 px-3 py-2">
-          <p className="font-mono text-sm font-medium tracking-wide text-fg sm:text-base">
+          <p className="text-sm font-medium tracking-wide text-fg sm:text-base">
             {width} × {height}
           </p>
-          {label && <p className="mt-1 font-mono text-[11px] uppercase tracking-widest text-dim">{label}</p>}
+          {label && <p className="mt-1 text-[11px] uppercase tracking-widest text-dim">{label}</p>}
         </div>
       </div>
     </div>

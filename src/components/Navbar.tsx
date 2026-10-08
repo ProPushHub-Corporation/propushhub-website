@@ -4,10 +4,8 @@ import { Link, useRouter } from '../lib/router';
 import { NAV_LINKS } from '../data/site';
 
 export const Logo: React.FC<{ className?: string }> = ({ className = '' }) => (
-  <Link to="/" aria-label="PropushHub home" className={`flex items-center gap-2.5 ${className}`}>
-    <span className="grid h-7 w-7 place-items-center bg-fg text-sm font-bold leading-none text-ink" aria-hidden="true">
-      P
-    </span>
+  <Link to="/" aria-label="PropushHub home" className={`flex items-center gap-3 ${className}`}>
+    <img src="/logo.png" width={40} height={40} alt="" className="block h-10 w-10" />
     <span className="text-[17px] font-semibold tracking-tight">PropushHub</span>
   </Link>
 );

@@ -6,7 +6,7 @@ export const NotFoundPage: React.FC = () => (
   <main id="main" className="bg-ink py-28 sm:py-40">
     <Container>
       <p className="eyebrow">Error 404</p>
-      <h1 className="mt-6 max-w-3xl text-5xl leading-[1] tracking-[-0.04em] sm:text-7xl">
+      <h1 className="mt-6 max-w-3xl text-5xl leading-[1] tracking-[-0.03em] sm:text-7xl">
         This page doesn’t exist.
       </h1>
       <p className="mt-6 max-w-[48ch] text-lg text-muted">

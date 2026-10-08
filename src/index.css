@@ -1,6 +1,5 @@
 @import "tailwindcss";
-@import "@fontsource-variable/geist";
-@import "@fontsource-variable/geist-mono";
+@import "@fontsource-variable/arimo";
 
 /*
  * Monochrome design system. Black and white only: no accent colour.
@@ -8,9 +7,8 @@
  * re-maps the same tokens to a white surface, so components never hard-code a theme.
  */
 @theme {
-  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-sans: "Arimo Variable", Arimo, Arial, Helvetica, sans-serif;
+  --font-display: "Arimo Variable", Arimo, Arial, Helvetica, sans-serif;
 
   --color-ink: #000000;
   --color-surface: #0a0a0a;
@@ -50,7 +48,7 @@
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
@@ -98,7 +96,6 @@
   }
 
   .eyebrow {
-    font-family: var(--font-mono);
     font-size: 0.75rem;
     line-height: 1;
     font-weight: 500;

@@ -28,7 +28,7 @@ export const ServiceList: React.FC<{ exclude?: string[] }> = ({ exclude = [] }) 
             to={`/services/${s.slug}`}
             className="group -mx-4 grid items-baseline gap-x-8 gap-y-2 px-4 py-7 transition-colors hover:bg-fg sm:grid-cols-12"
           >
-            <span className="font-mono text-xs text-dim transition-colors group-hover:text-ink sm:col-span-1">
+            <span className="text-xs text-dim transition-colors group-hover:text-ink sm:col-span-1">
               {String(i + 1).padStart(2, '0')}
             </span>
             <h3 className="text-2xl font-semibold tracking-tight transition-colors group-hover:text-ink sm:col-span-5 sm:text-3xl">
@@ -57,7 +57,7 @@ export const ProcessSection: React.FC<{ tone?: 'dark' | 'light' }> = ({ tone = '
     <ol className="grid gap-x-8 gap-y-10 md:grid-cols-5">
       {PROCESS_STEPS.map((step, i) => (
         <li key={step.title} className="border-t border-fg pt-5">
-          <span className="font-mono text-xs text-dim">{String(i + 1).padStart(2, '0')}</span>
+          <span className="text-xs text-dim">{String(i + 1).padStart(2, '0')}</span>
           <h3 className="mt-8 text-2xl">{step.title}</h3>
           <p className="mt-3 text-sm leading-relaxed text-muted">{step.detail}</p>
         </li>

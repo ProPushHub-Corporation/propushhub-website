@@ -16,7 +16,7 @@ const Label: React.FC<{ htmlFor: string; children: React.ReactNode; optional?: b
 }) => (
   <label htmlFor={htmlFor} className="mb-2 flex items-baseline justify-between text-sm font-medium">
     {children}
-    {optional && <span className="font-mono text-xs font-normal text-dim">Optional</span>}
+    {optional && <span className="text-xs font-normal text-dim">Optional</span>}
   </label>
 );
 
@@ -105,7 +105,7 @@ export const ContactPage: React.FC = () => {
           <div className="lg:col-span-5">
             <p className="eyebrow animate-rise">Contact</p>
             <h1
-              className="animate-rise mt-6 text-[length:clamp(2.5rem,5.5vw,4.25rem)] leading-[1] tracking-[-0.04em]"
+              className="animate-rise mt-6 text-[length:clamp(2.5rem,5.5vw,4.25rem)] leading-[1] tracking-[-0.03em]"
               style={{ animationDelay: '80ms' }}
             >
               Tell us about your project

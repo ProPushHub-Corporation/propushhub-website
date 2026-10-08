@@ -12,7 +12,7 @@ export const ServicesPage: React.FC = () => (
         <p className="eyebrow animate-rise">Services</p>
         <h1
           id="services-hero-title"
-          className="animate-rise mt-6 max-w-4xl text-[length:clamp(2.5rem,6vw,4.75rem)] leading-[1] tracking-[-0.04em]"
+          className="animate-rise mt-6 max-w-4xl text-[length:clamp(2.5rem,6vw,4.75rem)] leading-[1] tracking-[-0.03em]"
           style={{ animationDelay: '80ms' }}
         >
           Software development services for every stage of your business

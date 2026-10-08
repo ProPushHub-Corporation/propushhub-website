@@ -28,7 +28,7 @@ export const HomePage: React.FC = () => {
           <p className="eyebrow animate-rise">{HERO.eyebrow}</p>
           <h1
             id="hero-title"
-            className="animate-rise mx-auto mt-6 max-w-5xl text-[length:clamp(2.75rem,7.2vw,5.75rem)] leading-[0.98] tracking-[-0.045em]"
+            className="animate-rise mx-auto mt-6 max-w-5xl text-[length:clamp(2.75rem,7.2vw,5.75rem)] leading-[0.98] tracking-[-0.035em]"
             style={{ animationDelay: '80ms' }}
           >
             {HERO.title}

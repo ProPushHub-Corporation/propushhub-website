@@ -3,7 +3,7 @@
 Marketing site for PropushHub. It sells development services: websites, CMS, e-commerce, web apps, mobile, desktop, ERP, APIs, UI/UX, AI and DevOps.
 
 ## Stack
-React 19 + TypeScript, Vite, Tailwind CSS v4 (`@tailwindcss/vite`), `lucide-react` icons, self-hosted Geist fonts (`@fontsource-variable`).
+React 19 + TypeScript, Vite, Tailwind CSS v4 (`@tailwindcss/vite`), `lucide-react` icons, self-hosted Arimo font (`@fontsource-variable/arimo`) for everything.
 Originally scaffolded from Google AI Studio (see `metadata.json`, `.env.example`).
 
 ## Commands
