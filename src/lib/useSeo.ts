@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { getRouteSeo } from './seo';
+import { ROBOTS_INDEX, ROBOTS_NOINDEX, getRouteSeo } from './seo';
 
 const setMeta = (selector: string, attr: 'name' | 'property', key: string, content: string) => {
   let el = document.head.querySelector<HTMLMetaElement>(selector);
@@ -18,12 +18,7 @@ export const useSeo = (pathname: string) => {
 
     document.title = seo.title;
     setMeta('meta[name="description"]', 'name', 'description', seo.description);
-    setMeta(
-      'meta[name="robots"]',
-      'name',
-      'robots',
-      seo.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'
-    );
+    setMeta('meta[name="robots"]', 'name', 'robots', seo.noindex ? ROBOTS_NOINDEX : ROBOTS_INDEX);
 
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {

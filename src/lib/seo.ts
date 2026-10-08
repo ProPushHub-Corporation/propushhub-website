@@ -1,9 +1,12 @@
-import { COMPANY_INFO, PROJECTS, getProjectBySlug } from '../data/projects';
+import { SERVICES, getServiceBySlug } from '../data/services';
+import type { Service, ServiceFaq } from '../data/services';
+import { COMPANY_INFO, HOME_FAQS } from '../data/site';
 
 /** Canonical origin. Change this when a custom domain is connected. */
 export const SITE_URL = 'https://pphcorporation.vercel.app';
 export const SITE_NAME = 'PropushHub';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
+export const OG_IMAGE_ALT = 'PropushHub: websites, CMS, mobile, desktop and ERP software development';
 
 export interface RouteSeo {
   title: string;
@@ -14,48 +17,41 @@ export interface RouteSeo {
   type: 'website' | 'article';
   noindex?: boolean;
   jsonLd: Record<string, unknown>[];
-  /** Crawlable fallback content injected into #root at build time. */
-  heading: string;
-  summary: string;
 }
 
-const trim = (text: string, max = 158): string => {
-  const clean = text.replace(/\s+/g, ' ').trim();
-  if (clean.length <= max) return clean;
-  const cut = clean.slice(0, max - 1);
-  return `${cut.slice(0, cut.lastIndexOf(' '))}…`;
-};
-
 const absolute = (path: string) => `${SITE_URL}${path === '/' ? '/' : path.replace(/\/$/, '')}`;
+
+const ORG_ID = `${SITE_URL}/#organization`;
 
 export const ORGANIZATION_LD = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  '@id': `${SITE_URL}/#organization`,
+  '@id': ORG_ID,
   name: SITE_NAME,
   url: `${SITE_URL}/`,
-  logo: `${SITE_URL}/favicon.svg`,
+  logo: { '@type': 'ImageObject', url: `${SITE_URL}/icon-512.png`, width: 512, height: 512 },
   image: DEFAULT_OG_IMAGE,
+  description:
+    'Software development company building websites, CMS, e-commerce, web and mobile apps, desktop software and custom ERP.',
   email: COMPANY_INFO.email,
-  telephone: '+923190586822',
-  sameAs: [COMPANY_INFO.githubProfile, COMPANY_INFO.linkedinUrl],
+  telephone: COMPANY_INFO.phone,
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'sales',
     email: COMPANY_INFO.email,
-    telephone: '+923190586822',
+    telephone: COMPANY_INFO.phone,
     availableLanguage: ['English', 'Urdu'],
   },
 };
 
-export const WEBSITE_LD = {
+const WEBSITE_LD = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   '@id': `${SITE_URL}/#website`,
   url: `${SITE_URL}/`,
   name: SITE_NAME,
-  publisher: { '@id': `${SITE_URL}/#organization` },
   inLanguage: 'en',
+  publisher: { '@id': ORG_ID },
 };
 
 const breadcrumb = (items: { name: string; path: string }[]) => ({
@@ -69,17 +65,44 @@ const breadcrumb = (items: { name: string; path: string }[]) => ({
   })),
 });
 
+const faqPage = (faqs: ServiceFaq[]) => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+});
+
+const serviceLd = (service: Service) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': `${absolute(`/services/${service.slug}`)}#service`,
+  name: service.name,
+  serviceType: service.name,
+  description: service.metaDescription,
+  url: absolute(`/services/${service.slug}`),
+  provider: { '@id': ORG_ID },
+  keywords: service.keywords.join(', '),
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: `${service.name}: what is included`,
+    itemListElement: service.deliverables.map((d) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: d.title, description: d.detail },
+    })),
+  },
+});
+
 const HOME: RouteSeo = {
-  title: 'PropushHub — Custom ERP, Web & Mobile App Development Company',
+  title: 'PropushHub — Web, Mobile & Custom Software Development',
   description:
-    'PropushHub builds custom ERP systems, inventory & warehouse platforms, web and React Native mobile apps, and AI-integrated business software. See real, production-deployed projects.',
+    'PropushHub builds websites, CMS, e-commerce, mobile apps, desktop software and custom ERP. One team from design to launch and support. Get a free quote.',
   path: '/',
   canonical: absolute('/'),
   image: DEFAULT_OG_IMAGE,
   type: 'website',
-  heading: 'We don’t just build landing pages. We build complete digital products.',
-  summary:
-    'PropushHub designs, engineers, and deploys custom ERP platforms, multi-site warehouse systems, synchronized web and React Native mobile applications, and AI-powered business software.',
   jsonLd: [
     ORGANIZATION_LD,
     WEBSITE_LD,
@@ -90,101 +113,99 @@ const HOME: RouteSeo = {
       name: SITE_NAME,
       url: `${SITE_URL}/`,
       image: DEFAULT_OG_IMAGE,
-      description:
-        'Custom software development: ERP systems, inventory and warehouse platforms, web applications, React Native mobile apps and AI-integrated workflows.',
       email: COMPANY_INFO.email,
-      telephone: '+923190586822',
-      priceRange: '$$',
-      parentOrganization: { '@id': `${SITE_URL}/#organization` },
+      telephone: COMPANY_INFO.phone,
+      parentOrganization: { '@id': ORG_ID },
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'Software development services',
-        itemListElement: [
-          'Custom ERP & Business Software',
-          'Inventory & Warehouse Systems',
-          'Web Application Development',
-          'Mobile App Development (React Native)',
-          'AI-Integrated Applications',
-          'Website Development',
-        ].map((name) => ({
+        itemListElement: SERVICES.map((s) => ({
           '@type': 'Offer',
-          itemOffered: { '@type': 'Service', name },
+          itemOffered: { '@type': 'Service', name: s.name, url: absolute(`/services/${s.slug}`) },
         })),
       },
     },
+    faqPage(HOME_FAQS),
   ],
 };
 
-const WORK: RouteSeo = {
-  title: 'Our Work — ERP, Web, Mobile & AI Projects | PropushHub',
-  description: trim(
-    `Browse ${PROJECTS.length} real software projects by PropushHub: ERP and inventory systems, web and mobile apps, SaaS dashboards and AI tools, each with a detailed case study.`
-  ),
-  path: '/work',
-  canonical: absolute('/work'),
+const SERVICES_INDEX: RouteSeo = {
+  title: 'Software Development Services | PropushHub',
+  description:
+    'Website, CMS, e-commerce, web app, mobile app, desktop, ERP, API, UI/UX, AI and DevOps services from one development team. Explore what PropushHub builds.',
+  path: '/services',
+  canonical: absolute('/services'),
   image: DEFAULT_OG_IMAGE,
   type: 'website',
-  heading: 'Our Work — Projects Built by PropushHub',
-  summary:
-    'Case studies of production software: ERP, inventory, web, mobile, SaaS and AI-integrated platforms.',
   jsonLd: [
     breadcrumb([
       { name: 'Home', path: '/' },
-      { name: 'Our Work', path: '/work' },
+      { name: 'Services', path: '/services' },
     ]),
     {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
-      name: 'PropushHub Projects',
-      url: absolute('/work'),
+      name: 'PropushHub software development services',
+      url: absolute('/services'),
+      isPartOf: { '@id': `${SITE_URL}/#website` },
       mainEntity: {
         '@type': 'ItemList',
-        itemListElement: PROJECTS.map((p, i) => ({
+        itemListElement: SERVICES.map((s, i) => ({
           '@type': 'ListItem',
           position: i + 1,
-          url: absolute(`/work/${p.slug}`),
-          name: p.title,
+          url: absolute(`/services/${s.slug}`),
+          name: s.name,
         })),
       },
     },
   ],
 };
 
-const projectSeo = (slug: string): RouteSeo | null => {
-  const project = getProjectBySlug(slug);
-  if (!project) return null;
-  const path = `/work/${project.slug}`;
-  const description = trim(project.shortDescription);
+const serviceSeo = (slug: string): RouteSeo | null => {
+  const service = getServiceBySlug(slug);
+  if (!service) return null;
+  const path = `/services/${service.slug}`;
   return {
-    title: `${project.title} — ${project.category} Case Study | PropushHub`,
-    description,
+    title: `${service.seoTitle} | ${SITE_NAME}`,
+    description: service.metaDescription,
     path,
     canonical: absolute(path),
     image: DEFAULT_OG_IMAGE,
-    type: 'article',
-    heading: `${project.title} — Case Study`,
-    summary: project.longDescription || project.description,
+    type: 'website',
     jsonLd: [
       breadcrumb([
         { name: 'Home', path: '/' },
-        { name: 'Our Work', path: '/work' },
-        { name: project.title, path },
+        { name: 'Services', path: '/services' },
+        { name: service.name, path },
       ]),
-      {
-        '@context': 'https://schema.org',
-        '@type': 'CreativeWork',
-        name: project.title,
-        headline: `${project.title} — ${project.category}`,
-        description,
-        url: absolute(path),
-        about: project.category,
-        keywords: project.allTechnologies.join(', '),
-        author: { '@id': `${SITE_URL}/#organization` },
-        publisher: { '@id': `${SITE_URL}/#organization` },
-        ...(project.liveUrl ? { sameAs: [project.liveUrl] } : {}),
-      },
+      serviceLd(service),
+      faqPage(service.faqs),
     ],
   };
+};
+
+const CONTACT: RouteSeo = {
+  title: 'Contact PropushHub — Get a Free Project Quote',
+  description:
+    'Tell PropushHub about your website, app or software project and get a clear scope and written quote. Reach us by form, WhatsApp or email.',
+  path: '/contact',
+  canonical: absolute('/contact'),
+  image: DEFAULT_OG_IMAGE,
+  type: 'website',
+  jsonLd: [
+    breadcrumb([
+      { name: 'Home', path: '/' },
+      { name: 'Contact', path: '/contact' },
+    ]),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ContactPage',
+      name: 'Contact PropushHub',
+      url: absolute('/contact'),
+      isPartOf: { '@id': `${SITE_URL}/#website` },
+      about: { '@id': ORG_ID },
+    },
+  ],
 };
 
 const NOT_FOUND: RouteSeo = {
@@ -195,24 +216,27 @@ const NOT_FOUND: RouteSeo = {
   image: DEFAULT_OG_IMAGE,
   type: 'website',
   noindex: true,
-  heading: 'Page not found',
-  summary: 'The page you are looking for could not be found.',
   jsonLd: [],
 };
 
 export const getRouteSeo = (pathname: string): RouteSeo => {
   const path = pathname.replace(/\/+$/, '') || '/';
   if (path === '/') return HOME;
-  if (path === '/work') return WORK;
-  if (path.startsWith('/work/')) return projectSeo(path.slice('/work/'.length)) ?? NOT_FOUND;
+  if (path === '/services') return SERVICES_INDEX;
+  if (path.startsWith('/services/')) return serviceSeo(path.slice('/services/'.length)) ?? NOT_FOUND;
+  if (path === '/contact') return CONTACT;
   return NOT_FOUND;
 };
 
 export const getAllIndexablePaths = (): string[] => [
   '/',
-  '/work',
-  ...PROJECTS.map((p) => `/work/${p.slug}`),
+  '/services',
+  ...SERVICES.map((s) => `/services/${s.slug}`),
+  '/contact',
 ];
+
+export const ROBOTS_INDEX = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+export const ROBOTS_NOINDEX = 'noindex, nofollow';
 
 const esc = (value: string) =>
   value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
@@ -222,7 +246,7 @@ export const renderHeadTags = (seo: RouteSeo): string => {
   const tags = [
     `<title>${esc(seo.title)}</title>`,
     `<meta name="description" content="${esc(seo.description)}" />`,
-    `<meta name="robots" content="${seo.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1'}" />`,
+    `<meta name="robots" content="${seo.noindex ? ROBOTS_NOINDEX : ROBOTS_INDEX}" />`,
     `<link rel="canonical" href="${seo.canonical}" />`,
     `<meta property="og:site_name" content="${SITE_NAME}" />`,
     `<meta property="og:locale" content="en_US" />`,
@@ -233,11 +257,12 @@ export const renderHeadTags = (seo: RouteSeo): string => {
     `<meta property="og:image" content="${seo.image}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
-    `<meta property="og:image:alt" content="${SITE_NAME} — custom ERP, web, mobile and AI software" />`,
+    `<meta property="og:image:alt" content="${esc(OG_IMAGE_ALT)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${esc(seo.title)}" />`,
     `<meta name="twitter:description" content="${esc(seo.description)}" />`,
     `<meta name="twitter:image" content="${seo.image}" />`,
+    `<meta name="twitter:image:alt" content="${esc(OG_IMAGE_ALT)}" />`,
     ...seo.jsonLd.map(
       (ld) => `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`
     ),

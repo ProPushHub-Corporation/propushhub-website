@@ -1,8 +1,18 @@
 import { ServiceFaq } from './services';
 
+export const COMPANY_INFO = {
+  name: 'PropushHub',
+  tagline: 'We build the software your business runs on.',
+  email: 'info.propushhub@gmail.com',
+  phone: '+923190586822',
+  whatsappNumberDisplay: '+92 319 0586822',
+  whatsappUrl:
+    'https://wa.me/923190586822?text=Hello%20PropushHub%2C%20I%20would%20like%20to%20discuss%20a%20software%20project.',
+};
+
 export const NAV_LINKS: { label: string; to: string }[] = [
   { label: 'Services', to: '/services' },
-  { label: 'Work', to: '/work' },
+  { label: 'Process', to: '/#process' },
   { label: 'Contact', to: '/contact' },
 ];
 
@@ -47,9 +57,9 @@ export const REASONS: { title: string; detail: string }[] = [
       'Web, mobile, desktop, backend and design under one roof, so there are no handoffs between agencies.',
   },
   {
-    title: 'Work you can inspect',
+    title: 'Direct communication',
     detail:
-      'Our case studies link to live demos and public code, so you can judge the quality before you hire us.',
+      'You talk to the people building your software, over WhatsApp, email or video, with regular progress updates.',
   },
   {
     title: 'Clear scope, clear price',

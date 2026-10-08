@@ -3,58 +3,46 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { RouterProvider, useRouter } from './lib/router';
+import { useSeo } from './lib/useSeo';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { ProjectInquiryModal } from './components/ConversionSections';
 import { HomePage } from './pages/HomePage';
-import { WorkPage } from './pages/WorkPage';
-import { CaseStudyPage } from './pages/CaseStudyPage';
-import { useSeo } from './lib/useSeo';
+import { ServicesPage } from './pages/ServicesPage';
+import { ServicePage } from './pages/ServicePage';
+import { ContactPage } from './pages/ContactPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 const AppRoutes: React.FC = () => {
   const { pathname } = useRouter();
   useSeo(pathname);
 
-  if (pathname === '/work' || pathname === '/work/') {
-    return <WorkPage />;
+  if (pathname === '/') return <HomePage />;
+  if (pathname === '/services') return <ServicesPage />;
+  if (pathname.startsWith('/services/')) {
+    return <ServicePage key={pathname} slug={pathname.slice('/services/'.length)} />;
   }
-
-  if (pathname.startsWith('/work/')) {
-    const slug = pathname.replace('/work/', '').replace(/\/$/, '');
-    return <CaseStudyPage key={slug} slug={slug} />;
-  }
-
-  return <HomePage />;
+  if (pathname === '/contact') return <ContactPage />;
+  return <NotFoundPage />;
 };
 
-export default function App() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [defaultProjectType, setDefaultProjectType] = useState<string | undefined>(
-    undefined
-  );
-
-  const handleOpenProjectModal = (projectType?: string) => {
-    setDefaultProjectType(projectType);
-    setModalOpen(true);
-  };
-
+export default function App({ initialPath }: { initialPath?: string }) {
   return (
-    <RouterProvider onOpenProjectModal={handleOpenProjectModal}>
-      <div className="min-h-screen flex flex-col bg-ink text-fg">
+    <RouterProvider initialPath={initialPath}>
+      <div className="flex min-h-screen flex-col bg-ink text-fg">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-fg focus:px-4 focus:py-3 focus:text-ink"
+        >
+          Skip to content
+        </a>
         <Navbar />
         <div className="flex-1">
           <AppRoutes />
         </div>
         <Footer />
-        <ProjectInquiryModal
-          isOpen={modalOpen}
-          defaultProjectType={defaultProjectType}
-          onClose={() => setModalOpen(false)}
-        />
       </div>
     </RouterProvider>
   );
 }
-

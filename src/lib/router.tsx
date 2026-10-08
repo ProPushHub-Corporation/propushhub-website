@@ -1,82 +1,75 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 interface RouterContextValue {
   pathname: string;
-  navigate: (to: string, options?: { scrollToId?: string }) => void;
-  openProjectModal: (defaultProjectType?: string) => void;
+  search: string;
+  navigate: (to: string) => void;
 }
 
 const RouterContext = createContext<RouterContextValue>({
   pathname: '/',
+  search: '',
   navigate: () => {},
-  openProjectModal: () => {},
 });
 
 export const useRouter = () => useContext(RouterContext);
 
+export const normalizePath = (path: string): string => {
+  const trimmed = path.replace(/\/+$/, '');
+  return trimmed === '' ? '/' : trimmed;
+};
+
+const parse = (to: string) => {
+  const url = new URL(to, 'http://local');
+  return { pathname: normalizePath(url.pathname), search: url.search, hash: url.hash };
+};
+
+const scrollAfterRender = (hash: string) => {
+  window.setTimeout(() => {
+    const target = hash ? document.getElementById(decodeURIComponent(hash.slice(1))) : null;
+    if (target) target.scrollIntoView();
+    else window.scrollTo({ top: 0, behavior: 'instant' });
+  }, 0);
+};
+
 export const RouterProvider: React.FC<{
   children: React.ReactNode;
-  onOpenProjectModal: (defaultProjectType?: string) => void;
-}> = ({ children, onOpenProjectModal }) => {
-  const [pathname, setPathname] = useState<string>(() => {
+  /** Path to render on the server / at build time. Ignored in the browser. */
+  initialPath?: string;
+}> = ({ children, initialPath = '/' }) => {
+  const [location, setLocation] = useState(() => {
     if (typeof window !== 'undefined') {
-      return window.location.pathname || '/';
+      return { pathname: normalizePath(window.location.pathname), search: window.location.search };
     }
-    return '/';
+    const { pathname, search } = parse(initialPath);
+    return { pathname, search };
   });
 
   useEffect(() => {
-    const handlePopState = () => {
-      setPathname(window.location.pathname || '/');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    const onPopState = () => {
+      setLocation({ pathname: normalizePath(window.location.pathname), search: window.location.search });
+      scrollAfterRender(window.location.hash);
     };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
-  const navigate = useCallback((to: string, options?: { scrollToId?: string }) => {
-    if (to.startsWith('#')) {
-      const targetId = to.slice(1);
-      const el = document.getElementById(targetId);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-        return;
-      }
+  const navigate = useCallback((to: string) => {
+    const next = parse(to);
+    const changed = next.pathname !== normalizePath(window.location.pathname) || next.search !== window.location.search;
+    if (changed) {
+      window.history.pushState({}, '', `${next.pathname}${next.search}${next.hash}`);
+      setLocation({ pathname: next.pathname, search: next.search });
     }
-
-    if (to !== window.location.pathname) {
-      window.history.pushState({}, '', to);
-      setPathname(to);
-    }
-
-    if (options?.scrollToId) {
-      setTimeout(() => {
-        const el = document.getElementById(options.scrollToId!);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      }, 60);
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    scrollAfterRender(next.hash);
   }, []);
 
-  return (
-    <RouterContext.Provider
-      value={{
-        pathname,
-        navigate,
-        openProjectModal: onOpenProjectModal,
-      }}
-    >
-      {children}
-    </RouterContext.Provider>
-  );
+  const value = useMemo(() => ({ ...location, navigate }), [location, navigate]);
+
+  return <RouterContext.Provider value={value}>{children}</RouterContext.Provider>;
 };
 
-/** Crawlable internal link: real <a href> that navigates client-side. */
+/** Crawlable internal link: a real <a href> that navigates client-side. */
 export const Link: React.FC<
   Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & { to: string }
 > = ({ to, onClick, children, ...rest }) => {

@@ -1,135 +1,76 @@
 import React from 'react';
-import { COMPANY_INFO, PROJECTS } from '../data/projects';
-import { Link, useRouter } from '../lib/router';
+import { COMPANY_INFO } from '../data/site';
+import { SERVICES } from '../data/services';
+import { Link } from '../lib/router';
+import { Logo } from './Navbar';
 
-export const Footer: React.FC = () => {
-  const { navigate, openProjectModal } = useRouter();
+const linkCls = 'text-sm text-muted transition-colors hover:text-fg';
 
-  return (
-    <footer className="bg-ink text-muted border-t border-line py-16">
-      <div className="max-w-[1240px] mx-auto px-6">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-line">
-          {/* Column 1: Brand & Philosophy */}
-          <div className="lg:col-span-1">
-            <button
-              type="button"
-              onClick={() => navigate('/')}
-              className="font-display text-xl font-bold text-white tracking-tight mb-3 cursor-pointer"
-            >
-              PropushHub
-            </button>
-            <p className="text-sm text-dim leading-relaxed mb-5">
-              We don’t just build landing pages. We build complete digital products—custom ERP
-              systems, warehouse platforms, web and mobile ecosystems, and AI-integrated business
-              software.
-            </p>
-            <button
-              type="button"
-              onClick={() => openProjectModal()}
-              className="px-4 py-2 text-xs font-semibold text-white btn-primary rounded-full cursor-pointer"
-            >
-              Start Your Project
-            </button>
-          </div>
+export const Footer: React.FC = () => (
+  <footer className="border-t border-line bg-ink">
+    <div className="container-x py-16 sm:py-20">
+      <div className="grid gap-12 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <Logo />
+          <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
+            Websites, CMS, mobile apps, desktop software and custom ERP. Designed, built and
+            supported by one team.
+          </p>
+          <Link to="/contact" className="btn btn-primary mt-7 !h-10 !px-5">
+            Get a quote
+          </Link>
+        </div>
 
-          {/* Column 2: Selected Case Studies */}
-          <div>
-            <h3 className="font-display text-sm font-bold text-white mb-4">
-              Selected Case Studies
-            </h3>
-            <ul className="space-y-2.5 text-sm text-dim">
-              {PROJECTS.slice(0, 6).map((p) => (
-                <li key={p.id}>
-                  <Link
-                    to={`/work/${p.slug}`}
-                    className="hover:text-white transition-colors text-left cursor-pointer"
-                  >
-                    {p.title}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link
-                  to={'/work'}
-                  className="text-accent hover:text-accent font-medium transition-colors text-left cursor-pointer"
-                >
-                  View All 9 Projects →
+        <nav aria-label="Services" className="lg:col-span-4">
+          <h2 className="eyebrow mb-5 !text-fg">Services</h2>
+          <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
+            {SERVICES.map((s) => (
+              <li key={s.slug}>
+                <Link to={`/services/${s.slug}`} className={linkCls}>
+                  {s.name}
                 </Link>
               </li>
-            </ul>
-          </div>
+            ))}
+          </ul>
+        </nav>
 
-          {/* Column 3: Capabilities */}
-          <div>
-            <h3 className="font-display text-sm font-bold text-white mb-4">
-              What We Build
-            </h3>
-            <ul className="space-y-2.5 text-sm text-dim">
-              <li>ERP &amp; Business Software</li>
-              <li>Inventory &amp; Warehouse Systems</li>
-              <li>Web + Mobile App Ecosystems</li>
-              <li>Multi-Role SaaS Platforms</li>
-              <li>AI Applications &amp; Developer Tools</li>
-              <li>REST APIs &amp; Database Architecture</li>
-            </ul>
-          </div>
+        <nav aria-label="Company" className="lg:col-span-2">
+          <h2 className="eyebrow mb-5 !text-fg">Company</h2>
+          <ul className="space-y-3">
+            <li>
+              <Link to="/services" className={linkCls}>
+                All services
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className={linkCls}>
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </nav>
 
-          {/* Column 4: Direct Contact & Public Proof */}
-          <div>
-            <h3 className="font-display text-sm font-bold text-white mb-4">
-              Connect &amp; Verify
-            </h3>
-            <ul className="space-y-2.5 text-sm text-dim">
-              <li>
-                <a
-                  href={COMPANY_INFO.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  WhatsApp: {COMPANY_INFO.whatsappNumberDisplay}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`mailto:${COMPANY_INFO.email}`}
-                  className="hover:text-white transition-colors break-all"
-                >
-                  {COMPANY_INFO.email}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={COMPANY_INFO.githubProfile}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  GitHub Profile (syedmuhammadali-dev)
-                </a>
-              </li>
-              <li>
-                <a
-                  href={COMPANY_INFO.developerPortfolio}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                >
-                  Lead Engineer Portfolio
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-dim">
-          <p>© {new Date().getFullYear()} PropushHub. Built with real-world engineering proof.</p>
-          <p>
-            All showcased projects represent real software systems built by the PropushHub
-            development team.
-          </p>
+        <div className="lg:col-span-2">
+          <h2 className="eyebrow mb-5 !text-fg">Contact</h2>
+          <ul className="space-y-3">
+            <li>
+              <a href={`mailto:${COMPANY_INFO.email}`} className={`${linkCls} break-all`}>
+                {COMPANY_INFO.email}
+              </a>
+            </li>
+            <li>
+              <a href={COMPANY_INFO.whatsappUrl} target="_blank" rel="noopener noreferrer" className={linkCls}>
+                WhatsApp {COMPANY_INFO.whatsappNumberDisplay}
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
-    </footer>
-  );
-};
+
+      <div className="mt-16 flex flex-col gap-2 border-t border-line pt-6 text-xs text-dim sm:flex-row sm:justify-between">
+        <p>© <span suppressHydrationWarning>{new Date().getFullYear()}</span> PropushHub. All rights reserved.</p>
+        <p>Website · CMS · Mobile · Desktop · ERP</p>
+      </div>
+    </div>
+  </footer>
+);

@@ -9,7 +9,8 @@ export type ProjectFilterCategory =
 export interface ProjectScreenshot {
   id: string;
   label: string;
-  url: string;
+  /** Public URL of the real screenshot. Leave undefined to show the 1600 × 1000 placeholder. */
+  url?: string;
   caption: string;
   replacementPathHint: string;
 }
@@ -76,17 +77,6 @@ export interface Project {
   caseStudy: ProjectCaseStudy;
 }
 
-export const COMPANY_INFO = {
-  name: 'PropushHub',
-  tagline: 'We build the software your business runs on.',
-  githubProfile: 'https://github.com/syedmuhammadali-dev',
-  developerPortfolio: 'https://ali-portfolio-nine.vercel.app/',
-  whatsappUrl: 'https://wa.me/923190586822?text=Hello%20PropushHub%2C%20I%20would%20like%20to%20discuss%20a%20software%20project.',
-  whatsappNumberDisplay: '+92 319 0586822',
-  email: 'info.propushhub@gmail.com',
-  linkedinUrl: 'https://www.linkedin.com/in/syed-muhammed-ali/',
-};
-
 export const PROJECT_FILTERS: ProjectFilterCategory[] = [
   'All',
   'ERP & Business',
@@ -144,18 +134,16 @@ export const PROJECTS: Project[] = [
       {
         id: 'barakah-dashboard',
         label: 'ERP Operations Dashboard',
-        url: '/projects/barakah-erp/dashboard-overview.svg',
         caption:
           'Main ERP workspace connecting Inventory, Multi-Item Sales, Mechanic Job Cards, Purchase Bills, Reports, and Bilingual English/Urdu (RTL) navigation.',
-        replacementPathHint: '/public/projects/barakah-erp/dashboard-overview.svg',
+        replacementPathHint: 'public/projects/barakah-erp/dashboard-overview.webp',
       },
       {
         id: 'barakah-ocr',
         label: 'Inventory & Client-Side Bill OCR',
-        url: '/projects/barakah-erp/inventory-ocr.svg',
         caption:
           'Client-side optical character recognition pipeline (src/lib/bill-ocr.ts) using Tesseract.js and PDF.js to extract line items from supplier bills without external OCR API dependencies.',
-        replacementPathHint: '/public/projects/barakah-erp/inventory-ocr.svg',
+        replacementPathHint: 'public/projects/barakah-erp/inventory-ocr.webp',
       },
     ],
     liveUrl: 'https://barakah-erp.vercel.app/',
@@ -313,42 +301,37 @@ export const PROJECTS: Project[] = [
       {
         id: 'corestock-user-dashboard',
         label: 'User Dashboard',
-        url: '/projects/corestock/user-dashboard.svg',
         caption:
           'User-facing operational dashboard (corestock-webapp) showing assigned warehouse site status, active SKU catalog, and recent site stock transfers.',
-        replacementPathHint: '/public/projects/corestock/user-dashboard.svg',
+        replacementPathHint: 'public/projects/corestock/user-dashboard.webp',
       },
       {
         id: 'corestock-inventory',
         label: 'Inventory',
-        url: '/projects/corestock/inventory.svg',
         caption:
           'Multi-site SKU inventory directory with search, site filtering, category segmentation, and stock availability indicators.',
-        replacementPathHint: '/public/projects/corestock/inventory.svg',
+        replacementPathHint: 'public/projects/corestock/inventory.webp',
       },
       {
         id: 'corestock-stock-management',
         label: 'Stock Management',
-        url: '/projects/corestock/stock-management.svg',
         caption:
           'Warehouse stock movement interface for logging inbound receipts, outbound dispatches, and inter-site stock allocations.',
-        replacementPathHint: '/public/projects/corestock/stock-management.svg',
+        replacementPathHint: 'public/projects/corestock/stock-management.webp',
       },
       {
         id: 'corestock-admin-dashboard',
         label: 'Admin Dashboard',
-        url: '/projects/corestock/admin-dashboard.svg',
         caption:
           'Enterprise Admin Panel (corestock-adminapp) governing multi-site provisioning, role-based access control, and global inventory oversight.',
-        replacementPathHint: '/public/projects/corestock/admin-dashboard.svg',
+        replacementPathHint: 'public/projects/corestock/admin-dashboard.webp',
       },
       {
         id: 'corestock-reports',
         label: 'Reports',
-        url: '/projects/corestock/reports.svg',
         caption:
           'Warehouse reporting view providing site-by-site stock distribution, movement summaries, and audit visibility.',
-        replacementPathHint: '/public/projects/corestock/reports.svg',
+        replacementPathHint: 'public/projects/corestock/reports.webp',
       },
     ],
     liveUrl: 'https://corestock-webapp.vercel.app/',
@@ -507,10 +490,9 @@ export const PROJECTS: Project[] = [
       {
         id: 'roadhelper-ecosystem',
         label: 'Web + Mobile Ecosystem View',
-        url: '/projects/roadhelper/ecosystem-overview.svg',
         caption:
           'Unified Customer, Helper, and Admin ecosystem showing real-time map location pins, roadside service categories, and mobile helper coordination.',
-        replacementPathHint: '/public/projects/roadhelper/ecosystem-overview.svg',
+        replacementPathHint: 'public/projects/roadhelper/ecosystem-overview.webp',
       },
     ],
     liveUrl: 'https://roadhelper.vercel.app/',
@@ -664,10 +646,9 @@ export const PROJECTS: Project[] = [
       {
         id: 'clinic-multi-role',
         label: 'Multi-Role Dashboards & Prescription PDF / AI View',
-        url: '/projects/clinic/multi-role-dashboard.svg',
         caption:
           'Role-segmented clinic management interface showing Admin, Doctor, Receptionist, and Patient views alongside pdf-lib document generation and Gemini prescription summaries.',
-        replacementPathHint: '/public/projects/clinic/multi-role-dashboard.svg',
+        replacementPathHint: 'public/projects/clinic/multi-role-dashboard.webp',
       },
     ],
     liveUrl: 'https://clinic-management-hackathon.vercel.app/',
@@ -821,10 +802,9 @@ export const PROJECTS: Project[] = [
       {
         id: 'helplytics-dashboard',
         label: 'Helpdesk, AI Center & Analytics Workspace',
-        url: '/projects/helplytics/analytics-dashboard.svg',
         caption:
           'Helplytics SaaS interface featuring the analytics dashboard, helpdesk request queue, AI Center navigation, and built-in messaging modules.',
-        replacementPathHint: '/public/projects/helplytics/analytics-dashboard.svg',
+        replacementPathHint: 'public/projects/helplytics/analytics-dashboard.webp',
       },
     ],
     liveUrl: 'https://helplytics-frontend.vercel.app/',
@@ -962,10 +942,9 @@ export const PROJECTS: Project[] = [
       {
         id: 'ai-qa-agent-overview',
         label: 'Readiness Audit & Local Agent CLI Architecture',
-        url: '/projects/ai-qa-agent/readiness-audit.svg',
         caption:
           'AI QA Agent dashboard and Local Agent CLI workflow showing the 11 modular inspection packages, command policy risk classification, and multi-format report exports.',
-        replacementPathHint: '/public/projects/ai-qa-agent/readiness-audit.svg',
+        replacementPathHint: 'public/projects/ai-qa-agent/readiness-audit.webp',
       },
     ],
     liveUrl: 'https://ai-qa-agent-web.vercel.app',
@@ -1119,10 +1098,9 @@ export const PROJECTS: Project[] = [
       {
         id: 'student-portal-dashboard',
         label: 'Student Dashboard & Academic Modules',
-        url: '/projects/student-portal/portal-dashboard.svg',
         caption:
           'Student Portal interface displaying enrolled courses, attendance status, grade progression, and campus announcements.',
-        replacementPathHint: '/public/projects/student-portal/portal-dashboard.svg',
+        replacementPathHint: 'public/projects/student-portal/portal-dashboard.webp',
       },
     ],
     liveUrl: 'https://studentportal-silk.vercel.app/',
@@ -1247,10 +1225,9 @@ export const PROJECTS: Project[] = [
       {
         id: 'field-capture-sync',
         label: 'Offline Queue & Idempotent Sync Architecture',
-        url: '/projects/field-capture/offline-queue-sync.svg',
         caption:
           'FieldCapture offline-first workflow illustrating local SQLite storage, QUEUED/UPLOADING/SYNCED state transitions, and PostgreSQL idempotency protection.',
-        replacementPathHint: '/public/projects/field-capture/offline-queue-sync.svg',
+        replacementPathHint: 'public/projects/field-capture/offline-queue-sync.webp',
       },
     ],
     liveUrl: 'https://drive.google.com/file/d/1I6V72ydhaE8eLhWVGp3xBEwO8UkDqda9/view?usp=drive_link',
@@ -1395,10 +1372,9 @@ export const PROJECTS: Project[] = [
       {
         id: 'talkbridge-mobile',
         label: 'Cross-Platform Mobile Chat Architecture',
-        url: '/projects/talkbridge/mobile-chat-ui.svg',
         caption:
           'TalkBridge mobile client layout and companion real-time messaging stack (React Native + TypeScript mobile client paired with Node.js/Socket.io backend).',
-        replacementPathHint: '/public/projects/talkbridge/mobile-chat-ui.svg',
+        replacementPathHint: 'public/projects/talkbridge/mobile-chat-ui.webp',
       },
     ],
     liveUrl: 'https://talkbridge-chatapp.vercel.app/',
